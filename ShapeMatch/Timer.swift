@@ -42,6 +42,10 @@ class SquareTimer: UIView, CAAnimationDelegate{
         fatalError("init(coder:) has not been implemented")
     }
     
+    func changeColor(col : UIColor){
+        progressLayer.strokeColor = col.cgColor
+        progressLayer.shadowColor = col.cgColor
+    }
     
     func start(time: CGFloat){
         
@@ -75,7 +79,7 @@ class SquareTimer: UIView, CAAnimationDelegate{
     
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         if(flag){
-        timerFinished()
+            timerFinished()
         }
     }
     

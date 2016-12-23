@@ -13,8 +13,6 @@ public enum ScreenSide {
     case down
 }
 
-
-
 class MultiplayerScreenSide{
 
     var playerId : Int = 0
@@ -22,7 +20,7 @@ class MultiplayerScreenSide{
     var timer : SquareTimer = SquareTimer.null
     
     var score : Int = 0;
-    var timerTime : CGFloat = 40;
+    var timerTime : CGFloat = 2;
     
     var movingShape : MovingShape!
     var staticShape : StaticShape!

@@ -14,6 +14,8 @@ public enum Views{
     case Game
     case GameOver
     case Settings
+    case Multiplayer
+    case MultiplayerGameOver
 }
 
 public enum DeviceModel{
@@ -28,53 +30,86 @@ class GameController{
     
     var viewController: ViewController!
     var deviceModel : DeviceModel = .Unknown
-
+    
     var mainMenu: MainMenu!
     var game: Game!
     var gameOver: GameOver!
     
+    var multiplayer: Multiplayer! = Multiplayer(frame: CGRect.zero)
+    var multiplayerGameOver: MultiplayerGameOver! = MultiplayerGameOver(frame: CGRect.zero)
+    
+    
     func Setup(){
+        deviceModel = .iPad//(UIDevice.current.model == "iPad") ? .iPad : .iPhone
+
         mainMenu = MainMenu(frame: CGRect(x: 0, y: 0, width: Screen.screenSize.width, height: Screen.screenSize.height))
         game = Game(frame: CGRect(x: 0, y: 0, width: Screen.screenSize.width, height: Screen.screenSize.height))
         gameOver = GameOver(frame: CGRect(x: 0, y: 0, width: Screen.screenSize.width, height: Screen.screenSize.height))
-      
-        deviceModel = (UIDevice.current.model == "iPad") ? .iPad : .iPhone
+        
+
+        
+        if(deviceModel == .iPad){
+            multiplayer = Multiplayer(frame: CGRect(x: 0, y: 0, width: Screen.screenSize.width, height: Screen.screenSize.height))
+            multiplayerGameOver = MultiplayerGameOver(frame: CGRect(x: 0, y: 0, width: Screen.screenSize.width, height: Screen.screenSize.height))
+        }
     }
     
     func switchFromTo(from: Views, to: Views){
         switch from {
-            case .MainMenu:
-                mainMenu.animateOut()
-                break
-            case .Game:
-                game.animateOut()
-                break
-            case .GameOver:
-                gameOver.animateOut()
-                break
-            case .Settings:
-                break
-            default:
-                break
+        case .MainMenu:
+            mainMenu.animateOut()
+            break
+        case .Game:
+            game.animateOut()
+            break
+        case .GameOver:
+            gameOver.animateOut()
+            break
+        case .Settings:
+            break
+        case .Multiplayer:
+            if(GameController.sharedInstance.deviceModel == .iPad){
+                multiplayer.animateOut()
+            }
+            break
+        case .MultiplayerGameOver:
+            if(GameController.sharedInstance.deviceModel == .iPad){
+                multiplayerGameOver.animateOut()
+            }
+            break
+        default:
+            break
         }
         
         switch to {
-            case .MainMenu:
-                mainMenu.animateIn()
-                viewController.view.bringSubview(toFront: mainMenu)
-                break
-            case .Game:
-                game.animateIn()
-                viewController.view.bringSubview(toFront: game)
-                break
-            case .GameOver:
-                gameOver.animateIn()
-                viewController.view.bringSubview(toFront: gameOver)
-                break
-            case .Settings:
-                break
-            default:
-                break
+        case .MainMenu:
+            mainMenu.animateIn()
+            viewController.view.bringSubview(toFront: mainMenu)
+            break
+        case .Game:
+            game.animateIn()
+            viewController.view.bringSubview(toFront: game)
+            break
+        case .GameOver:
+            gameOver.animateIn()
+            viewController.view.bringSubview(toFront: gameOver)
+            break
+        case .Settings:
+            break
+        case .Multiplayer:
+            if(GameController.sharedInstance.deviceModel == .iPad){
+                multiplayer.animateIn()
+                viewController.view.bringSubview(toFront: multiplayer)
             }
+            break
+        case .MultiplayerGameOver:
+            if(GameController.sharedInstance.deviceModel == .iPad){
+                multiplayerGameOver.animateIn()
+                viewController.view.bringSubview(toFront: multiplayerGameOver)
+            }
+            break
+        default:
+            break
         }
+    }
 }

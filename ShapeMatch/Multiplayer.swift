@@ -24,9 +24,10 @@ class Multiplayer : UIView{
         downSide = MultiplayerScreenSide(_playerId: 0, _screenSide: .down)
 
         
-        
-        upSide.timer = SquareTimer(frame: CGRect(origin: Screen.getScreenPos(x: 0, y: 0), size: Screen.screenSize.size), lineWidth: 6)
-        
+        let upSideTimerSize : CGSize = Screen.getScreenSize(x: 1, y: 0.5)
+        upSide.timer = SquareTimer(frame: CGRect(origin: Screen.getScreenPos(x: 0, y: 0), size: upSideTimerSize), lineWidth: 6)
+        upSide.timer.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI))
+
         upSide.timer.done = {
             self.GameOver(side: self.upSide)
         }
@@ -57,11 +58,14 @@ class Multiplayer : UIView{
         
         let labelSizeUp = Screen.getActualSize(1, height: 0.2)
         
-        upSide.scoreLabel = Label(frame: CGRect(origin: CGPoint.zero, size: labelSizeUp), text: "\(upSide.score)", _outPos: Screen.getScreenPos(x: 0, y: -0.2), _inPos: Screen.getScreenPos(x: 0, y: 0))
+        let halfYPos : CGPoint = Screen.getScreenPos(x: 0, y: 0.5)
+        let upSideInPos : CGPoint = CGPoint(x: 0, y: halfYPos.y - labelSizeUp.height)
+        upSide.scoreLabel = Label(frame: CGRect(origin: CGPoint.zero, size: labelSizeUp), text: "\(upSide.score)", _outPos: Screen.getScreenPos(x: 0, y: -0.2), _inPos: upSideInPos)
         upSide.scoreLabel.textAlignment = .center
         upSide.scoreLabel.font = UIFont(name: "HiraginoSans-W3", size: Screen.fontSize(fontSize: 10))
         upSide.scoreLabel.textColor = UIColor.white
-        
+        upSide.scoreLabel.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI))
+
         
         self.addSubview(upSide.timer)
         self.addSubview(upSide.movingShape)
@@ -72,8 +76,8 @@ class Multiplayer : UIView{
         
         
         
-        
-        downSide.timer = SquareTimer(frame: CGRect(origin: Screen.getScreenPos(x: 0, y: 0), size: Screen.screenSize.size), lineWidth: 6)
+        let downSideTimerSize : CGSize = Screen.getScreenSize(x: 1, y: 0.5)
+        downSide.timer = SquareTimer(frame: CGRect(origin: Screen.getScreenPos(x: 0, y: 0.5), size: downSideTimerSize), lineWidth: 6)
         
         downSide.timer.done = {
             self.GameOver(side: self.upSide)
@@ -105,7 +109,7 @@ class Multiplayer : UIView{
         
         let labelSizeDown = Screen.getActualSize(1, height: 0.2)
         
-        downSide.scoreLabel = Label(frame: CGRect(origin: CGPoint.zero, size: labelSizeDown), text: "\(downSide.score)", _outPos: Screen.getScreenPos(x: 0, y: -0.2), _inPos: Screen.getScreenPos(x: 0, y: 0))
+        downSide.scoreLabel = Label(frame: CGRect(origin: CGPoint.zero, size: labelSizeDown), text: "\(downSide.score)", _outPos: Screen.getScreenPos(x: 0, y: -0.2), _inPos: Screen.getScreenPos(x: 0, y: 0.5))
         downSide.scoreLabel.textAlignment = .center
         downSide.scoreLabel.font = UIFont(name: "HiraginoSans-W3", size: Screen.fontSize(fontSize: 10))
         downSide.scoreLabel.textColor = UIColor.white
@@ -120,10 +124,10 @@ class Multiplayer : UIView{
     }
     
     func increaseDifficulty(side : MultiplayerScreenSide){
-        upSide.timerTime -= 0.01
+        side.timerTime -= 0.01
         
-        if(upSide.timerTime < 1.75){
-            upSide.timerTime = 1.75
+        if(side.timerTime < 1.75){
+            side.timerTime = 1.75
         }
         
     }
@@ -160,6 +164,9 @@ class Multiplayer : UIView{
         }
         
         side.movingShape.setColor((side.staticShape.col.GetDarkerColor(1.05)))
+        
+        side.timer.changeColor(col: side.staticShape.col)
+        side.scoreLabel.changeTextColor(color: side.staticShape.col)
     }
     
     func similarToStaticShape(side : MultiplayerScreenSide) -> Bool{
@@ -208,25 +215,29 @@ class Multiplayer : UIView{
     func GameOver(side : MultiplayerScreenSide){
         Sounds.PlayGameOverSound()
         isGameOver = true;
-//        GameController.sharedInstance.gameOver.score = score;
-        GameController.sharedInstance.switchFromTo(from: .Game, to: .GameOver)
+        
+        GameController.sharedInstance.multiplayerGameOver.upScore = upSide.score
+        GameController.sharedInstance.multiplayerGameOver.downScore = downSide.score
+
+        GameController.sharedInstance.switchFromTo(from: .Multiplayer, to: .MultiplayerGameOver)
     }
     
     func animateIn(){
+        isGameOver = false
+
+        newShapePositions(side: upSide, changeMovingShapePos: true)
+        newShapePositions(side: downSide, changeMovingShapePos: true)
+
         upSide.score = 0
         upSide.scoreLabel.text = "\(upSide.score)"
-        isGameOver = false
         upSide.scoreLabel.animateIn(time: transitionTime)
-        newShapePositions(side: upSide, changeMovingShapePos: true)
         upSide.timer.animateIn(time: transitionTime)
         upSide.timer.start(time: upSide.timerTime)
         self.bringSubview(toFront: upSide.movingShape.gestureView)
         
         downSide.score = 0
         downSide.scoreLabel.text = "\(downSide.score)"
-        isGameOver = false
         downSide.scoreLabel.animateIn(time: transitionTime)
-        newShapePositions(side: downSide, changeMovingShapePos: true)
         downSide.timer.animateIn(time: transitionTime)
         downSide.timer.start(time: downSide.timerTime)
         self.bringSubview(toFront: downSide.movingShape.gestureView)
