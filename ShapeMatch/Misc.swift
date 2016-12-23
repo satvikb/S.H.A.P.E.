@@ -8,38 +8,37 @@
 
 import UIKit
 
-let fontName = "HiraginoSans-W3"//"Verdana"//"HelveticaNeue-Light"
-
+let fontName = "HiraginoSans-W3"
 class Screen {
     
     
     static let screenSize = UIScreen.main.bounds
     
-    static var heightOverWidth : CGFloat!
+    static var heightOverWidth: CGFloat!
     
     static func setup(){
         Screen.heightOverWidth = (Screen.screenSize.height / Screen.screenSize.width)
     }
 
-    static func getScreenPos(x : CGFloat, y : CGFloat) -> CGPoint{
+    static func getScreenPos(x: CGFloat, y: CGFloat) -> CGPoint{
         return CGPoint(x: x * screenSize.width, y: y * screenSize.height)
     }
     
-    static func getScreenSize(x : CGFloat, y : CGFloat) -> CGSize{
+    static func getScreenSize(x: CGFloat, y: CGFloat) -> CGSize{
         return CGSize(width: x * screenSize.width, height: y * screenSize.height)
     }
     
-    static func getClampedScreenPosition(_ x : CGFloat, y : CGFloat) -> CGPoint{
+    static func getClampedScreenPosition(_ x: CGFloat, y: CGFloat) -> CGPoint{
         return CGPoint(x: (x / screenSize.width), y: (y / screenSize.height))
     }
     
-    static func getActualSize(_ width : CGFloat, height : CGFloat) -> CGSize{
+    static func getActualSize(_ width: CGFloat, height: CGFloat) -> CGSize{
         return CGSize(width: width * screenSize.width, height: height * screenSize.height)
     }
     
     //TODO: Return a font size that is the same for all devices.
     // A base ratio used from one device that is mimiced in all other devices?
-    static func fontSize(fontSize : CGFloat) -> CGFloat{
+    static func fontSize(fontSize: CGFloat) -> CGFloat{
         return ((fontSize*Screen.heightOverWidth)/1.77866666666667)*Screen.screenSize.width/36
     }
 }
@@ -47,20 +46,19 @@ class Screen {
 class Functions {
     
     static func randomColor() -> UIColor {
-        //        let hue : CGFloat = CGFloat(Float(arc4random()) / Float(UINT32_MAX))
-        
-        let r : CGFloat = CGFloat(randomInt(70, max: 250))
-        let g : CGFloat = CGFloat(randomInt(70, max: 250))
-        let b : CGFloat = CGFloat(randomInt(70, max: 250))
+        let r: CGFloat = CGFloat(randomInt(70, max: 250))
+        let g: CGFloat = CGFloat(randomInt(70, max: 250))
+        let b: CGFloat = CGFloat(randomInt(70, max: 250))
         return UIColor(red: r/255, green: g/255, blue: b/255, alpha: 0.8)
-        
-        //        return UIColor(hue: hue, saturation: 0.8, brightness: 1.0, alpha: 1)
     }
     
     static func inverseColor(_ color: UIColor) -> UIColor{
-        var a: CGFloat = 0.0; var r: CGFloat = 0.0; var g: CGFloat = 0.0; var b: CGFloat = 0.0;
-        color.getRed(&r, green: &g, blue: &b, alpha: &a);
-        return UIColor(red: 1-r, green: 1-g, blue: 1-b, alpha: a);
+        var a: CGFloat = 0.0
+        var r: CGFloat = 0.0
+        var g: CGFloat = 0.0
+        var b: CGFloat = 0.0
+        color.getRed(&r, green: &g, blue: &b, alpha: &a)
+        return UIColor(red: 1-r, green: 1-g, blue: 1-b, alpha: a)
     }
     
     static func randomInt(_ min: Int, max:Int) -> Int {
@@ -79,22 +77,22 @@ class Functions {
         return min + UInt8(arc4random_uniform(UInt32(max - min + 1)))
     }
     
-    static func lerpf(_ a : CGFloat, b : CGFloat, t : CGFloat) -> CGFloat{
-        return a + (b - a) * t;
+    static func lerpf(_ a: CGFloat, b: CGFloat, t: CGFloat) -> CGFloat{
+        return a + (b - a) * t
     }
     
-    static func lerpColor(_ a : UIColor, b : UIColor, t : CGFloat) -> UIColor{
-        let c = UIColor(colorLiteralRed: Float(lerpf(CGFloat(a.components.red), b: CGFloat(b.components.red), t: t)), green: Float(lerpf(CGFloat(a.components.green), b: CGFloat(b.components.green), t: t)), blue: Float(lerpf(CGFloat(a.components.blue), b: CGFloat(b.components.blue), t: t)), alpha: Float(lerpf(CGFloat(a.components.alpha), b: CGFloat(b.components.alpha), t: t)));
+    static func lerpColor(_ a: UIColor, b: UIColor, t: CGFloat) -> UIColor{
+        let c = UIColor(colorLiteralRed: Float(lerpf(CGFloat(a.components.red), b: CGFloat(b.components.red), t: t)), green: Float(lerpf(CGFloat(a.components.green), b: CGFloat(b.components.green), t: t)), blue: Float(lerpf(CGFloat(a.components.blue), b: CGFloat(b.components.blue), t: t)), alpha: Float(lerpf(CGFloat(a.components.alpha), b: CGFloat(b.components.alpha), t: t)))
         
-        return c;
+        return c
     }
 }
 
 struct Range {
-    var Min : CGFloat
-    var Max : CGFloat
+    var Min: CGFloat
+    var Max: CGFloat
     
-    init(min : CGFloat, max : CGFloat){
+    init(min: CGFloat, max: CGFloat){
         Min = min
         Max = max
     }
@@ -107,7 +105,7 @@ extension UIColor {
         return (r,g,b,a)
     }
     
-    func GetDarkerColor(_ amount : CGFloat) -> UIColor{
+    func GetDarkerColor(_ amount: CGFloat) -> UIColor{
         var h: CGFloat = 0.0
         var s: CGFloat = 0.0
         var b: CGFloat = 0.0

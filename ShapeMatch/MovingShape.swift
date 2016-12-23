@@ -8,19 +8,19 @@
 
 import UIKit
 
-class MovingShape : UIView, UIGestureRecognizerDelegate {
+class MovingShape: UIView, UIGestureRecognizerDelegate {
 
     //RADIANS
-    var radians : CGFloat = 0
+    var radians: CGFloat = 0
     
-    var size : CGSize = CGSize.zero
-    var startSize : CGSize = CGSize.zero
+    var size: CGSize = CGSize.zero
+    var startSize: CGSize = CGSize.zero
     
-    fileprivate var color : UIColor! = UIColor.blue
+    fileprivate var color: UIColor! = UIColor.blue
     
-    var gestureView : UIView!
+    var gestureView: UIView!
     
-    var panGR : UIPanGestureRecognizer!
+    var panGR: UIPanGestureRecognizer!
     
     init(position : CGPoint, size : CGSize, gestureViewSize : CGSize = UIScreen.main.bounds.size, gestureViewPos : CGPoint = CGPoint.zero){
         super.init(frame: CGRect(x: position.x, y: position.y, width: size.width, height: size.height))
@@ -32,21 +32,20 @@ class MovingShape : UIView, UIGestureRecognizerDelegate {
         
         gestureView = UIView(frame: CGRect(x: gestureViewPos.x, y: gestureViewPos.y, width: gestureViewSize.width, height: gestureViewSize.height))
         
-        
         layer.shadowRadius = 15
         layer.shadowOpacity = 0.9
         layer.shadowOffset = CGSize.zero
         layer.masksToBounds = false
         
         self.isUserInteractionEnabled = false
-        self.gestureView.isMultipleTouchEnabled = true;
+        self.gestureView.isMultipleTouchEnabled = true
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setColor(_ col : UIColor){
+    func setColor(_ col: UIColor){
         color = col
         self.backgroundColor = color
         layer.shadowColor = col.cgColor
@@ -55,9 +54,6 @@ class MovingShape : UIView, UIGestureRecognizerDelegate {
     func setupGestureRecognizers(){
         panGR = UIPanGestureRecognizer(target: self, action: #selector(self.didPan(_:)))
         panGR.delegate = self
-        
-//        panGR.minimumNumberOfTouches = 2
-//        panGR.maximumNumberOfTouches = 2
         
         gestureView.addGestureRecognizer(panGR)
         
@@ -72,20 +68,18 @@ class MovingShape : UIView, UIGestureRecognizerDelegate {
     
     func didPan(_ panGR: UIPanGestureRecognizer) {
         //TODO: Instead of setting the pan gesture for min and max touches, use a if here, so then we can pause the game if the user does not have two touches on screen
-//        if(panGR.numberOfTouches == 2){
-            self.superview!.bringSubview(toFront: self)
-            
-            var translation = panGR.translation(in: self)
-            
-            translation = translation.applying(self.transform)
-            
-            self.center.x += translation.x
-            self.center.y += translation.y
-            
-            panGR.setTranslation(CGPoint.zero, in: self)
-            
-            gestureHappened()
-//        }
+        self.superview!.bringSubview(toFront: self)
+        
+        var translation = panGR.translation(in: self)
+        
+        translation = translation.applying(self.transform)
+        
+        self.center.x += translation.x
+        self.center.y += translation.y
+        
+        panGR.setTranslation(CGPoint.zero, in: self)
+        
+        gestureHappened()
     }
     
     func didPinch(_ pinchGR: UIPinchGestureRecognizer) {
@@ -93,7 +87,6 @@ class MovingShape : UIView, UIGestureRecognizerDelegate {
         
         let scale = pinchGR.scale
         self.transform = self.transform.scaledBy(x: scale, y: scale)
-//        print(self.transform)
         pinchGR.scale = 1.0
         
         gestureHappened()
@@ -106,7 +99,7 @@ class MovingShape : UIView, UIGestureRecognizerDelegate {
         self.transform = self.transform.rotated(by: rotation)
         rotationGR.rotation = 0.0
         
-        let radians : CGFloat = atan2( (self.transform.b), (self.transform.a))
+        let radians: CGFloat = atan2( (self.transform.b), (self.transform.a))
         
         self.radians = radians
         gestureHappened()
@@ -122,7 +115,7 @@ class MovingShape : UIView, UIGestureRecognizerDelegate {
     
     var anyGestureHappened = {}
     
-    func animateOut(time : CGFloat){
+    func animateOut(time: CGFloat){
         UIView.animate(withDuration: TimeInterval(time), animations: {
             self.center = CGPoint(x: self.center.x, y: Screen.getScreenPos(x: 0, y: 2).y)
         })

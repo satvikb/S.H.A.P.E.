@@ -8,30 +8,30 @@
 
 import UIKit
 
-class Game : UIView{
+class Game: UIView{
     
-    let transitionTime : CGFloat = 0.5
+    let transitionTime: CGFloat = 0.5
     
-    var timer : SquareTimer = SquareTimer.null
+    var timer: SquareTimer = SquareTimer.null
     
-    var score : Int = 0;
-    var timerTime : CGFloat = 2;
+    var score: Int = 0
+    var timerTime: CGFloat = 2
     
-    var movingShape : MovingShape!
-    var staticShape : StaticShape!
-    var scoreLabel : Label!;
+    var movingShape: MovingShape!
+    var staticShape: StaticShape!
+    var scoreLabel: Label!
     
-    let posXMinMax : Range = Range(min: 0.3, max: 0.7)
-    let posYMinMax : Range = Range(min: 0.3, max: 0.7)
+    let posXMinMax: Range = Range(min: 0.3, max: 0.7)
+    let posYMinMax: Range = Range(min: 0.3, max: 0.7)
     
-    let sizeMinMax : Range = Range(min: 0.1, max: 0.45)
+    let sizeMinMax: Range = Range(min: 0.1, max: 0.45)
     
-    let scaleMinMax : Range = Range(min: 0.9, max: 1.3)
+    let scaleMinMax: Range = Range(min: 0.9, max: 1.3)
     
-    var isGameOver : Bool = false
+    var isGameOver: Bool = false
     
     override init(frame: CGRect) {
-        super.init(frame: frame);
+        super.init(frame: frame)
         timer = SquareTimer(frame: CGRect(origin: Screen.getScreenPos(x: 0, y: 0), size: Screen.screenSize.size), lineWidth: 6)
         
         timer.done = {
@@ -86,7 +86,7 @@ class Game : UIView{
         
     }
     
-    func newShapePositions(changeMovingShapePos : Bool = false){
+    func newShapePositions(changeMovingShapePos: Bool = false){
         var staticShapeNewSize = Screen.getActualSize(Functions.randomFloat(sizeMinMax.Min, maximum: sizeMinMax.Max), height: Functions.randomFloat(sizeMinMax.Min, maximum: sizeMinMax.Max))
         
         if(staticShapeNewSize.width > Screen.screenSize.width/2 || staticShapeNewSize.height > Screen.screenSize.height/2){
@@ -145,7 +145,7 @@ class Game : UIView{
         return isSame
     }
     
-    func rectLessThan(rect1 : CGRect, rect2 : CGRect) -> Bool{
+    func rectLessThan(rect1: CGRect, rect2: CGRect) -> Bool{
         // rect1 < rect2
         if((rect1.origin.x < rect2.origin.x) && (rect1.origin.y < rect2.origin.y) && (rect1.size.width < rect2.size.width) && (rect1.size.height < rect2.size.height)){
             return true
@@ -153,7 +153,7 @@ class Game : UIView{
         return false
     }
     
-    func subRect(movingRect : CGRect, staticRect : CGRect) -> CGRect{
+    func subRect(movingRect: CGRect, staticRect: CGRect) -> CGRect{
         let deltaRect = CGRect(x: abs(movingRect.origin.x - staticRect.origin.x), y: abs(movingRect.origin.y - staticRect.origin.y), width: abs(movingRect.size.width - staticRect.size.width), height: abs(movingRect.size.height - staticRect.size.height))
         
         return deltaRect
@@ -165,8 +165,9 @@ class Game : UIView{
     
     func GameOver(){
         Sounds.PlayGameOverSound()
-        isGameOver = true;
-        GameController.sharedInstance.gameOver.score = score;
+        isGameOver = true
+        GameController.sharedInstance.gameOver.score = score
+        
         GameController.sharedInstance.switchFromTo(from: .Game, to: .GameOver)
     }
     
