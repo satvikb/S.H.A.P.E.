@@ -54,7 +54,7 @@ class MainMenu: UIView{
         leaderboardButton.tap = {
             print("Show gamecenter")
             
-            
+            ScoreManager.showLeaderboardIn(viewController: GameController.sharedInstance.viewController)
             GameController.sharedInstance.viewController.view.backgroundColor = UIColor(red: 0.168627451, green: 0.168627451, blue: 0.168627451, alpha: 1)
         }
         

@@ -6,9 +6,14 @@
 //  Copyright © 2016 Satvik Borra. All rights reserved.
 //
 
-import Foundation
+import UIKit
+import GameKit
 
 class ScoreManager {
+    
+    static var gcEnabled : Bool = false
+    static var gcDefaultLeaderBoard = "mainScoreboard"
+    
     static func isScoreHighScore(newScore: Int) -> Bool {
         return (newScore > currentHighScore)
     }
@@ -17,6 +22,16 @@ class ScoreManager {
         saveScoreLocally(score: score)
         
         //TODO: Save to game center
+        let gcScore = GKScore(leaderboardIdentifier: gcDefaultLeaderBoard)
+        gcScore.value = Int64(score)
+        
+        GKScore.report([gcScore]) { (error) in
+            if error != nil {
+                print(error.debugDescription)
+            } else {
+                print("Score submitted")
+            }
+        }
     }
     
     static func saveScoreLocally(score: Int) {
@@ -28,5 +43,37 @@ class ScoreManager {
         return UserDefaults.standard.integer(forKey: "hs")
     }
     
+    static func authenticateGameCenterPlayer(currVC: UIViewController) {
+        let localPlayer = GKLocalPlayer.localPlayer()
+        localPlayer.authenticateHandler = { (vc, error) -> Void in
+            if vc != nil {
+                currVC.present(vc!, animated: true, completion: nil)
+            } else if localPlayer.isAuthenticated {
+                self.gcEnabled = true
+                localPlayer.loadDefaultLeaderboardIdentifier(completionHandler: { (boardID, error) in
+                    if error != nil {
+                        print(error.debugDescription)
+                    } else {
+                        self.gcDefaultLeaderBoard = boardID!
+                    }
+                })
+            } else {
+                self.gcEnabled = false
+                print("No game center enabled")
+            }
+        
+        }
+    }
     
+    static func showLeaderboardIn(viewController: ViewController) {
+        let leaderboardVC = GKGameCenterViewController()
+        leaderboardVC.gameCenterDelegate = viewController
+        leaderboardVC.viewState = .leaderboards
+        leaderboardVC.leaderboardIdentifier = gcDefaultLeaderBoard
+        viewController.present(leaderboardVC, animated: true, completion: nil)
+    }
+    
+    func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
+        gameCenterViewController.dismiss(animated: true, completion: nil)
+    }
 }

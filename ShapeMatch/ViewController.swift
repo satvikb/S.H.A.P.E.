@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import GameKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, GKGameCenterControllerDelegate {
 
     
     override func viewDidLoad() {
@@ -22,6 +23,12 @@ class ViewController: UIViewController {
         self.view.addSubview(GameController.sharedInstance.mainMenu)
         
         GameController.sharedInstance.switchFromTo(from: .Start, to: .MainMenu)
+        
+        ScoreManager.authenticateGameCenterPlayer(currVC: self)
+    }
+    
+    func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
+        gameCenterViewController.dismiss(animated: true, completion: nil)
     }
     
     override func didReceiveMemoryWarning() {

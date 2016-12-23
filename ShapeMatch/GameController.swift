@@ -20,7 +20,7 @@ class GameController{
     
     static let sharedInstance = GameController()
     
-    var viewController: UIViewController!
+    var viewController: ViewController!
     
     var mainMenu: MainMenu!
     var game: Game!
