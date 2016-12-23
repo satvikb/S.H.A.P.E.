@@ -28,6 +28,7 @@
 		40EC74251CF3956E00E7B5E1 /* MovingShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EC74241CF3956E00E7B5E1 /* MovingShape.swift */; };
 		40EC74291CF396E400E7B5E1 /* Misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EC74281CF396E400E7B5E1 /* Misc.swift */; };
 		40EC742B1CF3976D00E7B5E1 /* StaticShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EC742A1CF3976D00E7B5E1 /* StaticShape.swift */; };
+		E7175D641E0CFC0600A865F7 /* ScoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7175D631E0CFC0600A865F7 /* ScoreManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +76,7 @@
 		40EC74241CF3956E00E7B5E1 /* MovingShape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovingShape.swift; sourceTree = "<group>"; };
 		40EC74281CF396E400E7B5E1 /* Misc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Misc.swift; sourceTree = "<group>"; };
 		40EC742A1CF3976D00E7B5E1 /* StaticShape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticShape.swift; sourceTree = "<group>"; };
+		E7175D631E0CFC0600A865F7 /* ScoreManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				4002CA201E0A412E00291DCC /* MainMenu.swift */,
+				E7175D631E0CFC0600A865F7 /* ScoreManager.swift */,
 				4002CA291E0A421900291DCC /* Game.swift */,
 				4002CA2D1E0A431500291DCC /* GameOver.swift */,
 				40D033671E0CB8F1008BB7E8 /* Settings.swift */,
@@ -356,6 +359,7 @@
 				4002CA2A1E0A421900291DCC /* Game.swift in Sources */,
 				4002CA251E0A417900291DCC /* Label.swift in Sources */,
 				40EC74251CF3956E00E7B5E1 /* MovingShape.swift in Sources */,
+				E7175D641E0CFC0600A865F7 /* ScoreManager.swift in Sources */,
 				40EC74291CF396E400E7B5E1 /* Misc.swift in Sources */,
 				40EC73F71CF38DC500E7B5E1 /* AppDelegate.swift in Sources */,
 			);
