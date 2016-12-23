@@ -16,21 +16,31 @@ public enum Views{
     case Settings
 }
 
+public enum DeviceModel{
+    case Unknown
+    case iPhone
+    case iPad
+}
+
 class GameController{
     
     
     static let sharedInstance = GameController()
     
     var viewController : UIViewController!;
+    var deviceModel : DeviceModel = .Unknown
+    
     
     var mainMenu : MainMenu!;
-    var game : Game!;
+    var game : Multiplayer!;
     var gameOver : GameOver!;
     
     func Setup(){
         mainMenu = MainMenu(frame: CGRect(x: 0, y: 0, width: Screen.screenSize.width, height: Screen.screenSize.height));
-        game = Game(frame: CGRect(x: 0, y: 0, width: Screen.screenSize.width, height: Screen.screenSize.height));
+        game = Multiplayer(frame: CGRect(x: 0, y: 0, width: Screen.screenSize.width, height: Screen.screenSize.height));
         gameOver = GameOver(frame: CGRect(x: 0, y: 0, width: Screen.screenSize.width, height: Screen.screenSize.height));
+        
+        deviceModel = (UIDevice.current.model == "iPad") ? .iPad : .iPhone
     }
     
     func switchFromTo(from : Views, to : Views){

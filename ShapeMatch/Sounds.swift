@@ -18,6 +18,14 @@ class Sounds{
     static var GameOverSoundPlayer = AVAudioPlayer()
     
     static func Setup(){
+        
+        do{
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
+            try AVAudioSession.sharedInstance().setActive(true)
+        }catch{
+            
+        }
+        
         MatchedSoundPlayer = try! AVAudioPlayer(contentsOf: MatchedSound as URL)
         GameOverSoundPlayer = try! AVAudioPlayer(contentsOf: GameOverSound as URL)
 
