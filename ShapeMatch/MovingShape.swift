@@ -22,7 +22,7 @@ class MovingShape: UIView, UIGestureRecognizerDelegate {
     
     var panGR: UIPanGestureRecognizer!
     
-    init(position: CGPoint, size: CGSize){
+    init(position : CGPoint, size : CGSize, gestureViewSize : CGSize = UIScreen.main.bounds.size, gestureViewPos : CGPoint = CGPoint.zero){
         super.init(frame: CGRect(x: position.x, y: position.y, width: size.width, height: size.height))
         
         self.size = size
@@ -30,7 +30,7 @@ class MovingShape: UIView, UIGestureRecognizerDelegate {
         
         setColor(Functions.randomColor())
         
-        gestureView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+        gestureView = UIView(frame: CGRect(x: gestureViewPos.x, y: gestureViewPos.y, width: gestureViewSize.width, height: gestureViewSize.height))
         
         layer.shadowRadius = 15
         layer.shadowOpacity = 0.9

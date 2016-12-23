@@ -37,7 +37,7 @@ class Game: UIView{
         timer.done = {
             self.GameOver()
         }
-        
+                
         let staticMovingPos = Screen.getScreenPos(x: -1, y: -1)
         let staticMovingSize = CGSize(width: 0, height: 0)
         
@@ -95,6 +95,7 @@ class Game: UIView{
         
         let staticShapeNewPos = Screen.getScreenPos(x: Functions.randomFloat(posXMinMax.Min, maximum: posXMinMax.Max), y: Functions.randomFloat(posYMinMax.Min, maximum: posYMinMax.Max))
         
+        staticShape.transform = CGAffineTransform.identity
         staticShape.startSize = staticShapeNewSize
         staticShape.bounds = CGRect(origin: CGPoint.zero, size: staticShapeNewSize)
         
@@ -106,6 +107,7 @@ class Game: UIView{
         
         let movingShapeNewSize = CGSize(width: staticShapeNewSize.width*randomScale, height: staticShapeNewSize.height*randomScale)
         
+        movingShape.transform = CGAffineTransform.identity
         movingShape.startSize = movingShapeNewSize
         movingShape.bounds = CGRect(x: 0, y: 0, width: movingShapeNewSize.width, height: movingShapeNewSize.height)
         
