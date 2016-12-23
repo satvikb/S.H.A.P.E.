@@ -8,10 +8,9 @@
 
 import UIKit
 
-class MainMenu: UIView{
+class MainMenu: UIView {
     
     let transitionTime: CGFloat = 0.5
-    
     
     var titleLabel: Label = Label.Null
     var scoreLabel: Label = Label.Null
@@ -52,8 +51,6 @@ class MainMenu: UIView{
         
         leaderboardButton = Square(frame: CGRect(origin: CGPoint.outOfScreen, size: Screen.getScreenSize(x: buttonWidth, y: buttonHeight)), color: Functions.randomColor(), _outPos: startOutPos, _inPos: Screen.getScreenPos(x: sidePadding+(2*buttonWidth)+buttonWidth/2, y: buttonsY))
         leaderboardButton.tap = {
-            print("Show gamecenter")
-            
             ScoreManager.showLeaderboardIn(viewController: GameController.sharedInstance.viewController)
             GameController.sharedInstance.viewController.view.backgroundColor = UIColor(red: 0.168627451, green: 0.168627451, blue: 0.168627451, alpha: 1)
         }
@@ -72,7 +69,6 @@ class MainMenu: UIView{
     }
     
     func animateIn(){
-        
         scoreLabel.text = "Highscore: \(ScoreManager.currentHighScore)"
         
         playButton.animateIn(time: transitionTime)

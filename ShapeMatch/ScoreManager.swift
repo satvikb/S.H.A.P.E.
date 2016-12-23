@@ -10,7 +10,6 @@ import UIKit
 import GameKit
 
 class ScoreManager {
-    
     static var gcEnabled : Bool = false
     static var gcDefaultLeaderBoard = "mainScoreboard"
     
@@ -21,7 +20,6 @@ class ScoreManager {
     static func saveScoreToGameCenter(score: Int) {
         saveScoreLocally(score: score)
         
-        //TODO: Save to game center
         let gcScore = GKScore(leaderboardIdentifier: gcDefaultLeaderBoard)
         gcScore.value = Int64(score)
         
@@ -71,9 +69,5 @@ class ScoreManager {
         leaderboardVC.viewState = .leaderboards
         leaderboardVC.leaderboardIdentifier = gcDefaultLeaderBoard
         viewController.present(leaderboardVC, animated: true, completion: nil)
-    }
-    
-    func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
-        gameCenterViewController.dismiss(animated: true, completion: nil)
     }
 }
