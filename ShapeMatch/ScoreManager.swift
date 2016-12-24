@@ -57,7 +57,6 @@ class ScoreManager {
                 self.gcEnabled = false
                 print("No game center enabled")
             }
-        
         }
     }
     
