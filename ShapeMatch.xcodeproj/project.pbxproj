@@ -164,13 +164,7 @@
 		4002CA381E0B8FFD00291DCC /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				E733B4041E0E323600DB94F5 /* homeicon.png */,
-				E733B4001E0E2DE900DB94F5 /* shareicon.png */,
-				E733B4021E0E31AA00DB94F5 /* restart.png */,
-				E733B4061E0E356F00DB94F5 /* leaderboard icon.png */,
-				E733B4081E0E373200DB94F5 /* multiplayericon.png */,
-				E733B40A1E0E37EF00DB94F5 /* settingsicon.png */,
-				E733B40C1E0E387B00DB94F5 /* Playicon.png */,
+				E733B40E1E0E39DA00DB94F5 /* Images */,
 				40EC74241CF3956E00E7B5E1 /* MovingShape.swift */,
 				40EC742A1CF3976D00E7B5E1 /* StaticShape.swift */,
 				4002CA221E0A415E00291DCC /* Square.swift */,
@@ -250,6 +244,20 @@
 				E7175D661E0D9DCE00A865F7 /* GameKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E733B40E1E0E39DA00DB94F5 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				E733B4041E0E323600DB94F5 /* homeicon.png */,
+				E733B4001E0E2DE900DB94F5 /* shareicon.png */,
+				E733B4021E0E31AA00DB94F5 /* restart.png */,
+				E733B4061E0E356F00DB94F5 /* leaderboard icon.png */,
+				E733B4081E0E373200DB94F5 /* multiplayericon.png */,
+				E733B40A1E0E37EF00DB94F5 /* settingsicon.png */,
+				E733B40C1E0E387B00DB94F5 /* Playicon.png */,
+			);
+			name = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
