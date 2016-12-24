@@ -36,13 +36,10 @@ class Settings: UIView {
         backButton.tap = {
             GameController.sharedInstance.switchFromTo(from: .Settings, to: .MainMenu)
         }
-        
-        
-        
+          
         creditsLabel = Label(frame: CGRect(origin: CGPoint.outOfScreen, size: Screen.getScreenSize(x: 1, y: 0.1)), text: "© Satvik Borra & Virindh Borra", _outPos: Screen.getScreenPos(x: 0, y: 1), _inPos: Screen.getScreenPos(x: 0, y: 0.9), textColor: UIColor.white, debugFrame: false, _neon: false)
         creditsLabel.textAlignment = .center
-        
-        
+                
         super.init(frame: frame)
 
 //        let settingsData = SettingsData.settings

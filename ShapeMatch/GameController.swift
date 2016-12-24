@@ -29,7 +29,7 @@ class GameController{
     static let sharedInstance = GameController()
     
     var viewController: ViewController!
-    var deviceModel : DeviceModel = .Unknown
+    var deviceModel: DeviceModel = .Unknown
     
     var mainMenu: MainMenu!
     var game: Game!

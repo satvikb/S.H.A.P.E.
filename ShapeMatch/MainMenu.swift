@@ -42,24 +42,24 @@ class MainMenu: UIView {
         scoreLabel.font = UIFont(name: fontName, size: Screen.fontSize(fontSize: 2.5))
         scoreLabel.textAlignment = .center
         
-        settingsButton = Square(frame: CGRect(origin: CGPoint.outOfScreen, size: Screen.getScreenSize(x: buttonWidth, y: buttonHeight)), color: Functions.randomColor(), _outPos: startOutPos, _inPos: Screen.getScreenPos(x: sidePadding+(buttonWidth/2), y: buttonsY))
+        settingsButton = Square(frame: CGRect(origin: CGPoint.outOfScreen, size: Screen.getScreenSize(x: buttonWidth, y: buttonHeight)), color: UIColor.belizeHoleColor(), _outPos: startOutPos, _inPos: Screen.getScreenPos(x: sidePadding+(buttonWidth/2), y: buttonsY))
         settingsButton.tap = {
             GameController.sharedInstance.switchFromTo(from: .MainMenu, to: .Settings)
         }
         
-        playButton = Square(frame: CGRect(origin: CGPoint.outOfScreen, size: Screen.getScreenSize(x: buttonWidth, y: buttonHeight)), color: Functions.randomColor(), _outPos: startOutPos, _inPos: Screen.getScreenPos(x: sidePadding+(1*buttonWidth)+buttonWidth/2, y: buttonsY))
+        playButton = Square(frame: CGRect(origin: CGPoint.outOfScreen, size: Screen.getScreenSize(x: buttonWidth, y: buttonHeight)), color: UIColor.nephritisColor(), _outPos: startOutPos, _inPos: Screen.getScreenPos(x: sidePadding+(1*buttonWidth)+buttonWidth/2, y: buttonsY))
         playButton.tap = {
             GameController.sharedInstance.switchFromTo(from: .MainMenu, to: .Game)
         }
         
-        leaderboardButton = Square(frame: CGRect(origin: CGPoint.outOfScreen, size: Screen.getScreenSize(x: buttonWidth, y: buttonHeight)), color: Functions.randomColor(), _outPos: startOutPos, _inPos: Screen.getScreenPos(x: sidePadding+(2*buttonWidth)+buttonWidth/2, y: buttonsY))
+        leaderboardButton = Square(frame: CGRect(origin: CGPoint.outOfScreen, size: Screen.getScreenSize(x: buttonWidth, y: buttonHeight)), color: UIColor.alizarinColor(), _outPos: startOutPos, _inPos: Screen.getScreenPos(x: sidePadding+(2*buttonWidth)+buttonWidth/2, y: buttonsY))
         leaderboardButton.tap = {
             ScoreManager.showLeaderboardIn(viewController: GameController.sharedInstance.viewController)
         }
         
         if(GameController.sharedInstance.deviceModel == .iPad){
             print("iPad: \(GameController.sharedInstance.deviceModel == .iPad)")
-            multiplayerButton = Square(frame: CGRect(origin: CGPoint.outOfScreen, size: Screen.getScreenSize(x: buttonWidth, y: buttonHeight)), color: Functions.randomColor(), _outPos: startOutPos, _inPos: Screen.getScreenPos(x: sidePadding+(1*buttonWidth)+buttonWidth/2, y: buttonsY+buttonHeight))
+            multiplayerButton = Square(frame: CGRect(origin: CGPoint.outOfScreen, size: Screen.getScreenSize(x: buttonWidth, y: buttonHeight)), color: UIColor.carrotColor(), _outPos: startOutPos, _inPos: Screen.getScreenPos(x: sidePadding+(1*buttonWidth)+buttonWidth/2, y: buttonsY+buttonHeight))
             multiplayerButton.tap = {
                 GameController.sharedInstance.switchFromTo(from: .MainMenu, to: .Multiplayer)
             }
