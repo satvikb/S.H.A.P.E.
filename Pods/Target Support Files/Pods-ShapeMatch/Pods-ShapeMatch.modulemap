@@ -1,0 +1,6 @@
+framework module Pods_ShapeMatch {
+  umbrella header "Pods-ShapeMatch-umbrella.h"
+
+  export *
+  module * { export * }
+}

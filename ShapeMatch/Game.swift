@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Flurry_iOS_SDK
 
 class Game: UIView{
     
@@ -173,6 +174,8 @@ class Game: UIView{
     }
     
     func animateIn(){
+        Flurry.logEvent("Game", withParameters: nil, timed: true)
+        
         score = 0
         scoreLabel.text = "\(score)"
         isGameOver = false
@@ -184,6 +187,8 @@ class Game: UIView{
     }
     
     func animateOut(){
+        Flurry.logEvent("Game", withParameters: ["Score": score, "StaticShapeSize":staticShape.frame.size, "RectDiff": subRect(movingRect: CGRect(origin: movingShape.center, size: movingShape.frame.size), staticRect: CGRect(origin: staticShape.center, size: staticShape.frame.size)), "Color":staticShape.col], timed: true)
+
         timer.animateOut(time: transitionTime)
         timer.removeTimer()
         scoreLabel.animateOut(time: transitionTime)

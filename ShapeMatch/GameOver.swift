@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Flurry_iOS_SDK
 
 class GameOver: UIView{
     
@@ -60,15 +61,18 @@ class GameOver: UIView{
         super.init(frame: frame)
 
         homeButton.tap = {
+            Flurry.logEvent("HopeTapped", withParameters: ["Score":self.score, "Highscore":ScoreManager.currentHighScore])
             GameController.sharedInstance.switchFromTo(from: .GameOver, to: .MainMenu)
         }
         
         replayButton.tap = {
+            Flurry.logEvent("ReplayTapped", withParameters: ["Score":self.score, "Highscore":ScoreManager.currentHighScore])
             GameController.sharedInstance.switchFromTo(from: .GameOver, to: .Game)
         }
         
         shareButton.tap = {
-            //TODO: Show share button here
+            Flurry.logEvent("ShareTapped", withParameters: ["Score":self.score, "Highscore":ScoreManager.currentHighScore])
+
             let pluralword: String = (self.score == 1) ? "match" : "matches"
             let activityVC = UIActivityViewController(activityItems: ["I just scored \(self.score) \(pluralword) on S.H.A.P.E! Can you beat that? http://bit.ly/S_H_A_P_E"], applicationActivities: nil)
             GameController.sharedInstance.viewController.present(activityVC, animated: true, completion: nil)

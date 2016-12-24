@@ -7,13 +7,14 @@
 //
 
 import UIKit
+import Flurry_iOS_SDK
 
 class MultiplayerGameOver: UIView{
     
     let transitionTime: CGFloat = 0.5
     
-    var homeButton: Square
-    var replayButton: Square
+    var homeButton: Square = Square.null
+    var replayButton: Square = Square.null
     
     var gameOverLabel: Label!
     
@@ -53,44 +54,45 @@ class MultiplayerGameOver: UIView{
         gameOverLabel.textAlignment = .center
         gameOverLabel.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI/2))
 
-        upScoreLabel = Label(frame: CGRect(origin: Screen.getScreenPos(x: 0.1, y: 0.1), size: Screen.getScreenSize(x: scoreLabelSize.width, y: scoreLabelSize.height)), text: "\(upScore)", _outPos: Screen.getScreenPos(x: 0.5-(scoreLabelSize.width/2), y: 1+buttonHeight), _inPos: Screen.getScreenPos(x: 0.2, y: 0.285))
+        upScoreLabel = Label(frame: CGRect(origin: Screen.getScreenPos(x: 0.1, y: 0.1), size: Screen.getScreenSize(x: scoreLabelSize.width, y: scoreLabelSize.height)), text: "\(upScore)", _outPos: Screen.getScreenPos(x: -(scoreLabelSize.width), y: 0.285), _inPos: Screen.getScreenPos(x: 0.2, y: 0.285))
         upScoreLabel.changeTextColor(color: .white)
         upScoreLabel.font = UIFont(name: fontName, size: Screen.fontSize(fontSize: 6))
         upScoreLabel.adjustsFontSizeToFitWidth = true
         upScoreLabel.textAlignment = .center
         upScoreLabel.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI))
         
-        
-        upScorePlayerLabel = Label(frame: CGRect(origin: Screen.getScreenPos(x: 0.1, y: 0.1), size: Screen.getScreenSize(x: playerInfoLabelSize.width, y: playerInfoLabelSize.height)), text: "Your Score", _outPos: Screen.getScreenPos(x: 0.5-(playerInfoLabelSize.width/2), y: 1+buttonHeight), _inPos: Screen.getScreenPos(x: 0.2, y: 0.43))
+        upScorePlayerLabel = Label(frame: CGRect(origin: Screen.getScreenPos(x: 0.1, y: 0.1), size: Screen.getScreenSize(x: playerInfoLabelSize.width, y: playerInfoLabelSize.height)), text: "Your Score", _outPos: Screen.getScreenPos(x: -(playerInfoLabelSize.width), y: 0.43), _inPos: Screen.getScreenPos(x: 0.2, y: 0.43))
         upScorePlayerLabel.changeTextColor(color: .white)
         upScorePlayerLabel.font = UIFont(name: fontName, size: Screen.fontSize(fontSize: 3))
         upScorePlayerLabel.adjustsFontSizeToFitWidth = true
         upScorePlayerLabel.textAlignment = .center
         upScorePlayerLabel.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI))
-
         
-        
-        downScoreLabel = Label(frame: CGRect(origin: Screen.getScreenPos(x: 0.1, y: 0.1), size: Screen.getScreenSize(x: scoreLabelSize.width, y: scoreLabelSize.height)), text: "\(downScore)", _outPos: Screen.getScreenPos(x: 0.5-(scoreLabelSize.width/2), y: 1+buttonHeight), _inPos: Screen.getScreenPos(x: 0.2, y: 0.575))
+        downScoreLabel = Label(frame: CGRect(origin: Screen.getScreenPos(x: 0.1, y: 0.1), size: Screen.getScreenSize(x: scoreLabelSize.width, y: scoreLabelSize.height)), text: "\(downScore)", _outPos: Screen.getScreenPos(x: -(scoreLabelSize.width), y: 0.575), _inPos: Screen.getScreenPos(x: 0.2, y: 0.575))
         downScoreLabel.changeTextColor(color: .white)
         downScoreLabel.font = UIFont(name: fontName, size: Screen.fontSize(fontSize: 6))
         downScoreLabel.adjustsFontSizeToFitWidth = true
-
         downScoreLabel.textAlignment = .center
         
-        downScorePlayerLabel = Label(frame: CGRect(origin: Screen.getScreenPos(x: 0.1, y: 0.1), size: Screen.getScreenSize(x: playerInfoLabelSize.width, y: playerInfoLabelSize.height)), text: "Your Score", _outPos: Screen.getScreenPos(x: 0.5-(playerInfoLabelSize.width/2), y: 1+buttonHeight), _inPos: Screen.getScreenPos(x: 0.2, y: 0.51))
+        downScorePlayerLabel = Label(frame: CGRect(origin: Screen.getScreenPos(x: 0.1, y: 0.1), size: Screen.getScreenSize(x: playerInfoLabelSize.width, y: playerInfoLabelSize.height)), text: "Your Score", _outPos: Screen.getScreenPos(x: -(playerInfoLabelSize.width), y: 0.51), _inPos: Screen.getScreenPos(x: 0.2, y: 0.51))
         downScorePlayerLabel.changeTextColor(color: .white)
         downScorePlayerLabel.font = UIFont(name: fontName, size: Screen.fontSize(fontSize: 3))
         downScorePlayerLabel.adjustsFontSizeToFitWidth = true
         downScorePlayerLabel.textAlignment = .center
         
-        
-        homeButton = Square(frame: CGRect(origin: CGPoint.outOfScreen, size: Screen.getScreenSize(x: buttonWidth, y: buttonHeight)), color: Functions.randomColor(), _outPos: Screen.getScreenPos(x: -buttonWidth, y: buttonsY), _inPos: Screen.getScreenPos(x: sidePadding+(buttonWidth/2), y: buttonsY))
+        super.init(frame: frame)
+
+        homeButton = Square(frame: CGRect(origin: CGPoint.outOfScreen, size: Screen.getScreenSize(x: buttonWidth, y: buttonHeight)), color: UIColor.belizeHoleColor(), _outPos: Screen.getScreenPos(x: -buttonWidth, y: buttonsY), _inPos: Screen.getScreenPos(x: sidePadding+(buttonWidth/2), y: buttonsY))
+        homeButton.imageView.image = #imageLiteral(resourceName: "homeicon.png")
         homeButton.tap = {
+            Flurry.logEvent("HomeTappedMultiplayer", withParameters: ["ScoreUp":self.upScore, "ScoreDown":self.downScore])
             GameController.sharedInstance.switchFromTo(from: .MultiplayerGameOver, to: .MainMenu)
         }
         
-        replayButton = Square(frame: CGRect(origin: CGPoint.outOfScreen, size: Screen.getScreenSize(x: buttonWidth, y: buttonHeight)), color: Functions.randomColor(), _outPos: Screen.getScreenPos(x: -buttonWidth, y: buttonsY), _inPos: Screen.getScreenPos(x: sidePadding+(1*buttonWidth)+buttonWidth/2, y: buttonsY))
+        replayButton = Square(frame: CGRect(origin: CGPoint.outOfScreen, size: Screen.getScreenSize(x: buttonWidth, y: buttonHeight)), color: UIColor.nephritisColor(), _outPos: Screen.getScreenPos(x: -buttonWidth, y: buttonsY), _inPos: Screen.getScreenPos(x: sidePadding+(1*buttonWidth)+buttonWidth/2, y: buttonsY))
+        replayButton.imageView.image = #imageLiteral(resourceName: "restart.png")
         replayButton.tap = {
+            Flurry.logEvent("ReplayTappedMultiplayer", withParameters: ["ScoreUp":self.upScore, "ScoreDown":self.downScore])
             GameController.sharedInstance.switchFromTo(from: .MultiplayerGameOver, to: .Multiplayer)
         }
         
@@ -100,7 +102,6 @@ class MultiplayerGameOver: UIView{
         //horizontalLine.layer.borderWidth = 5
         //horizontalLine.layer.borderColor = UIColor.white.cgColor
         
-        super.init(frame: frame)
         
         addSubview(homeButton)
         addSubview(replayButton)
