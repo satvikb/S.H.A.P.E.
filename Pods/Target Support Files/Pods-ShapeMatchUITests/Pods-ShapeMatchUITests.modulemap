@@ -1,0 +1,6 @@
+framework module Pods_ShapeMatchUITests {
+  umbrella header "Pods-ShapeMatchUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

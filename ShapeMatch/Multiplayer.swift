@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Flurry_iOS_SDK
 
 class Multiplayer: UIView{
     
@@ -215,6 +216,8 @@ class Multiplayer: UIView{
     }
     
     func animateIn(){
+        Flurry.logEvent("MultiplayerGame", withParameters: nil, timed: true)
+
         isGameOver = false
 
         newShapePositions(side: upSide, changeMovingShapePos: true)
@@ -236,6 +239,8 @@ class Multiplayer: UIView{
     }
     
     func animateOut(){
+        Flurry.logEvent("MultiplayerGame", withParameters: ["ScoreUp": upSide.score, "StaticShapeSizeUp":upSide.staticShape.frame.size, "RectDiffUp": subRect(movingRect: CGRect(origin: upSide.movingShape.center, size: upSide.movingShape.frame.size), staticRect: CGRect(origin: upSide.staticShape.center, size: upSide.staticShape.frame.size)), "ColorUp": upSide.staticShape.col, "ScoreDown": downSide.score, "StaticShapeSizeDown":downSide.staticShape.frame.size, "RectDiffDown": subRect(movingRect: CGRect(origin: downSide.movingShape.center, size: downSide.movingShape.frame.size), staticRect: CGRect(origin: downSide.staticShape.center, size: downSide.staticShape.frame.size)), "ColorDown": downSide.staticShape.col], timed: true)
+
         upSide.timer.animateOut(time: transitionTime)
         upSide.timer.removeTimer()
         upSide.scoreLabel.animateOut(time: transitionTime)
