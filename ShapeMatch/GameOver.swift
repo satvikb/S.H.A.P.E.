@@ -23,6 +23,7 @@ class GameOver: UIView{
     var score: Int = 0
     
     override init(frame: CGRect) {
+        
         let buttonsY: CGFloat = 0.7
         let buttonWidth: CGFloat = 0.26
         let buttonHeight: CGFloat = 0.15
@@ -48,24 +49,28 @@ class GameOver: UIView{
         currentScoreLabel.adjustsFontSizeToFitWidth = true
         currentScoreLabel.textAlignment = .center
         
-        
         homeButton = Square(frame: CGRect(origin: CGPoint.outOfScreen, size: Screen.getScreenSize(x: buttonWidth, y: buttonHeight)), color: Functions.randomColor(), _outPos: Screen.getScreenPos(x: -buttonWidth, y: buttonsY), _inPos: Screen.getScreenPos(x: sidePadding+(buttonWidth/2), y: buttonsY))
+        
+        replayButton = Square(frame: CGRect(origin: CGPoint.outOfScreen, size: Screen.getScreenSize(x: buttonWidth, y: buttonHeight)), color: Functions.randomColor(), _outPos: Screen.getScreenPos(x: -buttonWidth, y: buttonsY), _inPos: Screen.getScreenPos(x: sidePadding+(1*buttonWidth)+buttonWidth/2, y: buttonsY))
+        
+        shareButton = Square(frame: CGRect(origin: CGPoint.outOfScreen, size: Screen.getScreenSize(x: buttonWidth, y: buttonHeight)), color: Functions.randomColor(), _outPos: Screen.getScreenPos(x: -buttonWidth, y: buttonsY), _inPos: Screen.getScreenPos(x: sidePadding+(2*buttonWidth)+buttonWidth/2, y: buttonsY))
+        
+        super.init(frame: frame)
+
         homeButton.tap = {
             GameController.sharedInstance.switchFromTo(from: .GameOver, to: .MainMenu)
         }
         
-        replayButton = Square(frame: CGRect(origin: CGPoint.outOfScreen, size: Screen.getScreenSize(x: buttonWidth, y: buttonHeight)), color: Functions.randomColor(), _outPos: Screen.getScreenPos(x: -buttonWidth, y: buttonsY), _inPos: Screen.getScreenPos(x: sidePadding+(1*buttonWidth)+buttonWidth/2, y: buttonsY))
         replayButton.tap = {
             GameController.sharedInstance.switchFromTo(from: .GameOver, to: .Game)
         }
         
-        shareButton = Square(frame: CGRect(origin: CGPoint.outOfScreen, size: Screen.getScreenSize(x: buttonWidth, y: buttonHeight)), color: Functions.randomColor(), _outPos: Screen.getScreenPos(x: -buttonWidth, y: buttonsY), _inPos: Screen.getScreenPos(x: sidePadding+(2*buttonWidth)+buttonWidth/2, y: buttonsY))
         shareButton.tap = {
-            print("Show gamecenter")
-         
+            //TODO: Show share button here
+            let pluralword: String = (self.score == 1) ? "match" : "matches"
+            let activityVC = UIActivityViewController(activityItems: ["I just scored \(self.score) \(pluralword) on S.H.A.P.E! Can you beat that? http://bit.ly/S_H_A_P_E"], applicationActivities: nil)
+            GameController.sharedInstance.viewController.present(activityVC, animated: true, completion: nil)
         }
-        
-        super.init(frame: frame)
         
         addSubview(homeButton)
         addSubview(replayButton)
