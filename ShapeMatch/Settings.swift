@@ -19,8 +19,8 @@ class Settings: UIView {
     
     var backButton: Square
     
-    var settingLabels : [Label] = []
-    var settingButtons : [SettingButton] = []
+    var settingLabels: [Label] = []
+    var settingButtons: [SettingButton] = []
     
     override init(frame: CGRect) {
         
@@ -48,7 +48,7 @@ class Settings: UIView {
         let settingX: CGFloat = 0.1
         let widthOfSetting: CGFloat = 0.8
         let heightOfSetting: CGFloat = 0.1
-        let labelWidth : CGFloat = 0.5
+        let labelWidth: CGFloat = 0.5
         
         for i in 0...SettingsData.settings.count-1{
             let setting = SettingsData.settings[i]
@@ -64,7 +64,7 @@ class Settings: UIView {
             settingLabels.append(label)
             self.addSubview(label)
             
-            var buttonSize : CGSize = Screen.getScreenSize(x: 0, y: heightOfSetting)
+            var buttonSize: CGSize = Screen.getScreenSize(x: 0, y: heightOfSetting)
             buttonSize.width = buttonSize.height
             let button: SettingButton = SettingButton(frame: CGRect(origin: CGPoint.outOfScreen, size: buttonSize), _inPos: Screen.getScreenPos(x: 0.7, y: settingY), _outPos: Screen.getScreenPos(x: 1.3, y: settingY), _activated: activated)
             button.tap = {

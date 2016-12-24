@@ -12,15 +12,15 @@ class SettingButton: UIView {
     
     static let activatedImage: UIImage = #imageLiteral(resourceName: "Check.png")
     
-    var inPos : CGPoint
-    var outPos : CGPoint
+    var inPos: CGPoint
+    var outPos: CGPoint
     
-    var activated : Bool = false
-    var imageView : UIImageView
+    var activated: Bool = false
+    var imageView: UIImageView
     
     var tap = {}
 
-    init(frame: CGRect, _inPos : CGPoint, _outPos : CGPoint, _activated : Bool = false, frameColor: UIColor = UIColor.white){
+    init(frame: CGRect, _inPos: CGPoint, _outPos: CGPoint, _activated: Bool = false, frameColor: UIColor = UIColor.white){
         inPos = _inPos
         outPos = _outPos
         activated = _activated

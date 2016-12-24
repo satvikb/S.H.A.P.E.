@@ -11,7 +11,7 @@ import AVFoundation
 
 class Sounds{
     
-    static var audioEnabled : Bool = true
+    static var audioEnabled: Bool = true
     
     static var MatchedSound = NSURL(fileURLWithPath: Bundle.main.path(forResource: "Matched", ofType: "wav")!)
     static var MatchedSoundPlayer = AVAudioPlayer()

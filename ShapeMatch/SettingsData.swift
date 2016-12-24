@@ -9,18 +9,18 @@
 import UIKit
 
 struct Setting{
-    var name : String = ""
-    var value : Bool = false
+    var name: String = ""
+    var value: Bool = false
     
     var setNonActive = {}
     var setActive = {}
 
-    init(_name : String, _value : Bool){
+    init(_name: String, _value: Bool){
         name = _name
         value = _value
     }
     
-    mutating func setValue(val : Bool){
+    mutating func setValue(val: Bool){
         value = val
         
         if(val == true){
@@ -41,9 +41,9 @@ struct Setting{
 
 class SettingsData {
     
-    static var settings : [Setting] = []
+    static var settings: [Setting] = []
     
-    static var reduceColors : Bool = false
+    static var reduceColors: Bool = false
     
     static func Setup(){
         var audioSetting = Setting(_name: "Audio", _value: true)
