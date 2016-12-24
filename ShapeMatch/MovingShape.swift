@@ -22,7 +22,7 @@ class MovingShape: UIView, UIGestureRecognizerDelegate {
     
     var panGR: UIPanGestureRecognizer!
     
-    init(position : CGPoint, size : CGSize, gestureViewSize : CGSize = UIScreen.main.bounds.size, gestureViewPos : CGPoint = CGPoint.zero){
+    init(position: CGPoint, size: CGSize, gestureViewSize: CGSize = UIScreen.main.bounds.size, gestureViewPos: CGPoint = CGPoint.zero){
         super.init(frame: CGRect(x: position.x, y: position.y, width: size.width, height: size.height))
         
         self.size = size

@@ -15,30 +15,30 @@ public enum ScreenSide {
 
 class MultiplayerScreenSide{
 
-    var playerId : Int = 0
-    var screenSide : ScreenSide
-    var timer : SquareTimer = SquareTimer.null
+    var playerId: Int = 0
+    var screenSide: ScreenSide
+    var timer: SquareTimer = SquareTimer.null
     
-    var score : Int = 0;
-    var timerTime : CGFloat = 2;
+    var score: Int = 0
+    var timerTime: CGFloat = 2
     
-    var movingShape : MovingShape!
-    var staticShape : StaticShape!
-    var scoreLabel : Label!;
+    var movingShape: MovingShape!
+    var staticShape: StaticShape!
+    var scoreLabel: Label!
     
-    static let posXMinMax : Range = Range(min: 0.3, max: 0.8)
-    static let posYMinMaxUp : Range = Range(min: 0.15, max: 0.35)
-    static let posYMinMaxDown : Range = Range(min: 0.65, max: 0.85)
+    static let posXMinMax: Range = Range(min: 0.3, max: 0.8)
+    static let posYMinMaxUp: Range = Range(min: 0.15, max: 0.35)
+    static let posYMinMaxDown: Range = Range(min: 0.65, max: 0.85)
     
-    static let sizeMinMax : Range = Range(min: 0.05, max: 0.225)
-    static let scaleMinMax : Range = Range(min: 0.8, max: 1.3)
+    static let sizeMinMax: Range = Range(min: 0.05, max: 0.225)
+    static let scaleMinMax: Range = Range(min: 0.8, max: 1.3)
 
     
-    static func getPosYFromSide(side : ScreenSide) -> Range{
+    static func getPosYFromSide(side: ScreenSide) -> Range{
         return side == .up ? posYMinMaxUp : posYMinMaxDown
     }
     
-    init(_playerId : Int, _screenSide : ScreenSide){
+    init(_playerId: Int, _screenSide: ScreenSide){
         playerId = _playerId
         screenSide = _screenSide
     }
