@@ -40,7 +40,7 @@ class GameController{
     
     
     func Setup(){
-        deviceModel = .iPad//(UIDevice.current.model == "iPad") ? .iPad : .iPhone
+        deviceModel = (UIDevice.current.model == "iPad") ? .iPad : .iPhone
 
         mainMenu = MainMenu(frame: CGRect(x: 0, y: 0, width: Screen.screenSize.width, height: Screen.screenSize.height))
         game = Game(frame: CGRect(x: 0, y: 0, width: Screen.screenSize.width, height: Screen.screenSize.height))

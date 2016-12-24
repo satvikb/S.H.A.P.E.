@@ -15,7 +15,7 @@ class Label: UILabel{
     var outPos: CGPoint!
     var inPos: CGPoint!
     
-    init(frame: CGRect, text: String, _outPos: CGPoint = CGPoint.zero, _inPos: CGPoint = CGPoint.zero, textColor: UIColor = UIColor.white, debugFrame: Bool = true){
+    init(frame: CGRect, text: String, _outPos: CGPoint = CGPoint.zero, _inPos: CGPoint = CGPoint.zero, textColor: UIColor = UIColor.white, debugFrame: Bool = false){
         outPos = _outPos
         inPos = _inPos
         

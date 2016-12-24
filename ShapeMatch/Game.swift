@@ -118,6 +118,7 @@ class Game: UIView{
         }
         
         movingShape.setColor((staticShape.col.GetDarkerColor(1.05)))
+        timer.changeColor(col: staticShape.col)
     }
     
     func similarToStaticShape() -> Bool{
