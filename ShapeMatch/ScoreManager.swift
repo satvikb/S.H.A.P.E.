@@ -18,8 +18,6 @@ class ScoreManager {
     }
     
     static func saveScoreToGameCenter(score: Int) {
-        saveScoreLocally(score: score)
-        
         let gcScore = GKScore(leaderboardIdentifier: gcDefaultLeaderBoard)
         gcScore.value = Int64(score)
         

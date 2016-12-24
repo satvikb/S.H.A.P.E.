@@ -89,11 +89,13 @@ class GameOver: UIView{
         currentScoreLabel.text = "\(score)"
         
         if ScoreManager.isScoreHighScore(newScore: score) {
-            ScoreManager.saveScoreToGameCenter(score: score) //Submit to game center and save if it is a new high score
+            ScoreManager.saveScoreLocally(score: score)
             highScoreLabel.text = "New Highscore!"
         } else {
             highScoreLabel.text = "Highscore: \(ScoreManager.currentHighScore)"
         }
+        
+        ScoreManager.saveScoreToGameCenter(score: score) //Submit to game center and save
         
         homeButton.animateIn(time: transitionTime)
         replayButton.animateIn(time: transitionTime)
