@@ -208,7 +208,6 @@ class Multiplayer : UIView{
     func GameOver(side : MultiplayerScreenSide){
         Sounds.PlayGameOverSound()
         isGameOver = true;
-//        GameController.sharedInstance.gameOver.score = score;
         GameController.sharedInstance.switchFromTo(from: .Game, to: .GameOver)
     }
     
