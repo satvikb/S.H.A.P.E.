@@ -8,23 +8,23 @@
 
 import UIKit
 
-class Multiplayer : UIView{
+class Multiplayer: UIView{
     
-    let transitionTime : CGFloat = 0.5
+    let transitionTime: CGFloat = 0.5
     
-    var upSide : MultiplayerScreenSide!
-    var downSide : MultiplayerScreenSide!
+    var upSide: MultiplayerScreenSide!
+    var downSide: MultiplayerScreenSide!
     
-    var isGameOver : Bool = false
+    var isGameOver: Bool = false
     
     override init(frame: CGRect) {
-        super.init(frame: frame);
+        super.init(frame: frame)
         
         upSide = MultiplayerScreenSide(_playerId: 0, _screenSide: .up)
         downSide = MultiplayerScreenSide(_playerId: 0, _screenSide: .down)
 
         
-        let upSideTimerSize : CGSize = Screen.getScreenSize(x: 1, y: 0.5)
+        let upSideTimerSize: CGSize = Screen.getScreenSize(x: 1, y: 0.5)
         upSide.timer = SquareTimer(frame: CGRect(origin: Screen.getScreenPos(x: 0, y: 0), size: upSideTimerSize), lineWidth: 6)
         upSide.timer.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI))
 
@@ -58,25 +58,21 @@ class Multiplayer : UIView{
         
         let labelSizeUp = Screen.getActualSize(1, height: 0.2)
         
-        let halfYPos : CGPoint = Screen.getScreenPos(x: 0, y: 0.5)
-        let upSideInPos : CGPoint = CGPoint(x: 0, y: halfYPos.y - labelSizeUp.height)
+        let halfYPos: CGPoint = Screen.getScreenPos(x: 0, y: 0.5)
+        let upSideInPos: CGPoint = CGPoint(x: 0, y: halfYPos.y - labelSizeUp.height)
         upSide.scoreLabel = Label(frame: CGRect(origin: CGPoint.zero, size: labelSizeUp), text: "\(upSide.score)", _outPos: Screen.getScreenPos(x: 0, y: -0.2), _inPos: upSideInPos)
         upSide.scoreLabel.textAlignment = .center
         upSide.scoreLabel.font = UIFont(name: "HiraginoSans-W3", size: Screen.fontSize(fontSize: 10))
         upSide.scoreLabel.textColor = UIColor.white
         upSide.scoreLabel.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI))
 
-        
         self.addSubview(upSide.timer)
         self.addSubview(upSide.movingShape)
         self.addSubview(upSide.staticShape)
         self.addSubview(upSide.scoreLabel)
         self.addSubview(upSide.movingShape.gestureView)
         
-        
-        
-        
-        let downSideTimerSize : CGSize = Screen.getScreenSize(x: 1, y: 0.5)
+        let downSideTimerSize: CGSize = Screen.getScreenSize(x: 1, y: 0.5)
         downSide.timer = SquareTimer(frame: CGRect(origin: Screen.getScreenPos(x: 0, y: 0.5), size: downSideTimerSize), lineWidth: 6)
         
         downSide.timer.done = {
@@ -114,25 +110,22 @@ class Multiplayer : UIView{
         downSide.scoreLabel.font = UIFont(name: "HiraginoSans-W3", size: Screen.fontSize(fontSize: 10))
         downSide.scoreLabel.textColor = UIColor.white
         
-        
         self.addSubview(downSide.timer)
         self.addSubview(downSide.movingShape)
         self.addSubview(downSide.staticShape)
         self.addSubview(downSide.scoreLabel)
         self.addSubview(downSide.movingShape.gestureView)
-        
     }
     
-    func increaseDifficulty(side : MultiplayerScreenSide){
+    func increaseDifficulty(side: MultiplayerScreenSide){
         side.timerTime -= 0.01
         
         if(side.timerTime < 1.75){
             side.timerTime = 1.75
         }
-        
     }
     
-    func newShapePositions(side : MultiplayerScreenSide, changeMovingShapePos : Bool = false){
+    func newShapePositions(side: MultiplayerScreenSide, changeMovingShapePos: Bool = false){
         var staticShapeNewSize = Screen.getActualSize(Functions.randomFloat(MultiplayerScreenSide.sizeMinMax.Min, maximum: MultiplayerScreenSide.sizeMinMax.Max), height: Functions.randomFloat(MultiplayerScreenSide.sizeMinMax.Min, maximum: MultiplayerScreenSide.sizeMinMax.Max))
         
         if(staticShapeNewSize.width > Screen.screenSize.width/2 || staticShapeNewSize.height > Screen.screenSize.height/4){
@@ -157,7 +150,6 @@ class Multiplayer : UIView{
         side.movingShape.startSize = movingShapeNewSize
         side.movingShape.bounds = CGRect(x: 0, y: 0, width: movingShapeNewSize.width, height: movingShapeNewSize.height)
         
-        
         if(changeMovingShapePos){
             let movingShapeNewPos = Screen.getScreenPos(x: Functions.randomFloat(MultiplayerScreenSide.posXMinMax.Min, maximum: MultiplayerScreenSide.posXMinMax.Max), y: Functions.randomFloat(MultiplayerScreenSide.getPosYFromSide(side: side.screenSide).Min, maximum: MultiplayerScreenSide.getPosYFromSide(side: side.screenSide).Max))
             side.movingShape.center = movingShapeNewPos
@@ -169,14 +161,14 @@ class Multiplayer : UIView{
         side.scoreLabel.changeTextColor(color: side.staticShape.col)
     }
     
-    func similarToStaticShape(side : MultiplayerScreenSide) -> Bool{
+    func similarToStaticShape(side: MultiplayerScreenSide) -> Bool{
         return framesClose(side: side)
     }
     
-    func framesClose(side : MultiplayerScreenSide) -> Bool{
+    func framesClose(side: MultiplayerScreenSide) -> Bool{
         
-        let movingSize = side.movingShape.frame.size//__CGSizeApplyAffineTransform(movingShape.startSize, movingShape.transform)
-        let staticSize = side.staticShape.frame.size//__CGSizeApplyAffineTransform(staticShape.startSize, staticShape.transform)
+        let movingSize = side.movingShape.frame.size
+        let staticSize = side.staticShape.frame.size
         
         let movingCenter = side.movingShape.center
         let staticCenter = side.staticShape.center
@@ -194,7 +186,7 @@ class Multiplayer : UIView{
         return isSame
     }
     
-    func rectLessThan(rect1 : CGRect, rect2 : CGRect) -> Bool{
+    func rectLessThan(rect1: CGRect, rect2: CGRect) -> Bool{
         // rect1 < rect2
         if((rect1.origin.x < rect2.origin.x) && (rect1.origin.y < rect2.origin.y) && (rect1.size.width < rect2.size.width) && (rect1.size.height < rect2.size.height)){
             return true
@@ -202,7 +194,7 @@ class Multiplayer : UIView{
         return false
     }
     
-    func subRect(movingRect : CGRect, staticRect : CGRect) -> CGRect{
+    func subRect(movingRect: CGRect, staticRect: CGRect) -> CGRect{
         let deltaRect = CGRect(x: abs(movingRect.origin.x - staticRect.origin.x), y: abs(movingRect.origin.y - staticRect.origin.y), width: abs(movingRect.size.width - staticRect.size.width), height: abs(movingRect.size.height - staticRect.size.height))
         
         return deltaRect
@@ -212,9 +204,9 @@ class Multiplayer : UIView{
         fatalError("init(coder:) has not been implemented")
     }
     
-    func GameOver(side : MultiplayerScreenSide){
+    func GameOver(side: MultiplayerScreenSide){
         Sounds.PlayGameOverSound()
-        isGameOver = true;
+        isGameOver = true
         
         GameController.sharedInstance.multiplayerGameOver.upScore = upSide.score
         GameController.sharedInstance.multiplayerGameOver.downScore = downSide.score
@@ -241,8 +233,6 @@ class Multiplayer : UIView{
         downSide.timer.animateIn(time: transitionTime)
         downSide.timer.start(time: downSide.timerTime)
         self.bringSubview(toFront: downSide.movingShape.gestureView)
-        
-        
     }
     
     func animateOut(){
@@ -257,7 +247,5 @@ class Multiplayer : UIView{
         downSide.scoreLabel.animateOut(time: transitionTime)
         downSide.movingShape.animateOut(time: transitionTime)
         downSide.staticShape.animateOut(time: transitionTime)
-        
-        
     }
 }

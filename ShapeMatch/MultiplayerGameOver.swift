@@ -23,12 +23,12 @@ class MultiplayerGameOver: UIView{
     var downScoreLabel: Label!
     var downScorePlayerLabel: Label!
 
-    var horizontalLine : UIView!
-    var horizontalLineOutPos : CGPoint = Screen.getScreenPos(x: -0.6, y: 0.5)
-    var horizontalLineInPos : CGPoint = Screen.getScreenPos(x: 0.5, y: 0.5)
+    var horizontalLine: UIView!
+    var horizontalLineOutPos: CGPoint = Screen.getScreenPos(x: -0.6, y: 0.5)
+    var horizontalLineInPos: CGPoint = Screen.getScreenPos(x: 0.5, y: 0.5)
 
     var upScore: Int = 0
-    var downScore : Int = 0
+    var downScore: Int = 0
     
     override init(frame: CGRect) {
         let buttonsY: CGFloat = 0.85
@@ -115,13 +115,13 @@ class MultiplayerGameOver: UIView{
         addSubview(horizontalLine)
     }
     
-    func animateInHorizontalLine(time : CGFloat){
+    func animateInHorizontalLine(time: CGFloat){
         UIView.animate(withDuration: TimeInterval(time), animations: {
             self.horizontalLine.center = self.horizontalLineInPos
         })
     }
     
-    func animateOutHorizontalLine(time : CGFloat){
+    func animateOutHorizontalLine(time: CGFloat){
         UIView.animate(withDuration: TimeInterval(time), animations: {
             self.horizontalLine.center = self.horizontalLineOutPos
         })
@@ -144,7 +144,7 @@ class MultiplayerGameOver: UIView{
         if(upScore == downScore){
             horizontalLine.backgroundColor = UIColor.white
         }else{
-            horizontalLine.backgroundColor = upScore > downScore ? GameController.sharedInstance.multiplayer.upSide.staticShape.col : GameController.sharedInstance.multiplayer.downSide.staticShape.col
+            horizontalLine.backgroundColor = upScore > downScore ? GameController.sharedInstance.multiplayer.upSide.staticShape.col: GameController.sharedInstance.multiplayer.downSide.staticShape.col
         }
         
         homeButton.animateIn(time: transitionTime)

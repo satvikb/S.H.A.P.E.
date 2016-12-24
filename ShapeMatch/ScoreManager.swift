@@ -10,7 +10,7 @@ import UIKit
 import GameKit
 
 class ScoreManager {
-    static var gcEnabled : Bool = false
+    static var gcEnabled: Bool = false
     static var gcDefaultLeaderBoard = "mainScoreboard"
     
     static func isScoreHighScore(newScore: Int) -> Bool {

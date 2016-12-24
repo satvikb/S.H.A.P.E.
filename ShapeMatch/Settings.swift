@@ -44,9 +44,7 @@ class Settings: UIView{
         
         leaderboardButton = Square(frame: CGRect(origin: CGPoint.outOfScreen, size: Screen.getScreenSize(x: buttonWidth, y: buttonHeight)), color: Functions.randomColor(), _outPos: startOutPos, _inPos: Screen.getScreenPos(x: sidePadding+(2*buttonWidth)+buttonWidth/2, y: buttonsY))
         leaderboardButton.tap = {
-            print("Show gamecenter")
             ScoreManager.showLeaderboardIn(viewController: GameController.sharedInstance.viewController)
-            
         }
         
         super.init(frame: frame)
