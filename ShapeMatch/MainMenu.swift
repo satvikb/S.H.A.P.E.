@@ -43,16 +43,19 @@ class MainMenu: UIView {
         scoreLabel.textAlignment = .center
         
         settingsButton = Square(frame: CGRect(origin: CGPoint.outOfScreen, size: Screen.getScreenSize(x: buttonWidth, y: buttonHeight)), color: UIColor.belizeHoleColor(), _outPos: startOutPos, _inPos: Screen.getScreenPos(x: sidePadding+(buttonWidth/2), y: buttonsY))
+        settingsButton.imageView.image = #imageLiteral(resourceName: "settingsicon.png")
         settingsButton.tap = {
             GameController.sharedInstance.switchFromTo(from: .MainMenu, to: .Settings)
         }
         
         playButton = Square(frame: CGRect(origin: CGPoint.outOfScreen, size: Screen.getScreenSize(x: buttonWidth, y: buttonHeight)), color: UIColor.nephritisColor(), _outPos: startOutPos, _inPos: Screen.getScreenPos(x: sidePadding+(1*buttonWidth)+buttonWidth/2, y: buttonsY))
+        playButton.imageView.image = #imageLiteral(resourceName: "Playicon.png")
         playButton.tap = {
             GameController.sharedInstance.switchFromTo(from: .MainMenu, to: .Game)
         }
         
         leaderboardButton = Square(frame: CGRect(origin: CGPoint.outOfScreen, size: Screen.getScreenSize(x: buttonWidth, y: buttonHeight)), color: UIColor.alizarinColor(), _outPos: startOutPos, _inPos: Screen.getScreenPos(x: sidePadding+(2*buttonWidth)+buttonWidth/2, y: buttonsY))
+        leaderboardButton.imageView.image = #imageLiteral(resourceName: "leaderboard icon.png")
         leaderboardButton.tap = {
             ScoreManager.showLeaderboardIn(viewController: GameController.sharedInstance.viewController)
         }
@@ -60,6 +63,7 @@ class MainMenu: UIView {
         if(GameController.sharedInstance.deviceModel == .iPad){
             print("iPad: \(GameController.sharedInstance.deviceModel == .iPad)")
             multiplayerButton = Square(frame: CGRect(origin: CGPoint.outOfScreen, size: Screen.getScreenSize(x: buttonWidth, y: buttonHeight)), color: UIColor.carrotColor(), _outPos: startOutPos, _inPos: Screen.getScreenPos(x: sidePadding+(1*buttonWidth)+buttonWidth/2, y: buttonsY+buttonHeight))
+            multiplayerButton.imageView.image = #imageLiteral(resourceName: "multiplayericon.png")
             multiplayerButton.tap = {
                 GameController.sharedInstance.switchFromTo(from: .MainMenu, to: .Multiplayer)
             }

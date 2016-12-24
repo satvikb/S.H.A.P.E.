@@ -21,6 +21,7 @@ class Square: UIView{
     var imageView: UIImageView
     
     init(frame: CGRect, color: UIColor, _outPos: CGPoint = CGPoint.zero, _inPos: CGPoint = CGPoint.zero, text: String = "", center: Bool = false) {
+        
         outPos = _outPos
         inPos = _inPos
 
@@ -32,34 +33,28 @@ class Square: UIView{
         label.font = UIFont(name: fontName, size: Screen.fontSize(fontSize: 5))
         label.textColor = UIColor.white
         
-        imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height))
+        let imageViewRelativeSize: CGFloat = 0.5
+        imageView = UIImageView(frame: CGRect(x: frame.size.width/2 - (frame.size.width * imageViewRelativeSize)/2, y: frame.size.height/2 - (frame.size.height * imageViewRelativeSize)/2, width: (frame.size.width * imageViewRelativeSize), height: (frame.size.height * imageViewRelativeSize)))
         imageView.isUserInteractionEnabled = true
+        imageView.contentMode = .scaleAspectFit
         
         let newFrame = CGRect(origin: CGPoint.outOfScreen, size: frame.size)
         
         super.init(frame: newFrame)
         
-        if(center){
+        if (center) {
             self.frame.origin = getCenterPos(pos: outPos)
-        }else{
+        } else {
             self.frame.origin = outPos
         }
-        
-//        layer.shadowColor = color.cgColor
-//        layer.shadowRadius = 15
-//        layer.shadowOpacity = 0.9
-//        layer.shadowOffset = CGSize.zero
-//        layer.masksToBounds = false
         
         self.backgroundColor = color
         
         let tapRec = UITapGestureRecognizer(target: self, action: #selector(self.tapped))
         
-        
         self.addSubview(label)
         self.addSubview(imageView)
         self.addGestureRecognizer(tapRec)
-
     }
     
     func setImage(image: UIImage){
@@ -74,13 +69,11 @@ class Square: UIView{
         self.tap()
     }
     
-    func changeColor(color: UIColor){
-        //TODO: Animate
+    func changeColor(color: UIColor) {
         self.backgroundColor = color
-//        layer.shadowColor = color.cgColor
     }
     
-    func animateIn(time: CGFloat){
+    func animateIn(time: CGFloat) {
         UIView.animate(withDuration: TimeInterval(time), animations: {
             self.frame.origin = self.getCenterPos(pos: self.inPos)
         })
