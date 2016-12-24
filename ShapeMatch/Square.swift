@@ -46,6 +46,12 @@ class Square: UIView{
             self.frame.origin = outPos
         }
         
+//        layer.shadowColor = color.cgColor
+//        layer.shadowRadius = 15
+//        layer.shadowOpacity = 0.9
+//        layer.shadowOffset = CGSize.zero
+//        layer.masksToBounds = false
+        
         self.backgroundColor = color
         
         let tapRec = UITapGestureRecognizer(target: self, action: #selector(self.tapped))
@@ -72,6 +78,7 @@ class Square: UIView{
     func changeColor(color: UIColor){
         //TODO: Animate
         self.backgroundColor = color
+//        layer.shadowColor = color.cgColor
     }
     
     func animateIn(time: CGFloat){

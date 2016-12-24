@@ -19,6 +19,9 @@ class MainMenu: UIView {
     var playButton: Square
     var leaderboardButton: Square
     
+    var multiplayerButton: Square = Square.null
+
+    
     override init(frame: CGRect) {
         let buttonsY: CGFloat = 0.7
         let buttonWidth: CGFloat = 0.26
@@ -55,6 +58,14 @@ class MainMenu: UIView {
             GameController.sharedInstance.viewController.view.backgroundColor = UIColor(red: 0.168627451, green: 0.168627451, blue: 0.168627451, alpha: 1)
         }
         
+        if(GameController.sharedInstance.deviceModel == .iPad){
+            print("iPad: \(GameController.sharedInstance.deviceModel == .iPad)")
+            multiplayerButton = Square(frame: CGRect(origin: CGPoint.outOfScreen, size: Screen.getScreenSize(x: buttonWidth, y: buttonHeight)), color: Functions.randomColor(), _outPos: startOutPos, _inPos: Screen.getScreenPos(x: sidePadding+(1*buttonWidth)+buttonWidth/2, y: buttonsY+buttonHeight))
+            multiplayerButton.tap = {
+                GameController.sharedInstance.switchFromTo(from: .MainMenu, to: .Multiplayer)
+            }
+        }
+        
         super.init(frame: frame)
         
         self.addSubview(settingsButton)
@@ -62,6 +73,10 @@ class MainMenu: UIView {
         self.addSubview(leaderboardButton)
         self.addSubview(titleLabel)
         self.addSubview(scoreLabel)
+        
+        if(GameController.sharedInstance.deviceModel == .iPad){
+            self.addSubview(multiplayerButton)
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -76,6 +91,10 @@ class MainMenu: UIView {
         leaderboardButton.animateIn(time: transitionTime)
         titleLabel.animateIn(time: transitionTime)
         scoreLabel.animateIn(time: transitionTime)
+        
+        if(GameController.sharedInstance.deviceModel == .iPad){
+            multiplayerButton.animateIn(time: transitionTime)
+        }
     }
     
     func animateOut(){
@@ -84,5 +103,9 @@ class MainMenu: UIView {
         leaderboardButton.animateOut(time: transitionTime)
         titleLabel.animateOut(time: transitionTime)
         scoreLabel.animateOut(time: transitionTime)
+        
+        if(GameController.sharedInstance.deviceModel == .iPad){
+            multiplayerButton.animateOut(time: transitionTime)
+        }
     }
 }

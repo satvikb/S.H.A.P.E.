@@ -18,9 +18,17 @@ class ViewController: UIViewController, GKGameCenterControllerDelegate {
         self.view.backgroundColor = UIColor(red: 0.168627451, green: 0.168627451, blue: 0.168627451, alpha: 1)
         GameController.sharedInstance.viewController = self
  
+        if(GameController.sharedInstance.deviceModel == .iPad){
+            print("is a ipad")
+            self.view.addSubview(GameController.sharedInstance.multiplayer)
+            self.view.addSubview(GameController.sharedInstance.multiplayerGameOver)
+        }
+        
         self.view.addSubview(GameController.sharedInstance.gameOver)
         self.view.addSubview(GameController.sharedInstance.game)
         self.view.addSubview(GameController.sharedInstance.mainMenu)
+        
+        
         
         GameController.sharedInstance.switchFromTo(from: .Start, to: .MainMenu)
         

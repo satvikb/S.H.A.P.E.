@@ -19,6 +19,7 @@
 		4002CA3B1E0B91C900291DCC /* Sounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4002CA3A1E0B91C900291DCC /* Sounds.swift */; };
 		400892971E0CFDF6008A52D8 /* Multiplayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400892961E0CFDF6008A52D8 /* Multiplayer.swift */; };
 		400892991E0CFE6C008A52D8 /* MultiplayerScreenSide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400892981E0CFE6C008A52D8 /* MultiplayerScreenSide.swift */; };
+		409548BC1E0DB6860005ED6D /* MultiplayerGameOver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409548BB1E0DB6860005ED6D /* MultiplayerGameOver.swift */; };
 		40D033681E0CB8F1008BB7E8 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D033671E0CB8F1008BB7E8 /* Settings.swift */; };
 		40EC73F71CF38DC500E7B5E1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EC73F61CF38DC500E7B5E1 /* AppDelegate.swift */; };
 		40EC73F91CF38DC500E7B5E1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EC73F81CF38DC500E7B5E1 /* ViewController.swift */; };
@@ -64,6 +65,7 @@
 		4002CA3A1E0B91C900291DCC /* Sounds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sounds.swift; sourceTree = "<group>"; };
 		400892961E0CFDF6008A52D8 /* Multiplayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Multiplayer.swift; sourceTree = "<group>"; };
 		400892981E0CFE6C008A52D8 /* MultiplayerScreenSide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiplayerScreenSide.swift; sourceTree = "<group>"; };
+		409548BB1E0DB6860005ED6D /* MultiplayerGameOver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiplayerGameOver.swift; sourceTree = "<group>"; };
 		40D033671E0CB8F1008BB7E8 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		40EC73F31CF38DC500E7B5E1 /* ShapeMatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShapeMatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		40EC73F61CF38DC500E7B5E1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -115,11 +117,11 @@
 			isa = PBXGroup;
 			children = (
 				4002CA201E0A412E00291DCC /* MainMenu.swift */,
-				E7175D631E0CFC0600A865F7 /* ScoreManager.swift */,
 				4002CA291E0A421900291DCC /* Game.swift */,
 				4002CA2D1E0A431500291DCC /* GameOver.swift */,
 				40D033671E0CB8F1008BB7E8 /* Settings.swift */,
 				400892961E0CFDF6008A52D8 /* Multiplayer.swift */,
+				409548BB1E0DB6860005ED6D /* MultiplayerGameOver.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -130,6 +132,7 @@
 				40EC73F61CF38DC500E7B5E1 /* AppDelegate.swift */,
 				40EC73F81CF38DC500E7B5E1 /* ViewController.swift */,
 				4002CA271E0A419200291DCC /* GameController.swift */,
+				E7175D631E0CFC0600A865F7 /* ScoreManager.swift */,
 			);
 			name = Main;
 			sourceTree = "<group>";
@@ -376,6 +379,7 @@
 				400892971E0CFDF6008A52D8 /* Multiplayer.swift in Sources */,
 				4002CA2E1E0A431500291DCC /* GameOver.swift in Sources */,
 				40D033681E0CB8F1008BB7E8 /* Settings.swift in Sources */,
+				409548BC1E0DB6860005ED6D /* MultiplayerGameOver.swift in Sources */,
 				4002CA3B1E0B91C900291DCC /* Sounds.swift in Sources */,
 				4002CA2C1E0A424800291DCC /* Timer.swift in Sources */,
 				40EC742B1CF3976D00E7B5E1 /* StaticShape.swift in Sources */,
