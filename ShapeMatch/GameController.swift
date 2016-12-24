@@ -34,7 +34,8 @@ class GameController{
     var mainMenu: MainMenu!
     var game: Game!
     var gameOver: GameOver!
-    
+    var settings: Settings!
+
     var multiplayer: Multiplayer! = Multiplayer(frame: CGRect.zero)
     var multiplayerGameOver: MultiplayerGameOver! = MultiplayerGameOver(frame: CGRect.zero)
     
@@ -46,6 +47,7 @@ class GameController{
         game = Game(frame: CGRect(x: 0, y: 0, width: Screen.screenSize.width, height: Screen.screenSize.height))
         gameOver = GameOver(frame: CGRect(x: 0, y: 0, width: Screen.screenSize.width, height: Screen.screenSize.height))
         
+        settings = Settings(frame: CGRect(x: 0, y: 0, width: Screen.screenSize.width, height: Screen.screenSize.height))
 
         
         if(deviceModel == .iPad){
@@ -66,6 +68,7 @@ class GameController{
             gameOver.animateOut()
             break
         case .Settings:
+            settings.animateOut()
             break
         case .Multiplayer:
             if(GameController.sharedInstance.deviceModel == .iPad){
@@ -95,6 +98,8 @@ class GameController{
             viewController.view.bringSubview(toFront: gameOver)
             break
         case .Settings:
+            settings.animateIn()
+            viewController.view.bringSubview(toFront: settings)
             break
         case .Multiplayer:
             if(GameController.sharedInstance.deviceModel == .iPad){

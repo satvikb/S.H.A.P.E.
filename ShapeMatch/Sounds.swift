@@ -11,6 +11,8 @@ import AVFoundation
 
 class Sounds{
     
+    static var audioEnabled : Bool = true
+    
     static var MatchedSound = NSURL(fileURLWithPath: Bundle.main.path(forResource: "Matched", ofType: "wav")!)
     static var MatchedSoundPlayer = AVAudioPlayer()
     
@@ -28,20 +30,24 @@ class Sounds{
         
         MatchedSoundPlayer = try! AVAudioPlayer(contentsOf: MatchedSound as URL)
         GameOverSoundPlayer = try! AVAudioPlayer(contentsOf: GameOverSound as URL)
-
+        
         MatchedSoundPlayer.prepareToPlay()
         GameOverSoundPlayer.prepareToPlay()
     }
     
     static func PlayMatchedSound(){
-        DispatchQueue.global(qos: .background).async {
-            MatchedSoundPlayer.play()
+        if(audioEnabled){
+            DispatchQueue.global(qos: .background).async {
+                MatchedSoundPlayer.play()
+            }
         }
     }
     
     static func PlayGameOverSound(){
-        DispatchQueue.global(qos: .background).async {
-            GameOverSoundPlayer.play()
+        if(audioEnabled){
+            DispatchQueue.global(qos: .background).async {
+                GameOverSoundPlayer.play()
+            }
         }
     }
     

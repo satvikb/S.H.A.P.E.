@@ -24,7 +24,7 @@ class MainMenu: UIView {
     
     override init(frame: CGRect) {
         let buttonsY: CGFloat = 0.7
-        let buttonWidth: CGFloat = 0.26
+        let buttonWidth: CGFloat = 0.266666666666
         let buttonHeight: CGFloat = 0.15
         let sidePadding: CGFloat = 0.1
         
@@ -55,7 +55,6 @@ class MainMenu: UIView {
         leaderboardButton = Square(frame: CGRect(origin: CGPoint.outOfScreen, size: Screen.getScreenSize(x: buttonWidth, y: buttonHeight)), color: UIColor.alizarinColor(), _outPos: startOutPos, _inPos: Screen.getScreenPos(x: sidePadding+(2*buttonWidth)+buttonWidth/2, y: buttonsY))
         leaderboardButton.tap = {
             ScoreManager.showLeaderboardIn(viewController: GameController.sharedInstance.viewController)
-            GameController.sharedInstance.viewController.view.backgroundColor = UIColor(red: 0.168627451, green: 0.168627451, blue: 0.168627451, alpha: 1)
         }
         
         if(GameController.sharedInstance.deviceModel == .iPad){

@@ -26,7 +26,6 @@ class Square: UIView{
 
         label = UILabel(frame: CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height))
         label.text = text
-        label.textColor = UIColor.black
         label.adjustsFontSizeToFitWidth = true
         label.textAlignment = .center
         label.isUserInteractionEnabled = true

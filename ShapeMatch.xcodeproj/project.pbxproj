@@ -19,6 +19,9 @@
 		4002CA3B1E0B91C900291DCC /* Sounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4002CA3A1E0B91C900291DCC /* Sounds.swift */; };
 		400892971E0CFDF6008A52D8 /* Multiplayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400892961E0CFDF6008A52D8 /* Multiplayer.swift */; };
 		400892991E0CFE6C008A52D8 /* MultiplayerScreenSide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400892981E0CFE6C008A52D8 /* MultiplayerScreenSide.swift */; };
+		407E08991E0E388100BAA626 /* Check.png in Resources */ = {isa = PBXBuildFile; fileRef = 407E08981E0E388100BAA626 /* Check.png */; };
+		4086873F1E0E1D5000B5477E /* SettingsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4086873E1E0E1D5000B5477E /* SettingsData.swift */; };
+		408687411E0E22D900B5477E /* SettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408687401E0E22D900B5477E /* SettingButton.swift */; };
 		409548BC1E0DB6860005ED6D /* MultiplayerGameOver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409548BB1E0DB6860005ED6D /* MultiplayerGameOver.swift */; };
 		40D033681E0CB8F1008BB7E8 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D033671E0CB8F1008BB7E8 /* Settings.swift */; };
 		40EC73F71CF38DC500E7B5E1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EC73F61CF38DC500E7B5E1 /* AppDelegate.swift */; };
@@ -65,6 +68,9 @@
 		4002CA3A1E0B91C900291DCC /* Sounds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sounds.swift; sourceTree = "<group>"; };
 		400892961E0CFDF6008A52D8 /* Multiplayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Multiplayer.swift; sourceTree = "<group>"; };
 		400892981E0CFE6C008A52D8 /* MultiplayerScreenSide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiplayerScreenSide.swift; sourceTree = "<group>"; };
+		407E08981E0E388100BAA626 /* Check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Check.png; sourceTree = "<group>"; };
+		4086873E1E0E1D5000B5477E /* SettingsData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsData.swift; sourceTree = "<group>"; };
+		408687401E0E22D900B5477E /* SettingButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingButton.swift; sourceTree = "<group>"; };
 		409548BB1E0DB6860005ED6D /* MultiplayerGameOver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiplayerGameOver.swift; sourceTree = "<group>"; };
 		40D033671E0CB8F1008BB7E8 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		40EC73F31CF38DC500E7B5E1 /* ShapeMatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShapeMatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -133,6 +139,7 @@
 				40EC73F81CF38DC500E7B5E1 /* ViewController.swift */,
 				4002CA271E0A419200291DCC /* GameController.swift */,
 				E7175D631E0CFC0600A865F7 /* ScoreManager.swift */,
+				4086873E1E0E1D5000B5477E /* SettingsData.swift */,
 			);
 			name = Main;
 			sourceTree = "<group>";
@@ -156,6 +163,7 @@
 				4002CA241E0A417900291DCC /* Label.swift */,
 				4002CA2B1E0A424800291DCC /* Timer.swift */,
 				400892981E0CFE6C008A52D8 /* MultiplayerScreenSide.swift */,
+				408687401E0E22D900B5477E /* SettingButton.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -169,6 +177,14 @@
 				40EC74021CF38DC500E7B5E1 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		408687421E0E262300B5477E /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				407E08981E0E388100BAA626 /* Check.png */,
+			);
+			name = Images;
 			sourceTree = "<group>";
 		};
 		40EC73EA1CF38DC500E7B5E1 = {
@@ -195,6 +211,7 @@
 		40EC73F51CF38DC500E7B5E1 /* ShapeMatch */ = {
 			isa = PBXGroup;
 			children = (
+				408687421E0E262300B5477E /* Images */,
 				4002CA391E0B901600291DCC /* Supporting Files */,
 				4002CA381E0B8FFD00291DCC /* UI */,
 				4002CA331E0B8FB800291DCC /* Sounds */,
@@ -348,6 +365,7 @@
 				40EC73FE1CF38DC500E7B5E1 /* Assets.xcassets in Resources */,
 				4002CA361E0B8FCF00291DCC /* GameOver.wav in Resources */,
 				40EC73FC1CF38DC500E7B5E1 /* Main.storyboard in Resources */,
+				407E08991E0E388100BAA626 /* Check.png in Resources */,
 				4002CA371E0B8FCF00291DCC /* Matched.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -376,10 +394,12 @@
 				4002CA231E0A415E00291DCC /* Square.swift in Sources */,
 				4002CA281E0A419200291DCC /* GameController.swift in Sources */,
 				40EC73F91CF38DC500E7B5E1 /* ViewController.swift in Sources */,
+				4086873F1E0E1D5000B5477E /* SettingsData.swift in Sources */,
 				400892971E0CFDF6008A52D8 /* Multiplayer.swift in Sources */,
 				4002CA2E1E0A431500291DCC /* GameOver.swift in Sources */,
 				40D033681E0CB8F1008BB7E8 /* Settings.swift in Sources */,
 				409548BC1E0DB6860005ED6D /* MultiplayerGameOver.swift in Sources */,
+				408687411E0E22D900B5477E /* SettingButton.swift in Sources */,
 				4002CA3B1E0B91C900291DCC /* Sounds.swift in Sources */,
 				4002CA2C1E0A424800291DCC /* Timer.swift in Sources */,
 				40EC742B1CF3976D00E7B5E1 /* StaticShape.swift in Sources */,
