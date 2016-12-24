@@ -49,7 +49,16 @@ class Functions {
         let r: CGFloat = CGFloat(randomInt(70, max: 250))
         let g: CGFloat = CGFloat(randomInt(70, max: 250))
         let b: CGFloat = CGFloat(randomInt(70, max: 250))
-        return UIColor(red: r/255, green: g/255, blue: b/255, alpha: 0.8)
+        
+        
+        let color = UIColor(red: r/255, green: g/255, blue: b/255, alpha: 0.8)
+        
+        if(SettingsData.reduceColors == true){
+            return color.GetDarkerColor(0.5)
+        }else{
+            return color
+        }
+        
     }
     
     static func inverseColor(_ color: UIColor) -> UIColor{

@@ -25,7 +25,7 @@ class GameOver: UIView{
     override init(frame: CGRect) {
         
         let buttonsY: CGFloat = 0.7
-        let buttonWidth: CGFloat = 0.26
+        let buttonWidth: CGFloat = 0.266666666666
         let buttonHeight: CGFloat = 0.15
         let sidePadding: CGFloat = 0.1
         

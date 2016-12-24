@@ -15,9 +15,12 @@ class Label: UILabel{
     var outPos: CGPoint!
     var inPos: CGPoint!
     
-    init(frame: CGRect, text: String, _outPos: CGPoint = CGPoint.zero, _inPos: CGPoint = CGPoint.zero, textColor: UIColor = UIColor.white, debugFrame: Bool = false){
+    var neon: Bool = true
+    
+    init(frame: CGRect, text: String, _outPos: CGPoint = CGPoint.zero, _inPos: CGPoint = CGPoint.zero, textColor: UIColor = UIColor.white, debugFrame: Bool = false, _neon: Bool = true){
         outPos = _outPos
         inPos = _inPos
+        neon = _neon
         
         let newFrame = CGRect(origin: outPos, size: frame.size)
         super.init(frame: newFrame)
@@ -29,18 +32,22 @@ class Label: UILabel{
         
         adjustsFontSizeToFitWidth = true
         
-        layer.shadowRadius = 15
-        layer.shadowOpacity = 0.9
-        layer.shadowOffset = CGSize.zero
-        layer.masksToBounds = false
-        
+        if(neon){
+            layer.shadowRadius = 15
+            layer.shadowOpacity = 0.9
+            layer.shadowOffset = CGSize.zero
+            layer.masksToBounds = false
+        }
         changeTextColor(color: textColor)
         self.text = text
     }
     
     func changeTextColor(color: UIColor){
         textColor = color
-        layer.shadowColor = color.cgColor
+        
+        if(neon){
+            layer.shadowColor = color.cgColor
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {

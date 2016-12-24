@@ -24,6 +24,7 @@ class ViewController: UIViewController, GKGameCenterControllerDelegate {
             self.view.addSubview(GameController.sharedInstance.multiplayerGameOver)
         }
         
+        self.view.addSubview(GameController.sharedInstance.settings)
         self.view.addSubview(GameController.sharedInstance.gameOver)
         self.view.addSubview(GameController.sharedInstance.game)
         self.view.addSubview(GameController.sharedInstance.mainMenu)
