@@ -16,7 +16,7 @@ class Game: UIView{
     var timer: SquareTimer = SquareTimer.null
     
     var score: Int = 0
-    var timerTime: CGFloat = 12.5
+    var timerTime: CGFloat = 2.5
     
     var movingShape: MovingShape!
     var staticShape: StaticShape!
@@ -39,9 +39,9 @@ class Game: UIView{
 //        tutorialView = View(frame: frame, _outPos: Screen.getScreenPos(x: -1, y: 0), _inPos: Screen.getScreenPos(x: 0, y: 0))
 //        tutorialView.backgroundColor = UIColor.black
 //        tutorialView.layer.opacity = 0.5
-        tutorialLabel = Label(frame: CGRect(origin: Screen.getScreenPos(x: 0, y: 0), size: Screen.getScreenSize(x: 1, y: 0.1)), text: "Match the shape.", _outPos: Screen.getScreenPos(x: -1, y: 0.5), _inPos: Screen.getScreenPos(x: 0, y: 0.9), textColor: UIColor.white, debugFrame: false, _neon: true)
+        tutorialLabel = Label(frame: CGRect(origin: Screen.getScreenPos(x: 0, y: 0.05), size: Screen.getScreenSize(x: 1, y: 0.1)), text: "Match the shape.", _outPos: Screen.getScreenPos(x: -1, y: 0.5), _inPos: Screen.getScreenPos(x: 0, y: 0.9), textColor: UIColor.white, debugFrame: false, _neon: true)
         tutorialLabel.textAlignment = .center
-        tutorialLabel.font = UIFont(name: fontName, size: Screen.fontSize(fontSize: 4))
+        tutorialLabel.font = UIFont(name: fontName, size: Screen.fontSize(fontSize: 3))
         
         
         let timerWidth = Screen.getScreenSize(x: 0.016, y: 0).width
@@ -128,6 +128,7 @@ class Game: UIView{
         print("Scale1: \(self.transform.a) \(self.transform.d) \(self.frame.size)")
 
         movingShape.transform = CGAffineTransform.identity
+        movingShape.currentScale = 1
         movingShape.startSize = movingShapeNewSize
         movingShape.bounds = CGRect(x: 0, y: 0, width: movingShapeNewSize.width, height: movingShapeNewSize.height)
         print("Scale2: \(self.transform.a) \(self.transform.d) \(self.frame.size)")

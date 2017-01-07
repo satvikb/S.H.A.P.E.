@@ -37,7 +37,7 @@ class SquareTimer: UIView, CAAnimationDelegate{
         progressLayer.shadowOffset = Neon.shadowOffset
         progressLayer.masksToBounds = Neon.masksToBounds
         
-        pause()
+//        pause()
         
         self.layer.addSublayer(progressLayer)
     }

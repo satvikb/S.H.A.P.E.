@@ -13,12 +13,14 @@ class Screen {
     
     
     static let screenSize = UIScreen.main.bounds
+    static var screenArea : CGFloat!
     
     static var heightOverWidth: CGFloat!
     
     static func setup(){
         print("Screen Size: \(screenSize)")
         Screen.heightOverWidth = (Screen.screenSize.height / Screen.screenSize.width)
+        Screen.screenArea = screenSize.width * screenSize.height
     }
 
     static func getScreenPos(x: CGFloat, y: CGFloat) -> CGPoint{
