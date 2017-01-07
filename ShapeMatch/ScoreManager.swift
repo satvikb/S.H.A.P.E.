@@ -8,6 +8,7 @@
 
 import UIKit
 import GameKit
+import Flurry_iOS_SDK
 
 class ScoreManager {
     static var gcEnabled: Bool = false
@@ -25,6 +26,7 @@ class ScoreManager {
             if error != nil {
                 print(error.debugDescription)
             } else {
+                Flurry.logEvent("GamecenterScoreSubmitted", withParameters: ["Score":gcScore])
                 print("Score submitted")
             }
         }
@@ -55,6 +57,7 @@ class ScoreManager {
                 })
             } else {
                 self.gcEnabled = false
+                Flurry.logEvent("GamecenterDisabled")
                 print("No game center enabled")
             }
         }

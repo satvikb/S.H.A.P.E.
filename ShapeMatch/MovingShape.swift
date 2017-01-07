@@ -8,6 +8,37 @@
 
 import UIKit
 
+public enum DoubleFalseBoolean{
+    case False
+    case True
+    case SuperFalse
+}
+
+class GestureView : UIView{
+    
+    var numTouches = 0
+    
+    override init(frame: CGRect){
+        super.init(frame: frame)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        numTouches += touches.count
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        numTouches -= touches.count
+    }
+    
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        numTouches -= touches.count
+    }
+}
+
 class MovingShape: UIView, UIGestureRecognizerDelegate {
 
     //RADIANS
@@ -18,9 +49,17 @@ class MovingShape: UIView, UIGestureRecognizerDelegate {
     
     fileprivate var color: UIColor! = UIColor.blue
     
-    var gestureView: UIView!
+    var gestureView: GestureView!
     
+    var tapGR: UITapGestureRecognizer!
     var panGR: UIPanGestureRecognizer!
+    
+    
+    var numTouches : Int = 0
+    
+    var currentScale : CGFloat! = 1
+    
+    private var maxFrameSize : CGSize = CGSize(width: Screen.screenSize.width/2, height: Screen.screenSize.height/2)
     
     init(position: CGPoint, size: CGSize, gestureViewSize: CGSize = UIScreen.main.bounds.size, gestureViewPos: CGPoint = CGPoint.zero){
         super.init(frame: CGRect(x: position.x, y: position.y, width: size.width, height: size.height))
@@ -30,15 +69,17 @@ class MovingShape: UIView, UIGestureRecognizerDelegate {
         
         setColor(Functions.randomColor())
         
-        gestureView = UIView(frame: CGRect(x: gestureViewPos.x, y: gestureViewPos.y, width: gestureViewSize.width, height: gestureViewSize.height))
+        gestureView = GestureView(frame: CGRect(x: gestureViewPos.x, y: gestureViewPos.y, width: gestureViewSize.width, height: gestureViewSize.height))
         
-        layer.shadowRadius = 15
-        layer.shadowOpacity = 0.9
-        layer.shadowOffset = CGSize.zero
-        layer.masksToBounds = false
+        layer.shadowRadius = Neon.shadowRadius
+        layer.shadowOpacity = Neon.shadowOpacity
+        layer.shadowOffset = Neon.shadowOffset
+        layer.masksToBounds = Neon.masksToBounds
         
         self.isUserInteractionEnabled = false
         self.gestureView.isMultipleTouchEnabled = true
+        
+        calculateMaxScale()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -52,9 +93,12 @@ class MovingShape: UIView, UIGestureRecognizerDelegate {
     }
     
     func setupGestureRecognizers(){
+        tapGR = UITapGestureRecognizer(target: self, action: #selector(self.didTap(_:)))
+        tapGR.delegate = self
+        gestureView.addGestureRecognizer(tapGR)
+        
         panGR = UIPanGestureRecognizer(target: self, action: #selector(self.didPan(_:)))
         panGR.delegate = self
-        
         gestureView.addGestureRecognizer(panGR)
         
         let pinchGR = UIPinchGestureRecognizer(target: self, action: #selector(self.didPinch(_:)))
@@ -66,16 +110,35 @@ class MovingShape: UIView, UIGestureRecognizerDelegate {
         gestureView.addGestureRecognizer(rotationGR)
     }
     
+    var maxScale : CGFloat = 1
+    var minScale : CGFloat = 0.3
+    
+    func calculateMaxScale(){
+        let maxActualSideLength = max(Screen.screenSize.width/2, Screen.screenSize.height/2)
+        let longerSide = max(self.startSize.width, self.startSize.height)
+        maxScale = maxActualSideLength/longerSide
+        print("Max Scale: \(maxScale)")
+        
+    }
+    
+    func didTap(_ tapGR: UITapGestureRecognizer){
+        
+    }
+    
+    let panSensitivity : CGFloat = 1.25
+    
     func didPan(_ panGR: UIPanGestureRecognizer) {
         //TODO: Instead of setting the pan gesture for min and max touches, use a if here, so then we can pause the game if the user does not have two touches on screen
         self.superview!.bringSubview(toFront: self)
+        
+//        if()
         
         var translation = panGR.translation(in: self)
         
         translation = translation.applying(self.transform)
         
-        self.center.x += translation.x
-        self.center.y += translation.y
+        self.center.x += translation.x * panSensitivity
+        self.center.y += translation.y * panSensitivity
         
         panGR.setTranslation(CGPoint.zero, in: self)
         
@@ -85,20 +148,94 @@ class MovingShape: UIView, UIGestureRecognizerDelegate {
     func didPinch(_ pinchGR: UIPinchGestureRecognizer) {
         self.superview!.bringSubview(toFront: self)
         
-        let scale = pinchGR.scale
-        self.transform = self.transform.scaledBy(x: scale, y: scale)
-        pinchGR.scale = 1.0
+        let pinchValue = allowPinch()
+        if(pinchValue == .True){
+            let scale = pinchGR.scale
+//                        print("GR Scale: \(scale)")
+            currentScale = currentScale*scale
+            self.transform = self.transform.scaledBy(x: scale, y: scale)
+            pinchGR.scale = 1.0
+        }else if(pinchValue == .False){
+            self.transform = self.transform.scaledBy(x: 0.995, y: 0.995)
+            currentScale = currentScale * 0.995
+            pinchGR.scale = 1.0
+        }else if(pinchValue == .SuperFalse){
+            self.transform = self.transform.scaledBy(x: 1.005, y: 1.005)
+            currentScale = currentScale * 1.005
+            pinchGR.scale = 1.0
+        }
         
+//        let transformSize = __CGSizeApplyAffineTransform(self.startSize, self.transform)
+//        
+//        let scaleX = abs(transformSize.width/startSize.width)//abs(self.transform.a)
+//        let scaleY = abs(transformSize.height/startSize.height)//abs(self.transform.d)
+//        
+//        let maxScale = max(scaleX, scaleY)
+        
+//        print("Scale: \(maxScale) \(scaleX) \(scaleY) \(transformSize) \(self.frame.size) \(self.startSize)")
+//        if(maxScale < maxScale && maxScale > minScale){
+//            let scale = pinchGR.scale
+////            print("GR Scale: \(scale)")
+//            self.transform = self.transform.scaledBy(x: scale, y: scale)
+//            pinchGR.scale = 1.0
+//        }else if(maxScale > maxScale){
+//            let scale = pinchGR.scale
+//            print("Larger")
+//            if(scale <= 1){
+//                self.transform = self.transform.scaledBy(x: scale, y: scale)
+//                pinchGR.scale = 1.0
+//            }
+//        }else if(maxScale < minScale){
+//            let scale = pinchGR.scale
+//            print("Smaller")
+//            if(scale >= 1){
+//                self.transform = self.transform.scaledBy(x: scale, y: scale)
+//                pinchGR.scale = 1.0
+//            }
+//        }
+        
+//        else if(self.transform.a >= maxScale){
+//            let radians: CGFloat = atan2( (self.transform.b), (self.transform.a))
+//            
+//            self.transform = CGAffineTransform(scaleX: maxScale/1.01, y: maxScale/1.01)
+////            self.transform = self.transform.rotated(by: radians)
+//        }else if(self.transform.a <= minScale){
+//            let radians: CGFloat = atan2( (self.transform.b), (self.transform.a))
+//            
+//            self.transform = CGAffineTransform(scaleX: minScale*1.01, y: minScale*1.01)
+////            self.transform = self.transform.rotated(by: radians)
+//        }
+
         gestureHappened()
+    }
+    
+    let smallestRatio : CGFloat = 0.01
+    let largestRatio : CGFloat = 0.6
+    
+    func allowPinch() -> DoubleFalseBoolean{
+        
+        let shapeBounds = CGSize(width: startSize.width*currentScale, height: startSize.height*currentScale)
+        let area = shapeBounds.width*shapeBounds.height
+        
+        let areaRatio = area/Screen.screenArea
+//        print("Ratio: \(areaRatio) \(currentScale)")
+        if(areaRatio < largestRatio && areaRatio > smallestRatio){
+            return .True
+        }else if(areaRatio >= largestRatio){
+            return .False
+        }else if(areaRatio <= smallestRatio){
+            return .SuperFalse
+        }
+        return .False
     }
     
     func didRotate(_ rotationGR: UIRotationGestureRecognizer) {
         self.superview!.bringSubview(toFront: self)
         
         let rotation = rotationGR.rotation
+//        print("Rotate \(rotation)")
         self.transform = self.transform.rotated(by: rotation)
         rotationGR.rotation = 0.0
-        
         let radians: CGFloat = atan2( (self.transform.b), (self.transform.a))
         
         self.radians = radians
@@ -109,10 +246,16 @@ class MovingShape: UIView, UIGestureRecognizerDelegate {
         return true
     }
     
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        recievedTouch()
+        return true
+    }
+    
     func gestureHappened(){
         anyGestureHappened()
     }
     
+    var recievedTouch = {}
     var anyGestureHappened = {}
     
     func animateOut(time: CGFloat){

@@ -31,6 +31,8 @@ class GameController{
     var viewController: ViewController!
     var deviceModel: DeviceModel = .Unknown
     
+    var currentView : Views = .Start
+    
     var mainMenu: MainMenu!
     var game: Game!
     var gameOver: GameOver!
@@ -87,29 +89,35 @@ class GameController{
         switch to {
         case .MainMenu:
             mainMenu.animateIn()
+            currentView = .MainMenu
             viewController.view.bringSubview(toFront: mainMenu)
             break
         case .Game:
             game.animateIn()
+            currentView = .Game
             viewController.view.bringSubview(toFront: game)
             break
         case .GameOver:
             gameOver.animateIn()
+            currentView = .GameOver
             viewController.view.bringSubview(toFront: gameOver)
             break
         case .Settings:
             settings.animateIn()
+            currentView = .Settings
             viewController.view.bringSubview(toFront: settings)
             break
         case .Multiplayer:
             if(GameController.sharedInstance.deviceModel == .iPad){
                 multiplayer.animateIn()
+                currentView = .Multiplayer
                 viewController.view.bringSubview(toFront: multiplayer)
             }
             break
         case .MultiplayerGameOver:
             if(GameController.sharedInstance.deviceModel == .iPad){
                 multiplayerGameOver.animateIn()
+                currentView = .MultiplayerGameOver
                 viewController.view.bringSubview(toFront: multiplayerGameOver)
             }
             break

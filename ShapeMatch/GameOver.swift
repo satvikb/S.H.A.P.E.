@@ -40,13 +40,13 @@ class GameOver: UIView{
         
         highScoreLabel = Label(frame: CGRect(origin: Screen.getScreenPos(x: 0.1, y: 0.1), size: Screen.getScreenSize(x: titleLabelSize.width, y: titleLabelSize.height)), text: "Highscore: \(ScoreManager.currentHighScore)", _outPos: Screen.getScreenPos(x: 0.5-(titleLabelSize.width/2), y: 1+buttonHeight), _inPos: Screen.getScreenPos(x: 0.1, y: 0.22))
         highScoreLabel.changeTextColor(color: .orange)
-        highScoreLabel.font = UIFont(name: fontName, size: Screen.fontSize(fontSize: 2.5))
+        highScoreLabel.font = UIFont(name: fontName, size: Screen.fontSize(fontSize: 5))
         highScoreLabel.adjustsFontSizeToFitWidth = true
         highScoreLabel.textAlignment = .center
         
-        currentScoreLabel = Label(frame: CGRect(origin: Screen.getScreenPos(x: 0.1, y: 0.1), size: Screen.getScreenSize(x: titleLabelSize.width, y: titleLabelSize.height)), text: "\(score)", _outPos: Screen.getScreenPos(x: 0.5-(titleLabelSize.width/2), y: 1+buttonHeight), _inPos: Screen.getScreenPos(x: 0.1, y: 0.4))
+        currentScoreLabel = Label(frame: CGRect(origin: Screen.getScreenPos(x: 0.1, y: 0.1), size: Screen.getScreenSize(x: titleLabelSize.width, y:0.225)), text: "\(score)", _outPos: Screen.getScreenPos(x: 0.5-(titleLabelSize.width/2), y: 1+buttonHeight), _inPos: Screen.getScreenPos(x: 0.1, y: 0.4))
         currentScoreLabel.changeTextColor(color: .white)
-        currentScoreLabel.font = UIFont(name: fontName, size: Screen.fontSize(fontSize: 6))
+        currentScoreLabel.font = UIFont(name: fontName, size: Screen.fontSize(fontSize: 10))
         currentScoreLabel.adjustsFontSizeToFitWidth = true
         currentScoreLabel.textAlignment = .center
         

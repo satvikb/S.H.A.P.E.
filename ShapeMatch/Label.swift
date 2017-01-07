@@ -33,10 +33,10 @@ class Label: UILabel{
         adjustsFontSizeToFitWidth = true
         
         if(neon){
-            layer.shadowRadius = 15
-            layer.shadowOpacity = 0.9
-            layer.shadowOffset = CGSize.zero
-            layer.masksToBounds = false
+            layer.shadowRadius = Neon.shadowRadius
+            layer.shadowOpacity = Neon.shadowOpacity
+            layer.shadowOffset = Neon.shadowOffset
+            layer.masksToBounds = Neon.masksToBounds
         }
         changeTextColor(color: textColor)
         self.text = text
