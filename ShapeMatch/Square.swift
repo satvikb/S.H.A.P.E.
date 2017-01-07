@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Square: UIView{
+class Square: UIView, UIGestureRecognizerDelegate{
     static let null = Square(frame: CGRect.zero, color: UIColor.clear)
     
     var id: Int = -1
@@ -51,6 +51,8 @@ class Square: UIView{
         self.backgroundColor = color
         
         let tapRec = UITapGestureRecognizer(target: self, action: #selector(self.tapped))
+//        tapRec.numberOfTouchesRequired = 2
+//        tapRec.delegate
         
         self.addSubview(label)
         self.addSubview(imageView)

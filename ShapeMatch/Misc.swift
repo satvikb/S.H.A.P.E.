@@ -17,6 +17,7 @@ class Screen {
     static var heightOverWidth: CGFloat!
     
     static func setup(){
+        print("Screen Size: \(screenSize)")
         Screen.heightOverWidth = (Screen.screenSize.height / Screen.screenSize.width)
     }
 

@@ -16,7 +16,7 @@ class Game: UIView{
     var timer: SquareTimer = SquareTimer.null
     
     var score: Int = 0
-    var timerTime: CGFloat = 2
+    var timerTime: CGFloat = 12.5
     
     var movingShape: MovingShape!
     var staticShape: StaticShape!
@@ -25,15 +25,28 @@ class Game: UIView{
     let posXMinMax: Range = Range(min: 0.3, max: 0.7)
     let posYMinMax: Range = Range(min: 0.3, max: 0.7)
     
-    let sizeMinMax: Range = Range(min: 0.1, max: 0.45)
+    let sizeMinMax: Range = Range(min: 0.1, max: 0.38)
     
     let scaleMinMax: Range = Range(min: 0.9, max: 1.3)
     
     var isGameOver: Bool = false
     
+//    var tutorialView : View!
+    var tutorialLabel: Label!
     override init(frame: CGRect) {
         super.init(frame: frame)
-        timer = SquareTimer(frame: CGRect(origin: Screen.getScreenPos(x: 0, y: 0), size: Screen.screenSize.size), lineWidth: 6)
+        
+//        tutorialView = View(frame: frame, _outPos: Screen.getScreenPos(x: -1, y: 0), _inPos: Screen.getScreenPos(x: 0, y: 0))
+//        tutorialView.backgroundColor = UIColor.black
+//        tutorialView.layer.opacity = 0.5
+        tutorialLabel = Label(frame: CGRect(origin: Screen.getScreenPos(x: 0, y: 0), size: Screen.getScreenSize(x: 1, y: 0.1)), text: "Match the shape.", _outPos: Screen.getScreenPos(x: -1, y: 0.5), _inPos: Screen.getScreenPos(x: 0, y: 0.9), textColor: UIColor.white, debugFrame: false, _neon: true)
+        tutorialLabel.textAlignment = .center
+        tutorialLabel.font = UIFont(name: fontName, size: Screen.fontSize(fontSize: 4))
+        
+        
+        let timerWidth = Screen.getScreenSize(x: 0.016, y: 0).width
+        
+        timer = SquareTimer(frame: CGRect(origin: Screen.getScreenPos(x: 0, y: 0), size: Screen.screenSize.size), lineWidth: timerWidth)
         
         timer.done = {
             self.GameOver()
@@ -51,8 +64,9 @@ class Game: UIView{
         movingShape.setupGestureRecognizers()
         movingShape.anyGestureHappened = {
             if(self.isGameOver == false){
+                //Restrict moving shape size here?
+                
                 if(self.similarToStaticShape()){
-//                    print("MATCH")
                     self.increaseDifficulty()
                     Sounds.PlayMatchedSound()
                     self.newShapePositions()
@@ -70,19 +84,22 @@ class Game: UIView{
         scoreLabel.font = UIFont(name: "HiraginoSans-W3", size: Screen.fontSize(fontSize: 10))
         scoreLabel.textColor = UIColor.white
         
-        
         self.addSubview(timer)
         self.addSubview(movingShape)
         self.addSubview(staticShape)
         self.addSubview(scoreLabel)
         self.addSubview(movingShape.gestureView)
+//        self.addSubview(tutorialView)
+        self.addSubview(tutorialLabel)
     }
     
     func increaseDifficulty(){
+        let minTime : CGFloat = 2
+
         timerTime -= 0.01
         
-        if(timerTime < 1.75){
-            timerTime = 1.75
+        if(timerTime < minTime){
+            timerTime = minTime
         }
         
     }
@@ -108,10 +125,13 @@ class Game: UIView{
         
         let movingShapeNewSize = CGSize(width: staticShapeNewSize.width*randomScale, height: staticShapeNewSize.height*randomScale)
         
+        print("Scale1: \(self.transform.a) \(self.transform.d) \(self.frame.size)")
+
         movingShape.transform = CGAffineTransform.identity
         movingShape.startSize = movingShapeNewSize
         movingShape.bounds = CGRect(x: 0, y: 0, width: movingShapeNewSize.width, height: movingShapeNewSize.height)
-        
+        print("Scale2: \(self.transform.a) \(self.transform.d) \(self.frame.size)")
+
         
         if(changeMovingShapePos){
             let movingShapeNewPos = Screen.getScreenPos(x: Functions.randomFloat(posXMinMax.Min, maximum: posXMinMax.Max), y: Functions.randomFloat(posYMinMax.Min, maximum: posYMinMax.Max))
@@ -120,7 +140,13 @@ class Game: UIView{
         
         movingShape.setColor((staticShape.col.GetDarkerColor(1.05)))
         timer.changeColor(col: staticShape.col)
+        movingShape.calculateMaxScale()
     }
+    
+//    func restrictMovingShapeSize(){
+//        
+//    }
+    
     
     func similarToStaticShape() -> Bool{
         return framesClose()
@@ -139,7 +165,7 @@ class Game: UIView{
 
         let deltaRect = subRect(movingRect: movingFrame, staticRect: staticFrame)
     
-        let width = Screen.getScreenSize(x: 0.05, y: 0).width
+        let width = Screen.getScreenSize(x: 0.03, y: 0).width
         let minimumDiffRect = CGRect(x: width, y: width, width: width, height: width)
         
         let isSame = rectLessThan(rect1: deltaRect, rect2: minimumDiffRect)
@@ -184,6 +210,15 @@ class Game: UIView{
         timer.animateIn(time: transitionTime)
         timer.start(time: timerTime)
         self.bringSubview(toFront: movingShape.gestureView)
+        
+        tutorialLabel.animateIn(time: transitionTime)
+        
+        UIView.animate(withDuration: TimeInterval(transitionTime), delay: 3, usingSpringWithDamping: 0, initialSpringVelocity: 0, options: .curveLinear, animations: {
+            self.tutorialLabel.frame.origin = self.tutorialLabel.outPos
+        }, completion: {(complete: Bool) in
+        
+        })
+        
     }
     
     func animateOut(){

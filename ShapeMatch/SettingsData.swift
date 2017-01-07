@@ -18,10 +18,21 @@ struct Setting{
     init(_name: String, _value: Bool){
         name = _name
         value = _value
+        
+        //Retrieve locally if exists
+        let exists = (UserDefaults.standard.object(forKey: name) != nil)
+        
+        if(exists == true){
+            let savedValue = UserDefaults.standard.bool(forKey: name)
+            value = savedValue
+        }
+        setValue(val: value)
     }
     
     mutating func setValue(val: Bool){
         value = val
+        
+        SettingsSave.saveSetting(setting: self)
         
         if(val == true){
             setToActive()
@@ -36,6 +47,13 @@ struct Setting{
     
     func setToActive(){
         self.setActive()
+    }
+}
+
+class SettingsSave{
+    
+    static func saveSetting(setting : Setting){
+        UserDefaults.standard.set(setting.value, forKey: setting.name)
     }
 }
 
@@ -55,7 +73,6 @@ class SettingsData {
         }
         
         var reduceColorSetting = Setting(_name: "Reduce Colors", _value: false)
-        reduceColorSetting.setValue(val: false)
         reduceColorSetting.setNonActive = {
             reduceColors = false
         }

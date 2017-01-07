@@ -24,9 +24,10 @@ class Multiplayer: UIView{
         upSide = MultiplayerScreenSide(_playerId: 0, _screenSide: .up)
         downSide = MultiplayerScreenSide(_playerId: 0, _screenSide: .down)
 
-        
+        let timerLineWidth = Screen.getScreenSize(x: 0.016, y: 0).width
+
         let upSideTimerSize: CGSize = Screen.getScreenSize(x: 1, y: 0.5)
-        upSide.timer = SquareTimer(frame: CGRect(origin: Screen.getScreenPos(x: 0, y: 0), size: upSideTimerSize), lineWidth: 6)
+        upSide.timer = SquareTimer(frame: CGRect(origin: Screen.getScreenPos(x: 0, y: 0), size: upSideTimerSize), lineWidth: timerLineWidth)
         upSide.timer.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI))
 
         upSide.timer.done = {
@@ -74,7 +75,7 @@ class Multiplayer: UIView{
         self.addSubview(upSide.movingShape.gestureView)
         
         let downSideTimerSize: CGSize = Screen.getScreenSize(x: 1, y: 0.5)
-        downSide.timer = SquareTimer(frame: CGRect(origin: Screen.getScreenPos(x: 0, y: 0.5), size: downSideTimerSize), lineWidth: 6)
+        downSide.timer = SquareTimer(frame: CGRect(origin: Screen.getScreenPos(x: 0, y: 0.5), size: downSideTimerSize), lineWidth: timerLineWidth)
         
         downSide.timer.done = {
             self.GameOver(side: self.upSide)

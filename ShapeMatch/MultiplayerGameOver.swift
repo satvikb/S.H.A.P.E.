@@ -33,9 +33,8 @@ class MultiplayerGameOver: UIView{
     
     override init(frame: CGRect) {
         let buttonsY: CGFloat = 0.85
-        let buttonWidth: CGFloat = 0.266666666666
-        let buttonHeight: CGFloat = 0.15
-        let sidePadding: CGFloat = 0.24
+        let buttonWidth: CGFloat = 0.3//0.266666666666
+        let buttonHeight: CGFloat = 0.1
         
         let titleLabelSize = CGSize(width: 0.2, height: 0.44)// Screen.getScreenSize(x: 0.8, y: 0.3)
         let newTitleSizeOriginal = Screen.getScreenSize(x: titleLabelSize.width, y: titleLabelSize.height)
@@ -46,8 +45,8 @@ class MultiplayerGameOver: UIView{
         
         let playerInfoLabelSize = CGSize(width: 0.6, height: 0.065)// Screen.getScreenSize(x: 0.8, y: 0.3)
 
-        
-        gameOverLabel = Label(frame: CGRect(origin: Screen.getScreenPos(x: 0.1, y: 0.1), size: newTitleSize), text: "Game Over", _outPos: Screen.getScreenPos(x: 1+(titleLabelSize.width), y: Screen.screenSize.height-newTitleSize.height), _inPos: Screen.getScreenPos(x: 0.8, y: 0.285))
+        let gameOverOutPos : CGPoint = CGPoint(x: Screen.screenSize.width+newTitleSize.width, y: Screen.getScreenPos(x: 0.8, y: 0.285).y)
+        gameOverLabel = Label(frame: CGRect(origin: Screen.getScreenPos(x: 0.1, y: 0.1), size: newTitleSize), text: "Game Over", _outPos: gameOverOutPos, _inPos: Screen.getScreenPos(x: 0.8, y: 0.285))
         gameOverLabel.changeTextColor(color: .red)
         gameOverLabel.font = UIFont(name: fontName, size: Screen.fontSize(fontSize: 8))
         gameOverLabel.adjustsFontSizeToFitWidth = true
@@ -82,26 +81,36 @@ class MultiplayerGameOver: UIView{
         
         super.init(frame: frame)
 
-        homeButton = Square(frame: CGRect(origin: CGPoint.outOfScreen, size: Screen.getScreenSize(x: buttonWidth, y: buttonHeight)), color: UIColor.belizeHoleColor(), _outPos: Screen.getScreenPos(x: -buttonWidth, y: buttonsY), _inPos: Screen.getScreenPos(x: sidePadding+(buttonWidth/2), y: buttonsY))
+        let centerY : CGFloat = 0.50
+        let buttonSize : CGSize = Screen.getScreenSize(x: buttonWidth, y: buttonHeight)
+        let buttonPropWidth = buttonSize.height/Screen.screenSize.width
+        let sidePadding: CGFloat = ((0.25-buttonPropWidth)/2)+buttonPropWidth/2//((0.25-buttonPropWidth/2)/2)
+
+        
+        var homeButtonInPos : CGPoint = Screen.getScreenPos(x: sidePadding, y: centerY)
+        homeButtonInPos.y -= buttonSize.width/2
+        
+        homeButton = Square(frame: CGRect(origin: CGPoint.outOfScreen, size: Screen.getScreenSize(x: buttonWidth, y: buttonHeight)), color: UIColor.belizeHoleColor(), _outPos: Screen.getScreenPos(x: -buttonWidth, y: buttonsY), _inPos: homeButtonInPos)
         homeButton.imageView.image = #imageLiteral(resourceName: "homeicon.png")
         homeButton.tap = {
             Flurry.logEvent("HomeTappedMultiplayer", withParameters: ["ScoreUp":self.upScore, "ScoreDown":self.downScore])
             GameController.sharedInstance.switchFromTo(from: .MultiplayerGameOver, to: .MainMenu)
         }
+        homeButton.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI/2))
         
-        replayButton = Square(frame: CGRect(origin: CGPoint.outOfScreen, size: Screen.getScreenSize(x: buttonWidth, y: buttonHeight)), color: UIColor.nephritisColor(), _outPos: Screen.getScreenPos(x: -buttonWidth, y: buttonsY), _inPos: Screen.getScreenPos(x: sidePadding+(1*buttonWidth)+buttonWidth/2, y: buttonsY))
+        var replayButtonInPos : CGPoint = Screen.getScreenPos(x: sidePadding, y: centerY)
+        replayButtonInPos.y += buttonSize.width/2
+        
+        replayButton = Square(frame: CGRect(origin: CGPoint.outOfScreen, size: Screen.getScreenSize(x: buttonWidth, y: buttonHeight)), color: UIColor.nephritisColor(), _outPos: Screen.getScreenPos(x: -buttonWidth, y: buttonsY), _inPos: replayButtonInPos)
         replayButton.imageView.image = #imageLiteral(resourceName: "restart.png")
         replayButton.tap = {
             Flurry.logEvent("ReplayTappedMultiplayer", withParameters: ["ScoreUp":self.upScore, "ScoreDown":self.downScore])
             GameController.sharedInstance.switchFromTo(from: .MultiplayerGameOver, to: .Multiplayer)
         }
+        replayButton.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI/2))
         
-        
-        horizontalLine = UIView(frame: CGRect(origin: horizontalLineOutPos, size: Screen.getScreenSize(x: 0.6, y: 0.01)))
+        horizontalLine = UIView(frame: CGRect(origin: horizontalLineOutPos, size: Screen.getScreenSize(x: 0.5, y: 0.01)))
         horizontalLine.backgroundColor = UIColor.white
-        //horizontalLine.layer.borderWidth = 5
-        //horizontalLine.layer.borderColor = UIColor.white.cgColor
-        
         
         addSubview(homeButton)
         addSubview(replayButton)

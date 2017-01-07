@@ -15,6 +15,10 @@ class ViewController: UIViewController, GKGameCenterControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //NotificationCenter.defaultCenter().addObserver(self, selector: Selector("myObserverMethod:"), name:UIApplicationDidEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackground), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didEnterForeground), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
+
         self.view.backgroundColor = UIColor(red: 0.168627451, green: 0.168627451, blue: 0.168627451, alpha: 1)
         GameController.sharedInstance.viewController = self
  
@@ -43,5 +47,31 @@ class ViewController: UIViewController, GKGameCenterControllerDelegate {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func didEnterBackground() {
+        print("Background")
+        
+        if(GameController.sharedInstance.currentView == .Game){
+            GameController.sharedInstance.game.timer.pause()
+        }
+        
+        if(GameController.sharedInstance.currentView == .Multiplayer){
+            GameController.sharedInstance.multiplayer.upSide.timer.pause()
+            GameController.sharedInstance.multiplayer.downSide.timer.pause()
+        }
+    }
+    
+    func didEnterForeground(){
+        print("Foreground")
+        
+        if(GameController.sharedInstance.currentView == .Game){
+            GameController.sharedInstance.game.timer.resume()
+        }
+        
+        if(GameController.sharedInstance.currentView == .Multiplayer){
+            GameController.sharedInstance.multiplayer.upSide.timer.resume()
+            GameController.sharedInstance.multiplayer.downSide.timer.resume()
+        }
     }
 }

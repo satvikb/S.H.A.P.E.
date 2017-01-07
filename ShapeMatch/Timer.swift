@@ -19,21 +19,25 @@ class SquareTimer: UIView, CAAnimationDelegate{
     init(frame: CGRect, lineWidth: CGFloat){
         super.init(frame: frame)
         
-        let path = UIBezierPath(rect: CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height)).cgPath
+        let newLineWidth = lineWidth*2
+        
+        let path = UIBezierPath(rect: CGRect(x: lineWidth/2, y: lineWidth, width: frame.size.width-lineWidth, height: frame.size.height-lineWidth*2)).cgPath
         progressLayer = CAShapeLayer()
         progressLayer.fillColor = UIColor.clear.cgColor
         progressLayer.strokeColor = UIColor.red.cgColor
         
-        progressLayer.lineWidth = lineWidth
+        progressLayer.lineWidth = newLineWidth
         progressLayer.strokeStart = 0
         progressLayer.path = path
         progressLayer.strokeEnd = 0
         progressLayer.opacity = 0
         
-        progressLayer.shadowRadius = 15
-        progressLayer.shadowOpacity = 0.9
-        progressLayer.shadowOffset = CGSize.zero
-        progressLayer.masksToBounds = false
+        progressLayer.shadowRadius = Neon.shadowRadius
+        progressLayer.shadowOpacity = Neon.shadowOpacity
+        progressLayer.shadowOffset = Neon.shadowOffset
+        progressLayer.masksToBounds = Neon.masksToBounds
+        
+        pause()
         
         self.layer.addSublayer(progressLayer)
     }

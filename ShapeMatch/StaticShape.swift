@@ -32,10 +32,10 @@ class StaticShape: UIView {
         
         self.layer.borderWidth = 3
         
-        layer.shadowRadius = 15
-        layer.shadowOpacity = 0.9
-        layer.shadowOffset = CGSize.zero
-        layer.masksToBounds = false
+        layer.shadowRadius = Neon.shadowRadius
+        layer.shadowOpacity = Neon.shadowOpacity
+        layer.shadowOffset = Neon.shadowOffset
+        layer.masksToBounds = Neon.masksToBounds
         
         self.isUserInteractionEnabled = false
     }
