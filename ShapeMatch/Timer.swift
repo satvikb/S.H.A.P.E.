@@ -14,6 +14,7 @@ class SquareTimer: UIView, CAAnimationDelegate{
     
     var done = {}
     
+    var animation : CABasicAnimation!
     var progressLayer: CAShapeLayer = CAShapeLayer()
  
     init(frame: CGRect, lineWidth: CGFloat){
@@ -21,7 +22,8 @@ class SquareTimer: UIView, CAAnimationDelegate{
         
         let newLineWidth = lineWidth*2
         
-        let path = UIBezierPath(rect: CGRect(x: lineWidth/2, y: lineWidth, width: frame.size.width-lineWidth, height: frame.size.height-lineWidth*2)).cgPath
+//        let path = UIBezierPath(rect: CGRect(x: lineWidth/2, y: lineWidth, width: frame.size.width-lineWidth, height: frame.size.height-lineWidth*2)).cgPath
+        let path = UIBezierPath(rect: CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height)).cgPath
         progressLayer = CAShapeLayer()
         progressLayer.fillColor = UIColor.clear.cgColor
         progressLayer.strokeColor = UIColor.red.cgColor
@@ -52,8 +54,7 @@ class SquareTimer: UIView, CAAnimationDelegate{
     }
     
     func start(time: CGFloat){
-        
-        let animation = CABasicAnimation(keyPath: "strokeEnd")
+        animation = CABasicAnimation(keyPath: "strokeEnd")
         animation.fromValue = CGFloat(1.0)
         animation.toValue = CGFloat(0.0)
         animation.duration = CFTimeInterval(time)
@@ -61,6 +62,7 @@ class SquareTimer: UIView, CAAnimationDelegate{
         animation.isRemovedOnCompletion = false
         animation.isAdditive = true
         animation.fillMode = kCAFillModeBackwards
+        
         progressLayer.add(animation, forKey: "timer")
     }
     
@@ -74,11 +76,11 @@ class SquareTimer: UIView, CAAnimationDelegate{
     }
     
     func pause(){
-        progressLayer.speed = 0
+        animation.speed = 0
     }
     
     func resume(){
-        progressLayer.speed = 1
+        animation.speed = 1
     }
     
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
