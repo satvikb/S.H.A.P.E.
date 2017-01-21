@@ -40,7 +40,7 @@ class GestureView : UIView{
 }
 
 class MovingShape: UIView, UIGestureRecognizerDelegate {
-
+    
     //RADIANS
     var radians: CGFloat = 0
     
@@ -128,85 +128,48 @@ class MovingShape: UIView, UIGestureRecognizerDelegate {
     let panSensitivity : CGFloat = 1.25
     
     func didPan(_ panGR: UIPanGestureRecognizer) {
-        //TODO: Instead of setting the pan gesture for min and max touches, use a if here, so then we can pause the game if the user does not have two touches on screen
-        self.superview!.bringSubview(toFront: self)
-        
-//        if()
-        
-        var translation = panGR.translation(in: self)
-        
-        translation = translation.applying(self.transform)
-        
-        self.center.x += translation.x * panSensitivity
-        self.center.y += translation.y * panSensitivity
-        
-        panGR.setTranslation(CGPoint.zero, in: self)
-        
-        gestureHappened()
+        if(GameController.sharedInstance.gamePaused == false){
+            //TODO: Instead of setting the pan gesture for min and max touches, use a if here, so then we can pause the game if the user does not have two touches on screen
+            self.superview!.bringSubview(toFront: self)
+            
+            
+            var translation = panGR.translation(in: self)
+            
+            translation = translation.applying(self.transform)
+            
+            self.center.x += translation.x * panSensitivity
+            self.center.y += translation.y * panSensitivity
+            
+            panGR.setTranslation(CGPoint.zero, in: self)
+            
+            gestureHappened()
+        }
     }
     
     func didPinch(_ pinchGR: UIPinchGestureRecognizer) {
-        self.superview!.bringSubview(toFront: self)
-        
-        let pinchValue = allowPinch()
-        if(pinchValue == .True){
-            let scale = pinchGR.scale
-//                        print("GR Scale: \(scale)")
-            currentScale = currentScale*scale
-            self.transform = self.transform.scaledBy(x: scale, y: scale)
-            pinchGR.scale = 1.0
-        }else if(pinchValue == .False){
-            self.transform = self.transform.scaledBy(x: 0.995, y: 0.995)
-            currentScale = currentScale * 0.995
-            pinchGR.scale = 1.0
-        }else if(pinchValue == .SuperFalse){
-            self.transform = self.transform.scaledBy(x: 1.005, y: 1.005)
-            currentScale = currentScale * 1.005
-            pinchGR.scale = 1.0
+        if(GameController.sharedInstance.gamePaused == false){
+            
+            self.superview!.bringSubview(toFront: self)
+            
+            let pinchValue = allowPinch()
+            if(pinchValue == .True){
+                let scale = pinchGR.scale
+                //                        print("GR Scale: \(scale)")
+                currentScale = currentScale*scale
+                self.transform = self.transform.scaledBy(x: scale, y: scale)
+                pinchGR.scale = 1.0
+            }else if(pinchValue == .False){
+                self.transform = self.transform.scaledBy(x: 0.995, y: 0.995)
+                currentScale = currentScale * 0.995
+                pinchGR.scale = 1.0
+            }else if(pinchValue == .SuperFalse){
+                self.transform = self.transform.scaledBy(x: 1.005, y: 1.005)
+                currentScale = currentScale * 1.005
+                pinchGR.scale = 1.0
+            }
+            
+            gestureHappened()
         }
-        
-//        let transformSize = __CGSizeApplyAffineTransform(self.startSize, self.transform)
-//        
-//        let scaleX = abs(transformSize.width/startSize.width)//abs(self.transform.a)
-//        let scaleY = abs(transformSize.height/startSize.height)//abs(self.transform.d)
-//        
-//        let maxScale = max(scaleX, scaleY)
-        
-//        print("Scale: \(maxScale) \(scaleX) \(scaleY) \(transformSize) \(self.frame.size) \(self.startSize)")
-//        if(maxScale < maxScale && maxScale > minScale){
-//            let scale = pinchGR.scale
-////            print("GR Scale: \(scale)")
-//            self.transform = self.transform.scaledBy(x: scale, y: scale)
-//            pinchGR.scale = 1.0
-//        }else if(maxScale > maxScale){
-//            let scale = pinchGR.scale
-//            print("Larger")
-//            if(scale <= 1){
-//                self.transform = self.transform.scaledBy(x: scale, y: scale)
-//                pinchGR.scale = 1.0
-//            }
-//        }else if(maxScale < minScale){
-//            let scale = pinchGR.scale
-//            print("Smaller")
-//            if(scale >= 1){
-//                self.transform = self.transform.scaledBy(x: scale, y: scale)
-//                pinchGR.scale = 1.0
-//            }
-//        }
-        
-//        else if(self.transform.a >= maxScale){
-//            let radians: CGFloat = atan2( (self.transform.b), (self.transform.a))
-//            
-//            self.transform = CGAffineTransform(scaleX: maxScale/1.01, y: maxScale/1.01)
-////            self.transform = self.transform.rotated(by: radians)
-//        }else if(self.transform.a <= minScale){
-//            let radians: CGFloat = atan2( (self.transform.b), (self.transform.a))
-//            
-//            self.transform = CGAffineTransform(scaleX: minScale*1.01, y: minScale*1.01)
-////            self.transform = self.transform.rotated(by: radians)
-//        }
-
-        gestureHappened()
     }
     
     let smallestRatio : CGFloat = 0.01
@@ -218,7 +181,7 @@ class MovingShape: UIView, UIGestureRecognizerDelegate {
         let area = shapeBounds.width*shapeBounds.height
         
         let areaRatio = area/Screen.screenArea
-//        print("Ratio: \(areaRatio) \(currentScale)")
+        //        print("Ratio: \(areaRatio) \(currentScale)")
         if(areaRatio < largestRatio && areaRatio > smallestRatio){
             return .True
         }else if(areaRatio >= largestRatio){
@@ -227,19 +190,23 @@ class MovingShape: UIView, UIGestureRecognizerDelegate {
             return .SuperFalse
         }
         return .False
+        
     }
     
     func didRotate(_ rotationGR: UIRotationGestureRecognizer) {
-        self.superview!.bringSubview(toFront: self)
-        
-        let rotation = rotationGR.rotation
-//        print("Rotate \(rotation)")
-        self.transform = self.transform.rotated(by: rotation)
-        rotationGR.rotation = 0.0
-        let radians: CGFloat = atan2( (self.transform.b), (self.transform.a))
-        
-        self.radians = radians
-        gestureHappened()
+        if(GameController.sharedInstance.gamePaused == false){
+            
+            self.superview!.bringSubview(toFront: self)
+            
+            let rotation = rotationGR.rotation
+            //        print("Rotate \(rotation)")
+            self.transform = self.transform.rotated(by: rotation)
+            rotationGR.rotation = 0.0
+            let radians: CGFloat = atan2( (self.transform.b), (self.transform.a))
+            
+            self.radians = radians
+            gestureHappened()
+        }
     }
     
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -252,7 +219,9 @@ class MovingShape: UIView, UIGestureRecognizerDelegate {
     }
     
     func gestureHappened(){
+        //        if(GameController.sharedInstance.gamePaused == false){
         anyGestureHappened()
+        //        }
     }
     
     var recievedTouch = {}
@@ -263,6 +232,6 @@ class MovingShape: UIView, UIGestureRecognizerDelegate {
             self.center = CGPoint(x: self.center.x, y: Screen.getScreenPos(x: 0, y: 2).y)
         })
     }
-  
+    
 }
 

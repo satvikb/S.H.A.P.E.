@@ -11,7 +11,6 @@ import Flurry_iOS_SDK
 
 class GameOver: UIView{
     
-    let transitionTime: CGFloat = 0.5
     
     var homeButton: Square
     var replayButton: Square
@@ -44,7 +43,7 @@ class GameOver: UIView{
         highScoreLabel.adjustsFontSizeToFitWidth = true
         highScoreLabel.textAlignment = .center
         
-        currentScoreLabel = Label(frame: CGRect(origin: Screen.getScreenPos(x: 0.1, y: 0.1), size: Screen.getScreenSize(x: titleLabelSize.width, y:0.225)), text: "\(score)", _outPos: Screen.getScreenPos(x: 0.5-(titleLabelSize.width/2), y: 1+buttonHeight), _inPos: Screen.getScreenPos(x: 0.1, y: 0.4))
+        currentScoreLabel = Label(frame: CGRect(origin: Screen.getScreenPos(x: 0.1, y: 0.1), size: Screen.getScreenSize(x: titleLabelSize.width, y:0.225)), text: "\(score)", _outPos: Screen.getScreenPos(x: 1+titleLabelSize.width, y: 0.4), _inPos: Screen.getScreenPos(x: 0.1, y: 0.4))
         currentScoreLabel.changeTextColor(color: .white)
         currentScoreLabel.font = UIFont(name: fontName, size: Screen.fontSize(fontSize: 10))
         currentScoreLabel.adjustsFontSizeToFitWidth = true
@@ -59,7 +58,7 @@ class GameOver: UIView{
         shareButton = Square(frame: CGRect(origin: CGPoint.outOfScreen, size: Screen.getScreenSize(x: buttonWidth, y: buttonHeight)), color: UIColor.alizarinColor(), _outPos: Screen.getScreenPos(x: -buttonWidth, y: buttonsY), _inPos: Screen.getScreenPos(x: sidePadding+(2*buttonWidth)+buttonWidth/2, y: buttonsY))
         shareButton.imageView.image = #imageLiteral(resourceName: "shareicon.png")
         super.init(frame: frame)
-
+        
         homeButton.tap = {
             Flurry.logEvent("HopeTapped", withParameters: ["Score":self.score, "Highscore":ScoreManager.currentHighScore])
             GameController.sharedInstance.switchFromTo(from: .GameOver, to: .MainMenu)
@@ -71,11 +70,14 @@ class GameOver: UIView{
         }
         
         shareButton.tap = {
-            Flurry.logEvent("ShareTapped", withParameters: ["Score":self.score, "Highscore":ScoreManager.currentHighScore])
-
-            let pluralword: String = (self.score == 1) ? "match" : "matches"
-            let activityVC = UIActivityViewController(activityItems: ["I just scored \(self.score) \(pluralword) on S.H.A.P.E! Can you beat that? http://bit.ly/S_H_A_P_E"], applicationActivities: nil)
-            GameController.sharedInstance.viewController.present(activityVC, animated: true, completion: nil)
+            if(GameController.sharedInstance.switchingViews == false){
+                
+                Flurry.logEvent("ShareTapped", withParameters: ["Score":self.score, "Highscore":ScoreManager.currentHighScore])
+                
+                let pluralword: String = (self.score == 1) ? "match" : "matches"
+                let activityVC = UIActivityViewController(activityItems: ["I just scored \(self.score) \(pluralword) on S.H.A.P.E! Can you beat that? http://bit.ly/S_H_A_P_E"], applicationActivities: nil)
+                GameController.sharedInstance.viewController.present(activityVC, animated: true, completion: nil)
+            }
         }
         
         addSubview(homeButton)
@@ -103,20 +105,20 @@ class GameOver: UIView{
         
         ScoreManager.saveScoreToGameCenter(score: score) //Submit to game center and save
         
-        homeButton.animateIn(time: transitionTime)
-        replayButton.animateIn(time: transitionTime)
-        shareButton.animateIn(time: transitionTime)
-        gameOverLabel.animateIn(time: transitionTime)
-        currentScoreLabel.animateIn(time: transitionTime)
-        highScoreLabel.animateIn(time: transitionTime)
+        homeButton.animateIn(time: Gameplay.transitionTime)
+        replayButton.animateIn(time: Gameplay.transitionTime)
+        shareButton.animateIn(time: Gameplay.transitionTime)
+        gameOverLabel.animateIn(time: Gameplay.transitionTime)
+        currentScoreLabel.animateIn(time: Gameplay.transitionTime)
+        highScoreLabel.animateIn(time: Gameplay.transitionTime)
     }
     
     func animateOut(){
-        homeButton.animateOut(time: transitionTime)
-        replayButton.animateOut(time: transitionTime)
-        shareButton.animateOut(time: transitionTime)
-        gameOverLabel.animateOut(time: transitionTime)
-        currentScoreLabel.animateOut(time: transitionTime)
-        highScoreLabel.animateOut(time: transitionTime)
+        homeButton.animateOut(time: Gameplay.transitionTime)
+        replayButton.animateOut(time: Gameplay.transitionTime)
+        shareButton.animateOut(time: Gameplay.transitionTime)
+        gameOverLabel.animateOut(time: Gameplay.transitionTime)
+        currentScoreLabel.animateOut(time: Gameplay.transitionTime)
+        highScoreLabel.animateOut(time: Gameplay.transitionTime)
     }
 }

@@ -80,7 +80,17 @@ class SettingsData {
             reduceColors = true
         }
         
+        var disableTutorialSetting = Setting(_name: "Disable Tutorial", _value: false)
+        disableTutorialSetting.setNonActive = {
+            GameController.sharedInstance.game.tutorialEnabled = true
+        }
+        disableTutorialSetting.setActive = {
+            GameController.sharedInstance.game.tutorialEnabled = false
+        }
+        
+        
         settings.append(audioSetting)
         settings.append(reduceColorSetting)
+        settings.append(disableTutorialSetting)
     }
 }

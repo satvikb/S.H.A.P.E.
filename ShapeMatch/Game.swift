@@ -11,7 +11,7 @@ import Flurry_iOS_SDK
 
 class Game: UIView{
     
-    let transitionTime: CGFloat = 0.5
+//    let transitionTime: CGFloat = 0.5
     
     var timer: SquareTimer = SquareTimer.null
     
@@ -33,6 +33,9 @@ class Game: UIView{
     
 //    var tutorialView : View!
     var tutorialLabel: Label!
+    var tutorialEnabled: Bool = true
+    private var tutorialFinished: Bool = false
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -67,12 +70,23 @@ class Game: UIView{
                 //Restrict moving shape size here?
                 
                 if(self.similarToStaticShape()){
-                    self.increaseDifficulty()
-                    Sounds.PlayMatchedSound()
-                    self.newShapePositions()
-                    self.timer.reset(time: self.timerTime)
-                    self.score += 1
-                    self.scoreLabel.text = "\(self.score)"
+                    
+                    if(self.tutorialEnabled == true && self.tutorialFinished == false){
+                        Sounds.PlayMatchedSound()
+                        self.newShapePositions()
+                        self.animateOutTutorialLabel()
+                        self.timer.start(time: self.timerTime)
+//                        self.timer.reset(time: self.timerTime)
+//                        self.timer.resume()
+                        self.tutorialFinished = true
+                    }else{
+                        self.increaseDifficulty()
+                        Sounds.PlayMatchedSound()
+                        self.newShapePositions()
+                        self.timer.reset(time: self.timerTime)
+                        self.score += 1
+                        self.scoreLabel.text = "\(self.score)"
+                    }
                 }
             }
         }
@@ -94,12 +108,11 @@ class Game: UIView{
     }
     
     func increaseDifficulty(){
-        let minTime : CGFloat = 2
 
-        timerTime -= 0.01
+        timerTime -= Gameplay.spReduceTime
         
-        if(timerTime < minTime){
-            timerTime = minTime
+        if(timerTime < Gameplay.spMinTime){
+            timerTime = Gameplay.spMinTime
         }
         
     }
@@ -166,7 +179,7 @@ class Game: UIView{
 
         let deltaRect = subRect(movingRect: movingFrame, staticRect: staticFrame)
     
-        let width = Screen.getScreenSize(x: 0.03, y: 0).width
+        let width = Gameplay.spCompareWidth
         let minimumDiffRect = CGRect(x: width, y: width, width: width, height: width)
         
         let isSame = rectLessThan(rect1: deltaRect, rect2: minimumDiffRect)
@@ -206,29 +219,42 @@ class Game: UIView{
         score = 0
         scoreLabel.text = "\(score)"
         isGameOver = false
-        scoreLabel.animateIn(time: transitionTime)
+        scoreLabel.animateIn(time: Gameplay.transitionTime)
         newShapePositions(changeMovingShapePos: true)
-        timer.animateIn(time: transitionTime)
-        timer.start(time: timerTime)
+        timer.animateIn(time: Gameplay.transitionTime)
+
+        if(tutorialEnabled == false){
+            timer.start(time: timerTime)
+        }
+        
         self.bringSubview(toFront: movingShape.gestureView)
         
-        tutorialLabel.animateIn(time: transitionTime)
-        
-        UIView.animate(withDuration: TimeInterval(transitionTime), delay: 3, usingSpringWithDamping: 0, initialSpringVelocity: 0, options: .curveLinear, animations: {
-            self.tutorialLabel.frame.origin = self.tutorialLabel.outPos
-        }, completion: {(complete: Bool) in
-        
-        })
-        
+        if(tutorialEnabled == true){
+            print("tutorial")
+            tutorialFinished = false
+//            timer.pause() //For tutorial
+            
+            tutorialLabel.animateIn(time: Gameplay.transitionTime)
+        }
+    }
+    
+    func animateOutTutorialLabel(){
+        print("animate out tutrial label")
+//        UIView.animate(withDuration: TimeInterval(Gameplay.transitionTime), delay: 3, usingSpringWithDamping: 0, initialSpringVelocity: 0, options: .curveLinear, animations: {
+//            self.tutorialLabel.frame.origin = self.tutorialLabel.outPos
+//        }, completion: {(complete: Bool) in
+//            
+//        })
+        tutorialLabel.animateOut(time: Gameplay.transitionTime)
     }
     
     func animateOut(){
         Flurry.logEvent("Game", withParameters: ["Score": score, "StaticShapeSize":staticShape.frame.size, "RectDiff": subRect(movingRect: CGRect(origin: movingShape.center, size: movingShape.frame.size), staticRect: CGRect(origin: staticShape.center, size: staticShape.frame.size)), "Color":staticShape.col], timed: true)
 
-        timer.animateOut(time: transitionTime)
+        timer.animateOut(time: Gameplay.transitionTime)
         timer.removeTimer()
-        scoreLabel.animateOut(time: transitionTime)
-        movingShape.animateOut(time: transitionTime)
-        staticShape.animateOut(time: transitionTime)
+        scoreLabel.animateOut(time: Gameplay.transitionTime)
+        movingShape.animateOut(time: Gameplay.transitionTime)
+        staticShape.animateOut(time: Gameplay.transitionTime)
     }
 }

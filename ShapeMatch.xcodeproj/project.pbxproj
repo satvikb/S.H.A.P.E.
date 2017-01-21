@@ -21,6 +21,7 @@
 		400892991E0CFE6C008A52D8 /* MultiplayerScreenSide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400892981E0CFE6C008A52D8 /* MultiplayerScreenSide.swift */; };
 		401644391E0F51C800819FF3 /* Neon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401644381E0F51C800819FF3 /* Neon.swift */; };
 		402648405084300CE794C967 /* Pods_ShapeMatchUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E92E729CA4758BE9CACA842 /* Pods_ShapeMatchUITests.framework */; };
+		404778C51E33FC5B00FC2D25 /* Gameplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 404778C41E33FC5B00FC2D25 /* Gameplay.swift */; };
 		407E08991E0E388100BAA626 /* Check.png in Resources */ = {isa = PBXBuildFile; fileRef = 407E08981E0E388100BAA626 /* Check.png */; };
 		4086873F1E0E1D5000B5477E /* SettingsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4086873E1E0E1D5000B5477E /* SettingsData.swift */; };
 		408687411E0E22D900B5477E /* SettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408687401E0E22D900B5477E /* SettingButton.swift */; };
@@ -82,6 +83,7 @@
 		400892961E0CFDF6008A52D8 /* Multiplayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Multiplayer.swift; sourceTree = "<group>"; };
 		400892981E0CFE6C008A52D8 /* MultiplayerScreenSide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = MultiplayerScreenSide.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		401644381E0F51C800819FF3 /* Neon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Neon.swift; sourceTree = "<group>"; };
+		404778C41E33FC5B00FC2D25 /* Gameplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gameplay.swift; sourceTree = "<group>"; };
 		407E08981E0E388100BAA626 /* Check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Check.png; sourceTree = "<group>"; };
 		407E089A1E0E3E7200BAA626 /* ShapeMatch-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ShapeMatch-Bridging-Header.h"; sourceTree = "<group>"; };
 		4086873E1E0E1D5000B5477E /* SettingsData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SettingsData.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -174,6 +176,7 @@
 				4002CA271E0A419200291DCC /* GameController.swift */,
 				E7175D631E0CFC0600A865F7 /* ScoreManager.swift */,
 				4086873E1E0E1D5000B5477E /* SettingsData.swift */,
+				404778C41E33FC5B00FC2D25 /* Gameplay.swift */,
 			);
 			name = Main;
 			sourceTree = "<group>";
@@ -628,6 +631,7 @@
 				40EC74291CF396E400E7B5E1 /* Misc.swift in Sources */,
 				40D02B9F1E10574A00435ED2 /* View.swift in Sources */,
 				40EC73F71CF38DC500E7B5E1 /* AppDelegate.swift in Sources */,
+				404778C51E33FC5B00FC2D25 /* Gameplay.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

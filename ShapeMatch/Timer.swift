@@ -10,15 +10,31 @@ import UIKit
 
 class SquareTimer: UIView, CAAnimationDelegate{
 
+    
+//    var layer: CALayer?
     static let null = SquareTimer(frame: CGRect.zero, lineWidth: 0)
     
     var done = {}
     
-    var animation : CABasicAnimation!
+    var animation: CABasicAnimation!
+    var animationViewPosition: CAAnimation!
     var progressLayer: CAShapeLayer = CAShapeLayer()
  
+    var countdownLabel: UILabel!
+    var counter: Int = 3
+    var counterTimer: Timer!
+    
     init(frame: CGRect, lineWidth: CGFloat){
         super.init(frame: frame)
+        
+        countdownLabel = UILabel(frame: frame)
+        countdownLabel.isUserInteractionEnabled = false
+        countdownLabel.text = ""
+        countdownLabel.textAlignment = .center
+        countdownLabel.textColor = UIColor.white
+        countdownLabel.font = UIFont(name: fontName, size: Screen.fontSize(fontSize: 8))
+        countdownLabel.adjustsFontSizeToFitWidth = true
+        
         
         let newLineWidth = lineWidth*2
         
@@ -26,7 +42,7 @@ class SquareTimer: UIView, CAAnimationDelegate{
         let path = UIBezierPath(rect: CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height)).cgPath
         progressLayer = CAShapeLayer()
         progressLayer.fillColor = UIColor.clear.cgColor
-        progressLayer.strokeColor = UIColor.red.cgColor
+//        progressLayer.strokeColor = UIColor.red.cgColor
         
         progressLayer.lineWidth = newLineWidth
         progressLayer.strokeStart = 0
@@ -42,6 +58,9 @@ class SquareTimer: UIView, CAAnimationDelegate{
 //        pause()
         
         self.layer.addSublayer(progressLayer)
+        
+        self.addSubview(countdownLabel)
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -75,15 +94,69 @@ class SquareTimer: UIView, CAAnimationDelegate{
         progressLayer.removeAnimation(forKey: "timer")
     }
     
+//    func pause(){
+//        animation.speed = 0
+//        
+//    }
+//    
+//    func resume(){
+//        animation.speed = 1
+//    }
+    
     func pause(){
-        animation.speed = 0
+        animationViewPosition = progressLayer.animation(forKey: "timer")?.copy() as! CAAnimation!
+        
+        let pausedTime = layer.convertTime(CACurrentMediaTime(), from: nil)
+        layer.speed = 0.0
+        layer.timeOffset = pausedTime
     }
     
-    func resume(){
-        animation.speed = 1
+    func resume(delay: CGFloat = 3){
+        if(animationViewPosition != nil){
+            progressLayer.add(animationViewPosition, forKey: "timer")
+            animationViewPosition = nil
+        }
+        
+        counter = Int(delay)
+        
+//        UIView.animate(withDuration: 0, delay: TimeInterval(delay), options: UIViewAnimationOptions.curveLinear, animations: {}, completion: {(bool: Bool) in
+//            print("delay \(delay)")
+//            
+//                    })
+        self.bringSubview(toFront: countdownLabel)
+        countdownLabel.isUserInteractionEnabled = true
+
+        counterTimer = Timer.scheduledTimer(timeInterval: 0.9, target: self, selector: #selector(updateCounter), userInfo: nil, repeats: true)
+
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(Int(delay*1000)), execute: {
+            // Put your code which should be executed with a delay here
+            let pausedTime = self.layer.timeOffset
+            self.layer.speed = 1.0
+            self.layer.timeOffset = 0.0
+            self.layer.beginTime = 0.0
+            let timeSincePause = self.layer.convertTime(CACurrentMediaTime(), from: nil) - pausedTime
+            self.layer.beginTime = timeSincePause
+            self.countdownLabel.isUserInteractionEnabled = false
+            GameController.sharedInstance.gamePaused = false
+        })
+    }
+    
+    func updateCounter() {
+        //you code, this is an example
+        if counter > 0 {
+            print("\(counter) seconds to the end of the world")
+            countdownLabel.text = "\(counter)"
+            counter -= 1
+        }else{
+            counter = 3
+            countdownLabel.text = ""
+            counterTimer.invalidate()
+        }
     }
     
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+        print("Timer finish \(flag)")
         if(flag){
             timerFinished()
         }

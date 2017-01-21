@@ -11,7 +11,7 @@ import Flurry_iOS_SDK
 
 class MultiplayerGameOver: UIView{
     
-    let transitionTime: CGFloat = 0.5
+//    let transitionTime: CGFloat = 0.5
     
     var homeButton: Square = Square.null
     var replayButton: Square = Square.null
@@ -157,29 +157,29 @@ class MultiplayerGameOver: UIView{
             horizontalLine.backgroundColor = upScore > downScore ? GameController.sharedInstance.multiplayer.upSide.staticShape.col: GameController.sharedInstance.multiplayer.downSide.staticShape.col
         }
         
-        homeButton.animateIn(time: transitionTime)
-        replayButton.animateIn(time: transitionTime)
-        gameOverLabel.animateIn(time: transitionTime)
+        homeButton.animateIn(time: Gameplay.transitionTime)
+        replayButton.animateIn(time: Gameplay.transitionTime)
+        gameOverLabel.animateIn(time: Gameplay.transitionTime)
         
-        upScoreLabel.animateIn(time: transitionTime)
-        downScoreLabel.animateIn(time: transitionTime)
+        upScoreLabel.animateIn(time: Gameplay.transitionTime)
+        downScoreLabel.animateIn(time: Gameplay.transitionTime)
 
-        upScorePlayerLabel.animateIn(time: transitionTime)
-        downScorePlayerLabel.animateIn(time: transitionTime)
+        upScorePlayerLabel.animateIn(time: Gameplay.transitionTime)
+        downScorePlayerLabel.animateIn(time: Gameplay.transitionTime)
         
-        animateInHorizontalLine(time: transitionTime)
+        animateInHorizontalLine(time: Gameplay.transitionTime)
     }
     
     func animateOut(){
-        homeButton.animateOut(time: transitionTime)
-        replayButton.animateOut(time: transitionTime)
-        gameOverLabel.animateOut(time: transitionTime)
-        upScoreLabel.animateOut(time: transitionTime)
-        downScoreLabel.animateOut(time: transitionTime)
+        homeButton.animateOut(time: Gameplay.transitionTime)
+        replayButton.animateOut(time: Gameplay.transitionTime)
+        gameOverLabel.animateOut(time: Gameplay.transitionTime)
+        upScoreLabel.animateOut(time: Gameplay.transitionTime)
+        downScoreLabel.animateOut(time: Gameplay.transitionTime)
         
-        upScorePlayerLabel.animateOut(time: transitionTime)
-        downScorePlayerLabel.animateOut(time: transitionTime)
+        upScorePlayerLabel.animateOut(time: Gameplay.transitionTime)
+        downScorePlayerLabel.animateOut(time: Gameplay.transitionTime)
         
-        animateOutHorizontalLine(time: transitionTime)
+        animateOutHorizontalLine(time: Gameplay.transitionTime)
     }
 }
