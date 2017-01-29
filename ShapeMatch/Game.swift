@@ -11,7 +11,7 @@ import Flurry_iOS_SDK
 
 class Game: UIView{
     
-    let transitionTime: CGFloat = 0.5
+//    let transitionTime: CGFloat = 0.5
     
     var timer: SquareTimer = SquareTimer.null
     
@@ -33,16 +33,30 @@ class Game: UIView{
     
 //    var tutorialView : View!
     var tutorialLabel: Label!
+    var howToPlayLabel: Label!
+
+    var fingerImage : UIImageView!
+    
+    var tutorialEnabled: Bool = true
+    private var tutorialFinished: Bool = false
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
 //        tutorialView = View(frame: frame, _outPos: Screen.getScreenPos(x: -1, y: 0), _inPos: Screen.getScreenPos(x: 0, y: 0))
 //        tutorialView.backgroundColor = UIColor.black
 //        tutorialView.layer.opacity = 0.5
-        tutorialLabel = Label(frame: CGRect(origin: Screen.getScreenPos(x: 0, y: 0.05), size: Screen.getScreenSize(x: 1, y: 0.1)), text: "Match the shape.", _outPos: Screen.getScreenPos(x: -1, y: 0.5), _inPos: Screen.getScreenPos(x: 0, y: 0.9), textColor: UIColor.white, debugFrame: false, _neon: true)
-        tutorialLabel.textAlignment = .center
-        tutorialLabel.font = UIFont(name: fontName, size: Screen.fontSize(fontSize: 3))
+        tutorialLabel = Label(frame: CGRect(origin: Screen.getScreenPos(x: 0, y: 0.05), size: Screen.getScreenSize(x: 0.8, y: 0.1)), text: "Match the shape.", _outPos: Screen.getScreenPos(x: -1, y: 0.5), _inPos: Screen.getScreenPos(x: 0.025, y: 0.8), textColor: UIColor.white, debugFrame: false, _neon: true)
+        tutorialLabel.textAlignment = .left
+        tutorialLabel.font = UIFont(name: fontName, size: Screen.fontSize(fontSize: 2.5))
         
+        howToPlayLabel = Label(frame: CGRect(origin: Screen.getScreenPos(x: 0, y: 0.05), size: Screen.getScreenSize(x: 0.5, y: 0.1)), text: "Use two fingers.", _outPos: Screen.getScreenPos(x: -1, y: 0.5), _inPos: Screen.getScreenPos(x: 0.025, y: 0.9), textColor: UIColor.white, debugFrame: false, _neon: true)
+        howToPlayLabel.textAlignment = .left
+        howToPlayLabel.font = UIFont(name: fontName, size: Screen.fontSize(fontSize: 2))
+        
+        let imageWidth = Screen.getScreenSize(x: 0.2, y: 0).width
+        fingerImage = UIImageView(frame: CGRect(origin: CGPoint.outOfScreen, size: CGSize(width: imageWidth, height: imageWidth)))
+        fingerImage.image = #imageLiteral(resourceName: "finger.png")
         
         let timerWidth = Screen.getScreenSize(x: 0.016, y: 0).width
         
@@ -67,12 +81,23 @@ class Game: UIView{
                 //Restrict moving shape size here?
                 
                 if(self.similarToStaticShape()){
-                    self.increaseDifficulty()
-                    Sounds.PlayMatchedSound()
-                    self.newShapePositions()
-                    self.timer.reset(time: self.timerTime)
-                    self.score += 1
-                    self.scoreLabel.text = "\(self.score)"
+                    
+                    if(self.tutorialEnabled == true && self.tutorialFinished == false){
+                        Sounds.PlayMatchedSound()
+                        self.newShapePositions()
+                        self.animateOutTutorialLabel()
+                        self.timer.start(time: self.timerTime)
+//                        self.timer.reset(time: self.timerTime)
+//                        self.timer.resume()
+                        self.tutorialFinished = true
+                    }else{
+                        self.increaseDifficulty()
+                        Sounds.PlayMatchedSound()
+                        self.newShapePositions()
+                        self.timer.reset(time: self.timerTime)
+                        self.score += 1
+                        self.scoreLabel.text = "\(self.score)"
+                    }
                 }
             }
         }
@@ -91,15 +116,16 @@ class Game: UIView{
         self.addSubview(movingShape.gestureView)
 //        self.addSubview(tutorialView)
         self.addSubview(tutorialLabel)
+        self.addSubview(howToPlayLabel)
+        self.addSubview(fingerImage)
     }
     
     func increaseDifficulty(){
-        let minTime : CGFloat = 2
 
-        timerTime -= 0.01
+        timerTime -= Gameplay.spReduceTime
         
-        if(timerTime < minTime){
-            timerTime = minTime
+        if(timerTime < Gameplay.spMinTime){
+            timerTime = Gameplay.spMinTime
         }
         
     }
@@ -166,7 +192,7 @@ class Game: UIView{
 
         let deltaRect = subRect(movingRect: movingFrame, staticRect: staticFrame)
     
-        let width = Screen.getScreenSize(x: 0.03, y: 0).width
+        let width = Gameplay.spCompareWidth
         let minimumDiffRect = CGRect(x: width, y: width, width: width, height: width)
         
         let isSame = rectLessThan(rect1: deltaRect, rect2: minimumDiffRect)
@@ -206,29 +232,51 @@ class Game: UIView{
         score = 0
         scoreLabel.text = "\(score)"
         isGameOver = false
-        scoreLabel.animateIn(time: transitionTime)
+        scoreLabel.animateIn(time: Gameplay.transitionTime)
         newShapePositions(changeMovingShapePos: true)
-        timer.animateIn(time: transitionTime)
-        timer.start(time: timerTime)
+        timer.animateIn(time: Gameplay.transitionTime)
+
+        if(tutorialEnabled == false){
+            timer.start(time: timerTime)
+        }
+        
         self.bringSubview(toFront: movingShape.gestureView)
         
-        tutorialLabel.animateIn(time: transitionTime)
+        if(tutorialEnabled == true){
+            print("tutorial")
+            tutorialFinished = false
+//            timer.pause() //For tutorial
+            
+            tutorialLabel.animateIn(time: Gameplay.transitionTime)
+            howToPlayLabel.animateIn(time: Gameplay.transitionTime)
+            UIView.animate(withDuration: TimeInterval(Gameplay.transitionTime), animations: {
+                self.fingerImage.frame.origin = CGPoint(x: Screen.screenSize.width-self.fingerImage.frame.width, y: Screen.screenSize.height-self.fingerImage.frame.height)
+            })
+        }
+    }
+    
+    func animateOutTutorialLabel(){
+        print("animate out tutrial label")
+//        UIView.animate(withDuration: TimeInterval(Gameplay.transitionTime), delay: 3, usingSpringWithDamping: 0, initialSpringVelocity: 0, options: .curveLinear, animations: {
+//            self.tutorialLabel.frame.origin = self.tutorialLabel.outPos
+//        }, completion: {(complete: Bool) in
+//            
+//        })
+        tutorialLabel.animateOut(time: Gameplay.transitionTime)
+        howToPlayLabel.animateOut(time: Gameplay.transitionTime)
         
-        UIView.animate(withDuration: TimeInterval(transitionTime), delay: 3, usingSpringWithDamping: 0, initialSpringVelocity: 0, options: .curveLinear, animations: {
-            self.tutorialLabel.frame.origin = self.tutorialLabel.outPos
-        }, completion: {(complete: Bool) in
-        
+        UIView.animate(withDuration: TimeInterval(Gameplay.transitionTime), animations: {
+            self.fingerImage.frame.origin = CGPoint(x: Screen.screenSize.width+self.fingerImage.frame.width, y: Screen.screenSize.height-self.fingerImage.frame.height)
         })
-        
     }
     
     func animateOut(){
         Flurry.logEvent("Game", withParameters: ["Score": score, "StaticShapeSize":staticShape.frame.size, "RectDiff": subRect(movingRect: CGRect(origin: movingShape.center, size: movingShape.frame.size), staticRect: CGRect(origin: staticShape.center, size: staticShape.frame.size)), "Color":staticShape.col], timed: true)
 
-        timer.animateOut(time: transitionTime)
+        timer.animateOut(time: Gameplay.transitionTime)
         timer.removeTimer()
-        scoreLabel.animateOut(time: transitionTime)
-        movingShape.animateOut(time: transitionTime)
-        staticShape.animateOut(time: transitionTime)
+        scoreLabel.animateOut(time: Gameplay.transitionTime)
+        movingShape.animateOut(time: Gameplay.transitionTime)
+        staticShape.animateOut(time: Gameplay.transitionTime)
     }
 }

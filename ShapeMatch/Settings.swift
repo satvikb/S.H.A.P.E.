@@ -10,7 +10,7 @@ import UIKit
 
 class Settings: UIView {
     
-    let transitionTime: CGFloat = 0.5
+//    let transitionTime: CGFloat = 0.5
     
     var titleLabel: Label = Label.Null
     var scoreLabel: Label = Label.Null
@@ -86,30 +86,30 @@ class Settings: UIView {
     }
     
     func animateIn(){
-        titleLabel.animateIn(time: transitionTime)
-        backButton.animateIn(time: transitionTime)
-        creditsLabel.animateIn(time: transitionTime)
+        titleLabel.animateIn(time: Gameplay.transitionTime)
+        backButton.animateIn(time: Gameplay.transitionTime)
+        creditsLabel.animateIn(time: Gameplay.transitionTime)
         
         for label in settingLabels{
-            label.animateIn(time: transitionTime)
+            label.animateIn(time: Gameplay.transitionTime)
         }
         
         for button in settingButtons{
-            button.animateIn(time: transitionTime)
+            button.animateIn(time: Gameplay.transitionTime)
         }
     }
     
     func animateOut(){
-        titleLabel.animateOut(time: transitionTime)
-        backButton.animateOut(time: transitionTime)
-        creditsLabel.animateOut(time: transitionTime)
+        titleLabel.animateOut(time: Gameplay.transitionTime)
+        backButton.animateOut(time: Gameplay.transitionTime)
+        creditsLabel.animateOut(time: Gameplay.transitionTime)
         
         for label in settingLabels{
-            label.animateOut(time: transitionTime)
+            label.animateOut(time: Gameplay.transitionTime)
         }
         
         for button in settingButtons{
-            button.animateOut(time: transitionTime)
+            button.animateOut(time: Gameplay.transitionTime)
         }
     }
 }

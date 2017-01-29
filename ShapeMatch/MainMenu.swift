@@ -10,7 +10,7 @@ import UIKit
 
 class MainMenu: UIView {
     
-    let transitionTime: CGFloat = 0.5
+    //    let transitionTime: CGFloat = 0.5
     
     var titleLabel: Label = Label.Null
     var scoreLabel: Label = Label.Null
@@ -20,7 +20,7 @@ class MainMenu: UIView {
     var leaderboardButton: Square
     
     var multiplayerButton: Square = Square.null
-
+    
     
     override init(frame: CGRect) {
         let buttonsY: CGFloat = 0.7
@@ -57,7 +57,9 @@ class MainMenu: UIView {
         leaderboardButton = Square(frame: CGRect(origin: CGPoint.outOfScreen, size: Screen.getScreenSize(x: buttonWidth, y: buttonHeight)), color: UIColor.alizarinColor(), _outPos: startOutPos, _inPos: Screen.getScreenPos(x: sidePadding+(2*buttonWidth)+buttonWidth/2, y: buttonsY))
         leaderboardButton.imageView.image = #imageLiteral(resourceName: "leaderboard icon.png")
         leaderboardButton.tap = {
-            ScoreManager.showLeaderboardIn(viewController: GameController.sharedInstance.viewController)
+            if(GameController.sharedInstance.switchingViews == false){
+                ScoreManager.showLeaderboardIn(viewController: GameController.sharedInstance.viewController)
+            }
         }
         
         if(GameController.sharedInstance.deviceModel == .iPad){
@@ -89,26 +91,26 @@ class MainMenu: UIView {
     func animateIn(){
         scoreLabel.text = "Highscore: \(ScoreManager.currentHighScore)"
         
-        playButton.animateIn(time: transitionTime)
-        settingsButton.animateIn(time: transitionTime)
-        leaderboardButton.animateIn(time: transitionTime)
-        titleLabel.animateIn(time: transitionTime)
-        scoreLabel.animateIn(time: transitionTime)
+        playButton.animateIn(time: Gameplay.transitionTime)
+        settingsButton.animateIn(time: Gameplay.transitionTime)
+        leaderboardButton.animateIn(time: Gameplay.transitionTime)
+        titleLabel.animateIn(time: Gameplay.transitionTime)
+        scoreLabel.animateIn(time: Gameplay.transitionTime)
         
         if(GameController.sharedInstance.deviceModel == .iPad){
-            multiplayerButton.animateIn(time: transitionTime)
+            multiplayerButton.animateIn(time: Gameplay.transitionTime)
         }
     }
     
     func animateOut(){
-        playButton.animateOut(time: transitionTime)
-        settingsButton.animateOut(time: transitionTime)
-        leaderboardButton.animateOut(time: transitionTime)
-        titleLabel.animateOut(time: transitionTime)
-        scoreLabel.animateOut(time: transitionTime)
+        playButton.animateOut(time: Gameplay.transitionTime)
+        settingsButton.animateOut(time: Gameplay.transitionTime)
+        leaderboardButton.animateOut(time: Gameplay.transitionTime)
+        titleLabel.animateOut(time: Gameplay.transitionTime)
+        scoreLabel.animateOut(time: Gameplay.transitionTime)
         
         if(GameController.sharedInstance.deviceModel == .iPad){
-            multiplayerButton.animateOut(time: transitionTime)
+            multiplayerButton.animateOut(time: Gameplay.transitionTime)
         }
     }
 }

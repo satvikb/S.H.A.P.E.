@@ -11,12 +11,15 @@ import Flurry_iOS_SDK
 
 class Multiplayer: UIView{
     
-    let transitionTime: CGFloat = 0.5
+//    let transitionTime: CGFloat = 0.5
     
     var upSide: MultiplayerScreenSide!
     var downSide: MultiplayerScreenSide!
     
+    var numberOfGameOverSide : Int = 0
     var isGameOver: Bool = false
+    
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -47,7 +50,7 @@ class Multiplayer: UIView{
         upSide.movingShape.setupGestureRecognizers()
         upSide.movingShape.anyGestureHappened = {
             if(self.isGameOver == false){
-                if(self.similarToStaticShape(side: self.upSide)){
+                if(self.similarToStaticShape(side: self.upSide) && self.upSide.gameOver == false){
                     self.increaseDifficulty(side: self.upSide)
                     Sounds.PlayMatchedSound()
                     self.newShapePositions(side: self.upSide)
@@ -94,7 +97,7 @@ class Multiplayer: UIView{
         downSide.movingShape.setupGestureRecognizers()
         downSide.movingShape.anyGestureHappened = {
             if(self.isGameOver == false){
-                if(self.similarToStaticShape(side: self.downSide)){
+                if(self.similarToStaticShape(side: self.downSide) && self.downSide.gameOver == false){
                     self.increaseDifficulty(side: self.downSide)
                     Sounds.PlayMatchedSound()
                     self.newShapePositions(side: self.downSide)
@@ -207,34 +210,53 @@ class Multiplayer: UIView{
     }
     
     func GameOver(side: MultiplayerScreenSide){
-        Sounds.PlayGameOverSound()
-        isGameOver = true
+//        Sounds.PlayGameOverSound()
+//        isGameOver = true
+//        
+//        GameController.sharedInstance.multiplayerGameOver.upScore = upSide.score
+//        GameController.sharedInstance.multiplayerGameOver.downScore = downSide.score
+//
+//        GameController.sharedInstance.switchFromTo(from: .Multiplayer, to: .MultiplayerGameOver)
         
-        GameController.sharedInstance.multiplayerGameOver.upScore = upSide.score
-        GameController.sharedInstance.multiplayerGameOver.downScore = downSide.score
-
-        GameController.sharedInstance.switchFromTo(from: .Multiplayer, to: .MultiplayerGameOver)
+        Sounds.PlayGameOverSound()
+        side.gameOver = true
+        side.movingShape.animateOut(time: Gameplay.transitionTime)
+        side.staticShape.animateOut(time: Gameplay.transitionTime)
+        
+        //If both sides have game over, go to game over screen
+        numberOfGameOverSide += 1
+        
+        if(numberOfGameOverSide >= 2){
+            isGameOver = true
+            GameController.sharedInstance.multiplayerGameOver.upScore = upSide.score
+            GameController.sharedInstance.multiplayerGameOver.downScore = downSide.score
+            
+            GameController.sharedInstance.switchFromTo(from: .Multiplayer, to: .MultiplayerGameOver)
+        }
     }
     
     func animateIn(){
         Flurry.logEvent("MultiplayerGame", withParameters: nil, timed: true)
 
         isGameOver = false
-
+        upSide.gameOver = false
+        downSide.gameOver = false
+        numberOfGameOverSide = 0
+        
         newShapePositions(side: upSide, changeMovingShapePos: true)
         newShapePositions(side: downSide, changeMovingShapePos: true)
 
         upSide.score = 0
         upSide.scoreLabel.text = "\(upSide.score)"
-        upSide.scoreLabel.animateIn(time: transitionTime)
-        upSide.timer.animateIn(time: transitionTime)
+        upSide.scoreLabel.animateIn(time: Gameplay.transitionTime)
+        upSide.timer.animateIn(time: Gameplay.transitionTime)
         upSide.timer.start(time: upSide.timerTime)
         self.bringSubview(toFront: upSide.movingShape.gestureView)
         
         downSide.score = 0
         downSide.scoreLabel.text = "\(downSide.score)"
-        downSide.scoreLabel.animateIn(time: transitionTime)
-        downSide.timer.animateIn(time: transitionTime)
+        downSide.scoreLabel.animateIn(time: Gameplay.transitionTime)
+        downSide.timer.animateIn(time: Gameplay.transitionTime)
         downSide.timer.start(time: downSide.timerTime)
         self.bringSubview(toFront: downSide.movingShape.gestureView)
     }
@@ -242,16 +264,16 @@ class Multiplayer: UIView{
     func animateOut(){
         Flurry.logEvent("MultiplayerGame", withParameters: ["ScoreUp": upSide.score, "StaticShapeSizeUp":upSide.staticShape.frame.size, "RectDiffUp": subRect(movingRect: CGRect(origin: upSide.movingShape.center, size: upSide.movingShape.frame.size), staticRect: CGRect(origin: upSide.staticShape.center, size: upSide.staticShape.frame.size)), "ColorUp": upSide.staticShape.col, "ScoreDown": downSide.score, "StaticShapeSizeDown":downSide.staticShape.frame.size, "RectDiffDown": subRect(movingRect: CGRect(origin: downSide.movingShape.center, size: downSide.movingShape.frame.size), staticRect: CGRect(origin: downSide.staticShape.center, size: downSide.staticShape.frame.size)), "ColorDown": downSide.staticShape.col], timed: true)
 
-        upSide.timer.animateOut(time: transitionTime)
+        upSide.timer.animateOut(time: Gameplay.transitionTime)
         upSide.timer.removeTimer()
-        upSide.scoreLabel.animateOut(time: transitionTime)
-        upSide.movingShape.animateOut(time: transitionTime)
-        upSide.staticShape.animateOut(time: transitionTime)
+        upSide.scoreLabel.animateOut(time: Gameplay.transitionTime)
+        upSide.movingShape.animateOut(time: Gameplay.transitionTime)
+        upSide.staticShape.animateOut(time: Gameplay.transitionTime)
         
-        downSide.timer.animateOut(time: transitionTime)
+        downSide.timer.animateOut(time: Gameplay.transitionTime)
         downSide.timer.removeTimer()
-        downSide.scoreLabel.animateOut(time: transitionTime)
-        downSide.movingShape.animateOut(time: transitionTime)
-        downSide.staticShape.animateOut(time: transitionTime)
+        downSide.scoreLabel.animateOut(time: Gameplay.transitionTime)
+        downSide.movingShape.animateOut(time: Gameplay.transitionTime)
+        downSide.staticShape.animateOut(time: Gameplay.transitionTime)
     }
 }

@@ -51,6 +51,7 @@ class ViewController: UIViewController, GKGameCenterControllerDelegate {
     
     func didEnterBackground() {
         print("Background")
+        GameController.sharedInstance.gamePaused = true
         
         if(GameController.sharedInstance.currentView == .Game){
             GameController.sharedInstance.game.timer.pause()
@@ -64,9 +65,8 @@ class ViewController: UIViewController, GKGameCenterControllerDelegate {
     
     func didEnterForeground(){
         print("Foreground")
-        
         if(GameController.sharedInstance.currentView == .Game){
-            GameController.sharedInstance.game.timer.resume()
+            GameController.sharedInstance.game.timer.resume(delay: 3)
         }
         
         if(GameController.sharedInstance.currentView == .Multiplayer){
