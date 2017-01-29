@@ -123,10 +123,10 @@ class Multiplayer: UIView{
     }
     
     func increaseDifficulty(side: MultiplayerScreenSide){
-        side.timerTime -= 0.01
+        side.timerTime -= Gameplay.mpReduceTime
         
-        if(side.timerTime < 1.75){
-            side.timerTime = 1.75
+        if(side.timerTime < Gameplay.mpMinTime){
+            side.timerTime = Gameplay.mpMinTime
         }
     }
     
@@ -183,7 +183,7 @@ class Multiplayer: UIView{
         
         let deltaRect = subRect(movingRect: movingFrame, staticRect: staticFrame)
         
-        let width = Screen.getScreenSize(x: 0.05, y: 0).width
+        let width = Gameplay.mpCompareWidth//Screen.getScreenSize(x: 0.05, y: 0).width
         let minimumDiffRect = CGRect(x: width, y: width, width: width, height: width)
         
         let isSame = rectLessThan(rect1: deltaRect, rect2: minimumDiffRect)
