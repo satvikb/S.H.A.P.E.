@@ -33,6 +33,10 @@ class Game: UIView{
     
 //    var tutorialView : View!
     var tutorialLabel: Label!
+    var howToPlayLabel: Label!
+
+    var fingerImage : UIImageView!
+    
     var tutorialEnabled: Bool = true
     private var tutorialFinished: Bool = false
     
@@ -42,10 +46,17 @@ class Game: UIView{
 //        tutorialView = View(frame: frame, _outPos: Screen.getScreenPos(x: -1, y: 0), _inPos: Screen.getScreenPos(x: 0, y: 0))
 //        tutorialView.backgroundColor = UIColor.black
 //        tutorialView.layer.opacity = 0.5
-        tutorialLabel = Label(frame: CGRect(origin: Screen.getScreenPos(x: 0, y: 0.05), size: Screen.getScreenSize(x: 1, y: 0.1)), text: "Match the shape.", _outPos: Screen.getScreenPos(x: -1, y: 0.5), _inPos: Screen.getScreenPos(x: 0, y: 0.9), textColor: UIColor.white, debugFrame: false, _neon: true)
-        tutorialLabel.textAlignment = .center
-        tutorialLabel.font = UIFont(name: fontName, size: Screen.fontSize(fontSize: 3))
+        tutorialLabel = Label(frame: CGRect(origin: Screen.getScreenPos(x: 0, y: 0.05), size: Screen.getScreenSize(x: 0.8, y: 0.1)), text: "Match the shape.", _outPos: Screen.getScreenPos(x: -1, y: 0.5), _inPos: Screen.getScreenPos(x: 0.025, y: 0.8), textColor: UIColor.white, debugFrame: false, _neon: true)
+        tutorialLabel.textAlignment = .left
+        tutorialLabel.font = UIFont(name: fontName, size: Screen.fontSize(fontSize: 2.5))
         
+        howToPlayLabel = Label(frame: CGRect(origin: Screen.getScreenPos(x: 0, y: 0.05), size: Screen.getScreenSize(x: 0.5, y: 0.1)), text: "Use two fingers.", _outPos: Screen.getScreenPos(x: -1, y: 0.5), _inPos: Screen.getScreenPos(x: 0.025, y: 0.9), textColor: UIColor.white, debugFrame: false, _neon: true)
+        howToPlayLabel.textAlignment = .left
+        howToPlayLabel.font = UIFont(name: fontName, size: Screen.fontSize(fontSize: 2))
+        
+        let imageWidth = Screen.getScreenSize(x: 0.2, y: 0).width
+        fingerImage = UIImageView(frame: CGRect(origin: CGPoint.outOfScreen, size: CGSize(width: imageWidth, height: imageWidth)))
+        fingerImage.image = #imageLiteral(resourceName: "finger.png")
         
         let timerWidth = Screen.getScreenSize(x: 0.016, y: 0).width
         
@@ -105,6 +116,8 @@ class Game: UIView{
         self.addSubview(movingShape.gestureView)
 //        self.addSubview(tutorialView)
         self.addSubview(tutorialLabel)
+        self.addSubview(howToPlayLabel)
+        self.addSubview(fingerImage)
     }
     
     func increaseDifficulty(){
@@ -235,6 +248,10 @@ class Game: UIView{
 //            timer.pause() //For tutorial
             
             tutorialLabel.animateIn(time: Gameplay.transitionTime)
+            howToPlayLabel.animateIn(time: Gameplay.transitionTime)
+            UIView.animate(withDuration: TimeInterval(Gameplay.transitionTime), animations: {
+                self.fingerImage.frame.origin = CGPoint(x: Screen.screenSize.width-self.fingerImage.frame.width, y: Screen.screenSize.height-self.fingerImage.frame.height)
+            })
         }
     }
     
@@ -246,6 +263,11 @@ class Game: UIView{
 //            
 //        })
         tutorialLabel.animateOut(time: Gameplay.transitionTime)
+        howToPlayLabel.animateOut(time: Gameplay.transitionTime)
+        
+        UIView.animate(withDuration: TimeInterval(Gameplay.transitionTime), animations: {
+            self.fingerImage.frame.origin = CGPoint(x: Screen.screenSize.width+self.fingerImage.frame.width, y: Screen.screenSize.height-self.fingerImage.frame.height)
+        })
     }
     
     func animateOut(){

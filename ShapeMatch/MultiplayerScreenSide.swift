@@ -19,6 +19,8 @@ class MultiplayerScreenSide{
     var screenSide: ScreenSide
     var timer: SquareTimer = SquareTimer.null
     
+    var gameOver: Bool!
+    
     var score: Int = 0
     var timerTime: CGFloat = 2.5
     

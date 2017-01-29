@@ -19,6 +19,7 @@
 		4002CA3B1E0B91C900291DCC /* Sounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4002CA3A1E0B91C900291DCC /* Sounds.swift */; };
 		400892971E0CFDF6008A52D8 /* Multiplayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400892961E0CFDF6008A52D8 /* Multiplayer.swift */; };
 		400892991E0CFE6C008A52D8 /* MultiplayerScreenSide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400892981E0CFE6C008A52D8 /* MultiplayerScreenSide.swift */; };
+		400B90B81E3D693000AC7FC4 /* finger.png in Resources */ = {isa = PBXBuildFile; fileRef = 400B90B71E3D693000AC7FC4 /* finger.png */; };
 		401644391E0F51C800819FF3 /* Neon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401644381E0F51C800819FF3 /* Neon.swift */; };
 		402648405084300CE794C967 /* Pods_ShapeMatchUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E92E729CA4758BE9CACA842 /* Pods_ShapeMatchUITests.framework */; };
 		404778C51E33FC5B00FC2D25 /* Gameplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 404778C41E33FC5B00FC2D25 /* Gameplay.swift */; };
@@ -82,6 +83,7 @@
 		4002CA3A1E0B91C900291DCC /* Sounds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Sounds.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		400892961E0CFDF6008A52D8 /* Multiplayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Multiplayer.swift; sourceTree = "<group>"; };
 		400892981E0CFE6C008A52D8 /* MultiplayerScreenSide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = MultiplayerScreenSide.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		400B90B71E3D693000AC7FC4 /* finger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = finger.png; sourceTree = "<group>"; };
 		401644381E0F51C800819FF3 /* Neon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Neon.swift; sourceTree = "<group>"; };
 		404778C41E33FC5B00FC2D25 /* Gameplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gameplay.swift; sourceTree = "<group>"; };
 		407E08981E0E388100BAA626 /* Check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Check.png; sourceTree = "<group>"; };
@@ -229,6 +231,7 @@
 				E733B40A1E0E37EF00DB94F5 /* settingsicon.png */,
 				E733B40C1E0E387B00DB94F5 /* Playicon.png */,
 				407E08981E0E388100BAA626 /* Check.png */,
+				400B90B71E3D693000AC7FC4 /* finger.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -438,6 +441,7 @@
 				E733B40B1E0E37EF00DB94F5 /* settingsicon.png in Resources */,
 				E733B4051E0E323600DB94F5 /* homeicon.png in Resources */,
 				40EC74011CF38DC500E7B5E1 /* LaunchScreen.storyboard in Resources */,
+				400B90B81E3D693000AC7FC4 /* finger.png in Resources */,
 				E733B4091E0E373200DB94F5 /* multiplayericon.png in Resources */,
 				40EC73FE1CF38DC500E7B5E1 /* Assets.xcassets in Resources */,
 				4002CA361E0B8FCF00291DCC /* GameOver.wav in Resources */,

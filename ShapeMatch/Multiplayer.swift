@@ -16,7 +16,10 @@ class Multiplayer: UIView{
     var upSide: MultiplayerScreenSide!
     var downSide: MultiplayerScreenSide!
     
+    var numberOfGameOverSide : Int = 0
     var isGameOver: Bool = false
+    
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -47,7 +50,7 @@ class Multiplayer: UIView{
         upSide.movingShape.setupGestureRecognizers()
         upSide.movingShape.anyGestureHappened = {
             if(self.isGameOver == false){
-                if(self.similarToStaticShape(side: self.upSide)){
+                if(self.similarToStaticShape(side: self.upSide) && self.upSide.gameOver == false){
                     self.increaseDifficulty(side: self.upSide)
                     Sounds.PlayMatchedSound()
                     self.newShapePositions(side: self.upSide)
@@ -94,7 +97,7 @@ class Multiplayer: UIView{
         downSide.movingShape.setupGestureRecognizers()
         downSide.movingShape.anyGestureHappened = {
             if(self.isGameOver == false){
-                if(self.similarToStaticShape(side: self.downSide)){
+                if(self.similarToStaticShape(side: self.downSide) && self.downSide.gameOver == false){
                     self.increaseDifficulty(side: self.downSide)
                     Sounds.PlayMatchedSound()
                     self.newShapePositions(side: self.downSide)
@@ -214,13 +217,32 @@ class Multiplayer: UIView{
 //        GameController.sharedInstance.multiplayerGameOver.downScore = downSide.score
 //
 //        GameController.sharedInstance.switchFromTo(from: .Multiplayer, to: .MultiplayerGameOver)
+        
+        Sounds.PlayGameOverSound()
+        side.gameOver = true
+        side.movingShape.animateOut(time: Gameplay.transitionTime)
+        side.staticShape.animateOut(time: Gameplay.transitionTime)
+        
+        //If both sides have game over, go to game over screen
+        numberOfGameOverSide += 1
+        
+        if(numberOfGameOverSide >= 2){
+            isGameOver = true
+            GameController.sharedInstance.multiplayerGameOver.upScore = upSide.score
+            GameController.sharedInstance.multiplayerGameOver.downScore = downSide.score
+            
+            GameController.sharedInstance.switchFromTo(from: .Multiplayer, to: .MultiplayerGameOver)
+        }
     }
     
     func animateIn(){
         Flurry.logEvent("MultiplayerGame", withParameters: nil, timed: true)
 
         isGameOver = false
-
+        upSide.gameOver = false
+        downSide.gameOver = false
+        numberOfGameOverSide = 0
+        
         newShapePositions(side: upSide, changeMovingShapePos: true)
         newShapePositions(side: downSide, changeMovingShapePos: true)
 
