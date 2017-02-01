@@ -11,8 +11,6 @@ import Flurry_iOS_SDK
 
 class MultiplayerGameOver: UIView{
     
-//    let transitionTime: CGFloat = 0.5
-    
     var homeButton: Square = Square.null
     var replayButton: Square = Square.null
     

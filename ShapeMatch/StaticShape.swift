@@ -44,11 +44,11 @@ class StaticShape: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setColor(_ coler: UIColor){
-        col = coler
+    func setColor(_ color: UIColor){
+        col = color
         self.backgroundColor = UIColor.clear//color
         self.layer.borderColor = col.cgColor
-        layer.shadowColor = coler.cgColor
+        layer.shadowColor = color.cgColor
     }
     
     func setRotation(_ radians: CGFloat){

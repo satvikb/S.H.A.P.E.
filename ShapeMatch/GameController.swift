@@ -52,7 +52,6 @@ class GameController{
         
         settings = Settings(frame: CGRect(x: 0, y: 0, width: Screen.screenSize.width, height: Screen.screenSize.height))
         
-        
         if(deviceModel == .iPad){
             multiplayer = Multiplayer(frame: CGRect(x: 0, y: 0, width: Screen.screenSize.width, height: Screen.screenSize.height))
             multiplayerGameOver = MultiplayerGameOver(frame: CGRect(x: 0, y: 0, width: Screen.screenSize.width, height: Screen.screenSize.height))

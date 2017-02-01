@@ -219,9 +219,7 @@ class MovingShape: UIView, UIGestureRecognizerDelegate {
     }
     
     func gestureHappened(){
-        //        if(GameController.sharedInstance.gamePaused == false){
         anyGestureHappened()
-        //        }
     }
     
     var recievedTouch = {}

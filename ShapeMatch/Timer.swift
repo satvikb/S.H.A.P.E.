@@ -38,11 +38,10 @@ class SquareTimer: UIView, CAAnimationDelegate{
         
         let newLineWidth = lineWidth*2
         
-//        let path = UIBezierPath(rect: CGRect(x: lineWidth/2, y: lineWidth, width: frame.size.width-lineWidth, height: frame.size.height-lineWidth*2)).cgPath
+
         let path = UIBezierPath(rect: CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height)).cgPath
         progressLayer = CAShapeLayer()
         progressLayer.fillColor = UIColor.clear.cgColor
-//        progressLayer.strokeColor = UIColor.red.cgColor
         
         progressLayer.lineWidth = newLineWidth
         progressLayer.strokeStart = 0
@@ -54,8 +53,6 @@ class SquareTimer: UIView, CAAnimationDelegate{
         progressLayer.shadowOpacity = Neon.shadowOpacity
         progressLayer.shadowOffset = Neon.shadowOffset
         progressLayer.masksToBounds = Neon.masksToBounds
-        
-//        pause()
         
         self.layer.addSublayer(progressLayer)
         
@@ -94,15 +91,6 @@ class SquareTimer: UIView, CAAnimationDelegate{
         progressLayer.removeAnimation(forKey: "timer")
     }
     
-//    func pause(){
-//        animation.speed = 0
-//        
-//    }
-//    
-//    func resume(){
-//        animation.speed = 1
-//    }
-    
     func pause(){
         animationViewPosition = progressLayer.animation(forKey: "timer")?.copy() as! CAAnimation!
         
@@ -119,16 +107,11 @@ class SquareTimer: UIView, CAAnimationDelegate{
         
         counter = Int(delay)
         
-//        UIView.animate(withDuration: 0, delay: TimeInterval(delay), options: UIViewAnimationOptions.curveLinear, animations: {}, completion: {(bool: Bool) in
-//            print("delay \(delay)")
-//            
-//                    })
         self.bringSubview(toFront: countdownLabel)
         countdownLabel.isUserInteractionEnabled = true
 
         counterTimer = Timer.scheduledTimer(timeInterval: 0.9, target: self, selector: #selector(updateCounter), userInfo: nil, repeats: true)
 
-        
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(Int(delay*1000)), execute: {
             // Put your code which should be executed with a delay here
             let pausedTime = self.layer.timeOffset
@@ -163,7 +146,7 @@ class SquareTimer: UIView, CAAnimationDelegate{
     }
     
     func timerFinished(){
-        self.done()
+        done()
     }
     
     func getCenterPos(pos: CGPoint) -> CGPoint{

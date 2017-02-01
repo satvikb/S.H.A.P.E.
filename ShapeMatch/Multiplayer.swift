@@ -11,15 +11,12 @@ import Flurry_iOS_SDK
 
 class Multiplayer: UIView{
     
-//    let transitionTime: CGFloat = 0.5
     
     var upSide: MultiplayerScreenSide!
     var downSide: MultiplayerScreenSide!
     
     var numberOfGameOverSide : Int = 0
     var isGameOver: Bool = false
-    
-    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -210,14 +207,7 @@ class Multiplayer: UIView{
     }
     
     func GameOver(side: MultiplayerScreenSide){
-//        Sounds.PlayGameOverSound()
-//        isGameOver = true
-//        
-//        GameController.sharedInstance.multiplayerGameOver.upScore = upSide.score
-//        GameController.sharedInstance.multiplayerGameOver.downScore = downSide.score
-//
-//        GameController.sharedInstance.switchFromTo(from: .Multiplayer, to: .MultiplayerGameOver)
-        
+
         Sounds.PlayGameOverSound()
         side.gameOver = true
         side.movingShape.animateOut(time: Gameplay.transitionTime)

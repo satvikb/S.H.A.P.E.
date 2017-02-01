@@ -62,7 +62,7 @@ class SettingButton: UIView {
             imageView.image = nil
         }
         
-        self.tap()
+        tap()
     }
     
     
