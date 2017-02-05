@@ -104,7 +104,6 @@ class SquareTimer: UIView, CAAnimationDelegate{
     }
     
     func resume(delay: CGFloat = 1){
-        if(self.layer.speed == 0){
         if(animationViewPosition != nil){
             progressLayer.add(animationViewPosition, forKey: "timer")
             animationViewPosition = nil
@@ -128,7 +127,7 @@ class SquareTimer: UIView, CAAnimationDelegate{
         self.countdownLabel.isUserInteractionEnabled = false
         GameController.sharedInstance.gamePaused = false
                     })
-        }
+        
     }
 
 
