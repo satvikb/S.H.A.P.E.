@@ -20,20 +20,20 @@ class SquareTimer: UIView, CAAnimationDelegate{
     var animationViewPosition: CAAnimation!
     var progressLayer: CAShapeLayer = CAShapeLayer()
     
-    var countdownLabel: UILabel!
+//    var countdownLabel: UILabel!
     var counter: Int = 3
     var counterTimer: Timer!
     
     init(frame: CGRect, lineWidth: CGFloat){
         super.init(frame: frame)
         
-        countdownLabel = UILabel(frame: frame)
-        countdownLabel.isUserInteractionEnabled = false
-        countdownLabel.text = ""
-        countdownLabel.textAlignment = .center
-        countdownLabel.textColor = UIColor.white
-        countdownLabel.font = UIFont(name: fontName, size: Screen.fontSize(fontSize: 8))
-        countdownLabel.adjustsFontSizeToFitWidth = true
+//        countdownLabel = UILabel(frame: frame)
+//        countdownLabel.isUserInteractionEnabled = false
+//        countdownLabel.text = ""
+//        countdownLabel.textAlignment = .center
+//        countdownLabel.textColor = UIColor.white
+//        countdownLabel.font = UIFont(name: fontName, size: Screen.fontSize(fontSize: 8))
+//        countdownLabel.adjustsFontSizeToFitWidth = true
         
         
         let newLineWidth = lineWidth*2
@@ -59,7 +59,7 @@ class SquareTimer: UIView, CAAnimationDelegate{
         
         self.layer.addSublayer(progressLayer)
         
-        self.addSubview(countdownLabel)
+//        self.addSubview(countdownLabel)
         
     }
     
@@ -117,53 +117,53 @@ class SquareTimer: UIView, CAAnimationDelegate{
         //            counterTimer = Timer.scheduledTimer(timeInterval: 0.9, target: self, selector: #selector(updateCounter), userInfo: nil, repeats: true)
         
         
-                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(Int(delay*1000)), execute: {
-        let pausedTime = self.layer.timeOffset
-        self.layer.speed = 1.0
-        self.layer.timeOffset = 0.0
-        self.layer.beginTime = 0.0
-        let timeSincePause = self.layer.convertTime(CACurrentMediaTime(), from: nil) - pausedTime
-        self.layer.beginTime = timeSincePause
-        self.countdownLabel.isUserInteractionEnabled = false
-        GameController.sharedInstance.gamePaused = false
-                    })
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(Int(delay*1000)), execute: {
+            let pausedTime = self.layer.timeOffset
+            self.layer.speed = 1.0
+            self.layer.timeOffset = 0.0
+            self.layer.beginTime = 0.0
+            let timeSincePause = self.layer.convertTime(CACurrentMediaTime(), from: nil) - pausedTime
+            self.layer.beginTime = timeSincePause
+//            self.countdownLabel.isUserInteractionEnabled = false
+            GameController.sharedInstance.gamePaused = false
+        })
         
     }
-
-
-
-//func updateCounter() {
-//    if counter > 0 {
-//        print("\(counter) seconds to the end of the world")
-//        countdownLabel.text = "\(counter)"
-//        counter -= 1
-//    }else{
-//        counter = 3
-//        countdownLabel.text = ""
-//        counterTimer.invalidate()
-//    }
-//}
-
-func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-    print("Timer finish \(flag)")
-    if(flag){
-        timerFinished()
+    
+    
+    
+    //func updateCounter() {
+    //    if counter > 0 {
+    //        print("\(counter) seconds to the end of the world")
+    //        countdownLabel.text = "\(counter)"
+    //        counter -= 1
+    //    }else{
+    //        counter = 3
+    //        countdownLabel.text = ""
+    //        counterTimer.invalidate()
+    //    }
+    //}
+    
+    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+        print("Timer finish \(flag)")
+        if(flag){
+            timerFinished()
+        }
     }
-}
-
-func timerFinished(){
-    self.done()
-}
-
-func getCenterPos(pos: CGPoint) -> CGPoint{
-    return CGPoint(x: pos.x-(frame.size.width/2), y: pos.y-(frame.size.height/2))
-}
-
-func animateIn(time: CGFloat){
-    progressLayer.opacity = 1
-}
-
-func animateOut(time: CGFloat){
-    progressLayer.opacity = 0
-}
+    
+    func timerFinished(){
+        self.done()
+    }
+    
+    func getCenterPos(pos: CGPoint) -> CGPoint{
+        return CGPoint(x: pos.x-(frame.size.width/2), y: pos.y-(frame.size.height/2))
+    }
+    
+    func animateIn(time: CGFloat){
+        progressLayer.opacity = 1
+    }
+    
+    func animateOut(time: CGFloat){
+        progressLayer.opacity = 0
+    }
 }
