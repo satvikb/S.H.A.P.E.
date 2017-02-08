@@ -10,8 +10,6 @@ import UIKit
 
 class Settings: UIView {
     
-//    let transitionTime: CGFloat = 0.5
-    
     var titleLabel: Label = Label.Null
     var scoreLabel: Label = Label.Null
     
@@ -41,8 +39,6 @@ class Settings: UIView {
         creditsLabel.textAlignment = .center
                 
         super.init(frame: frame)
-
-//        let settingsData = SettingsData.settings
         
         let settingYOffset: CGFloat = 0.4
         let settingX: CGFloat = 0.1

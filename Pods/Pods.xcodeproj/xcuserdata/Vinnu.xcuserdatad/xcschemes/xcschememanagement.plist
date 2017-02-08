@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>Flurry-iOS-SDK.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>Pods-ShapeMatch.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+		<key>Pods-ShapeMatchTests.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>Pods-ShapeMatchUITests.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>5DE61EAE04F77EC29BF37CCF8FEA7275</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B60742998EEB08D41262197A7B027940</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E1B48EDE81B40623908FB957E241B951</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E9ED05F0DDA5FBEEBF5F032868C76099</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>

@@ -11,8 +11,6 @@ import Flurry_iOS_SDK
 
 class Game: UIView{
     
-//    let transitionTime: CGFloat = 0.5
-    
     var timer: SquareTimer = SquareTimer.null
     
     var score: Int = 0
@@ -31,7 +29,6 @@ class Game: UIView{
     
     var isGameOver: Bool = false
     
-//    var tutorialView : View!
     var tutorialLabel: Label!
     var howToPlayLabel: Label!
 
@@ -43,9 +40,6 @@ class Game: UIView{
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-//        tutorialView = View(frame: frame, _outPos: Screen.getScreenPos(x: -1, y: 0), _inPos: Screen.getScreenPos(x: 0, y: 0))
-//        tutorialView.backgroundColor = UIColor.black
-//        tutorialView.layer.opacity = 0.5
         tutorialLabel = Label(frame: CGRect(origin: Screen.getScreenPos(x: 0, y: 0.05), size: Screen.getScreenSize(x: 0.8, y: 0.1)), text: "Match the shape.", _outPos: Screen.getScreenPos(x: -1, y: 0.5), _inPos: Screen.getScreenPos(x: 0.025, y: 0.8), textColor: UIColor.white, debugFrame: false, _neon: true)
         tutorialLabel.textAlignment = .left
         tutorialLabel.font = UIFont(name: fontName, size: Screen.fontSize(fontSize: 2.5))
@@ -87,8 +81,6 @@ class Game: UIView{
                         self.newShapePositions()
                         self.animateOutTutorialLabel()
                         self.timer.start(time: self.timerTime)
-//                        self.timer.reset(time: self.timerTime)
-//                        self.timer.resume()
                         self.tutorialFinished = true
                     }else{
                         self.increaseDifficulty()
@@ -114,7 +106,6 @@ class Game: UIView{
         self.addSubview(staticShape)
         self.addSubview(scoreLabel)
         self.addSubview(movingShape.gestureView)
-//        self.addSubview(tutorialView)
         self.addSubview(tutorialLabel)
         self.addSubview(howToPlayLabel)
         self.addSubview(fingerImage)
@@ -169,20 +160,15 @@ class Game: UIView{
         timer.changeColor(col: staticShape.col)
         movingShape.calculateMaxScale()
     }
-    
-//    func restrictMovingShapeSize(){
-//        
-//    }
-    
-    
+
     func similarToStaticShape() -> Bool{
         return framesClose()
     }
     
     func framesClose() -> Bool{
         
-        let movingSize = movingShape.frame.size//__CGSizeApplyAffineTransform(movingShape.startSize, movingShape.transform)
-        let staticSize = staticShape.frame.size//__CGSizeApplyAffineTransform(staticShape.startSize, staticShape.transform)
+        let movingSize = movingShape.frame.size
+        let staticSize = staticShape.frame.size
 
         let movingCenter = movingShape.center
         let staticCenter = staticShape.center
@@ -195,9 +181,7 @@ class Game: UIView{
         let width = Gameplay.spCompareWidth
         let minimumDiffRect = CGRect(x: width, y: width, width: width, height: width)
         
-        let isSame = rectLessThan(rect1: deltaRect, rect2: minimumDiffRect)
-        
-        return isSame
+        return rectLessThan(rect1: deltaRect, rect2: minimumDiffRect) //is same
     }
     
     func rectLessThan(rect1: CGRect, rect2: CGRect) -> Bool{
@@ -245,7 +229,6 @@ class Game: UIView{
         if(tutorialEnabled == true){
             print("tutorial")
             tutorialFinished = false
-//            timer.pause() //For tutorial
             
             tutorialLabel.animateIn(time: Gameplay.transitionTime)
             howToPlayLabel.animateIn(time: Gameplay.transitionTime)
@@ -257,11 +240,7 @@ class Game: UIView{
     
     func animateOutTutorialLabel(){
         print("animate out tutrial label")
-//        UIView.animate(withDuration: TimeInterval(Gameplay.transitionTime), delay: 3, usingSpringWithDamping: 0, initialSpringVelocity: 0, options: .curveLinear, animations: {
-//            self.tutorialLabel.frame.origin = self.tutorialLabel.outPos
-//        }, completion: {(complete: Bool) in
-//            
-//        })
+
         tutorialLabel.animateOut(time: Gameplay.transitionTime)
         howToPlayLabel.animateOut(time: Gameplay.transitionTime)
         

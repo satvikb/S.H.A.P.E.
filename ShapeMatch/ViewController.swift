@@ -15,7 +15,6 @@ class ViewController: UIViewController, GKGameCenterControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //NotificationCenter.defaultCenter().addObserver(self, selector: Selector("myObserverMethod:"), name:UIApplicationDidEnterBackgroundNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackground), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterForeground), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
 
@@ -32,8 +31,6 @@ class ViewController: UIViewController, GKGameCenterControllerDelegate {
         self.view.addSubview(GameController.sharedInstance.gameOver)
         self.view.addSubview(GameController.sharedInstance.game)
         self.view.addSubview(GameController.sharedInstance.mainMenu)
-        
-        
         
         GameController.sharedInstance.switchFromTo(from: .Start, to: .MainMenu)
         

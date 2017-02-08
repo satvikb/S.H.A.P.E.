@@ -51,8 +51,6 @@ class Square: UIView, UIGestureRecognizerDelegate{
         self.backgroundColor = color
         
         let tapRec = UITapGestureRecognizer(target: self, action: #selector(self.tapped))
-//        tapRec.numberOfTouchesRequired = 2
-//        tapRec.delegate
         
         self.addSubview(label)
         self.addSubview(imageView)

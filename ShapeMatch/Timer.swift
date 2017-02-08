@@ -9,9 +9,6 @@
 import UIKit
 
 class SquareTimer: UIView, CAAnimationDelegate{
-    
-    
-    //    var layer: CALayer?
     static let null = SquareTimer(frame: CGRect.zero, lineWidth: 0)
     
     var done = {}
@@ -35,14 +32,11 @@ class SquareTimer: UIView, CAAnimationDelegate{
 //        countdownLabel.font = UIFont(name: fontName, size: Screen.fontSize(fontSize: 8))
 //        countdownLabel.adjustsFontSizeToFitWidth = true
         
-        
         let newLineWidth = lineWidth*2
-        
-        //        let path = UIBezierPath(rect: CGRect(x: lineWidth/2, y: lineWidth, width: frame.size.width-lineWidth, height: frame.size.height-lineWidth*2)).cgPath
+
         let path = UIBezierPath(rect: CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height)).cgPath
         progressLayer = CAShapeLayer()
         progressLayer.fillColor = UIColor.clear.cgColor
-        //        progressLayer.strokeColor = UIColor.red.cgColor
         
         progressLayer.lineWidth = newLineWidth
         progressLayer.strokeStart = 0
@@ -55,8 +49,7 @@ class SquareTimer: UIView, CAAnimationDelegate{
         progressLayer.shadowOffset = Neon.shadowOffset
         progressLayer.masksToBounds = Neon.masksToBounds
         
-        //        pause()
-        
+
         self.layer.addSublayer(progressLayer)
         
 //        self.addSubview(countdownLabel)
@@ -116,7 +109,7 @@ class SquareTimer: UIView, CAAnimationDelegate{
         
         //            counterTimer = Timer.scheduledTimer(timeInterval: 0.9, target: self, selector: #selector(updateCounter), userInfo: nil, repeats: true)
         
-        
+
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(Int(delay*1000)), execute: {
             let pausedTime = self.layer.timeOffset
             self.layer.speed = 1.0
@@ -152,7 +145,7 @@ class SquareTimer: UIView, CAAnimationDelegate{
     }
     
     func timerFinished(){
-        self.done()
+        done()
     }
     
     func getCenterPos(pos: CGPoint) -> CGPoint{

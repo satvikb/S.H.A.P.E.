@@ -10,8 +10,6 @@ import UIKit
 
 class MainMenu: UIView {
     
-    //    let transitionTime: CGFloat = 0.5
-    
     var titleLabel: Label = Label.Null
     var scoreLabel: Label = Label.Null
     
