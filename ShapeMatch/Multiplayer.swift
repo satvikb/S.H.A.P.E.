@@ -252,7 +252,13 @@ class Multiplayer: UIView{
     }
     
     func animateOut(){
-        Flurry.logEvent("MultiplayerGame", withParameters: ["ScoreUp": upSide.score, "StaticShapeSizeUp":upSide.staticShape.frame.size, "RectDiffUp": subRect(movingRect: CGRect(origin: upSide.movingShape.center, size: upSide.movingShape.frame.size), staticRect: CGRect(origin: upSide.staticShape.center, size: upSide.staticShape.frame.size)), "ColorUp": upSide.staticShape.col, "ScoreDown": downSide.score, "StaticShapeSizeDown":downSide.staticShape.frame.size, "RectDiffDown": subRect(movingRect: CGRect(origin: downSide.movingShape.center, size: downSide.movingShape.frame.size), staticRect: CGRect(origin: downSide.staticShape.center, size: downSide.staticShape.frame.size)), "ColorDown": downSide.staticShape.col], timed: true)
+        let rectDiffUp = subRect(movingRect: CGRect(origin: upSide.movingShape.center, size: upSide.movingShape.frame.size), staticRect: CGRect(origin: upSide.staticShape.center, size: upSide.staticShape.frame.size))
+        let rectDiffDown = subRect(movingRect: CGRect(origin: downSide.movingShape.center, size: downSide.movingShape.frame.size), staticRect: CGRect(origin: downSide.staticShape.center, size: downSide.staticShape.frame.size))
+
+        let upCol = upSide.staticShape.col
+        let downCol = downSide.staticShape.col
+
+        Flurry.logEvent("MultiplayerGame", withParameters: ["ScoreUp": upSide.score, "StaticShapeSizeUp":upSide.staticShape.frame.size, "RectDiffUp": ["x":rectDiffUp.origin.x,"y":rectDiffUp.origin.y,"width":rectDiffUp.size.width,"height":rectDiffUp.size.height], "ColorUp": ["r":upCol?.components.red, "g":upCol?.components.green, "b":upCol?.components.blue], "ScoreDown": downSide.score, "StaticShapeSizeDown":downSide.staticShape.frame.size, "RectDiffDown": ["x":rectDiffDown.origin.x,"y":rectDiffDown.origin.y,"width":rectDiffDown.size.width,"height":rectDiffDown.size.height], "ColorDown": ["r":downCol?.components.red, "g":downCol?.components.green, "b":downCol?.components.blue]], timed: true)
 
         upSide.timer.animateOut(time: Gameplay.transitionTime)
         upSide.timer.removeTimer()

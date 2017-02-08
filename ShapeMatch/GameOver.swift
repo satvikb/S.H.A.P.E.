@@ -60,7 +60,7 @@ class GameOver: UIView{
         super.init(frame: frame)
         
         homeButton.tap = {
-            Flurry.logEvent("HopeTapped", withParameters: ["Score":self.score, "Highscore":ScoreManager.currentHighScore])
+            Flurry.logEvent("HomeTapped", withParameters: ["Score":self.score, "Highscore":ScoreManager.currentHighScore])
             GameController.sharedInstance.switchFromTo(from: .GameOver, to: .MainMenu)
         }
         

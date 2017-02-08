@@ -10,7 +10,7 @@ import UIKit
 
 class Gameplay {
     
-    static let transitionTime: CGFloat = 0.5
+    static let transitionTime: CGFloat = 0.2
     
     // CompareWidth variables: Change only the x value to decide how easy it should be to match a shape, a lower value means a small margin of error between the shapes making it harder. A higher value means the shapes can be more different making it easier.
     

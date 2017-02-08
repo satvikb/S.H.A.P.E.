@@ -250,7 +250,9 @@ class Game: UIView{
     }
     
     func animateOut(){
-        Flurry.logEvent("Game", withParameters: ["Score": score, "StaticShapeSize":staticShape.frame.size, "RectDiff": subRect(movingRect: CGRect(origin: movingShape.center, size: movingShape.frame.size), staticRect: CGRect(origin: staticShape.center, size: staticShape.frame.size)), "Color":staticShape.col], timed: true)
+        let flurryRectDiff = subRect(movingRect: CGRect(origin: movingShape.center, size: movingShape.frame.size), staticRect: CGRect(origin: staticShape.center, size: staticShape.frame.size))
+        let col = staticShape.col
+        Flurry.logEvent("Game", withParameters: ["Score": score, "StaticShapeSize": ["width":staticShape.frame.size.width, "height": staticShape.frame.size.height], "RectDiff": ["x":flurryRectDiff.origin.x,"y":flurryRectDiff.origin.y,"width":flurryRectDiff.size.width,"height":flurryRectDiff.size.height], "Color":["r":col?.components.red, "g":col?.components.green, "b":col?.components.blue]], timed: true)
 
         timer.animateOut(time: Gameplay.transitionTime)
         timer.removeTimer()
